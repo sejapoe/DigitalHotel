@@ -1,8 +1,13 @@
 package ru.sejapoe.digitalhotel.ui.viewmodel;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -17,19 +22,25 @@ import javax.crypto.NoSuchPaddingException;
 
 import okhttp3.Response;
 import ru.sejapoe.digitalhotel.R;
+import ru.sejapoe.digitalhotel.data.AppDatabase;
 import ru.sejapoe.digitalhotel.data.LoginFormState;
 import ru.sejapoe.digitalhotel.data.auth.AuthState;
 import ru.sejapoe.digitalhotel.data.auth.BitArray256;
 import ru.sejapoe.digitalhotel.data.auth.LoginRepository;
 import ru.sejapoe.digitalhotel.data.net.HttpProvider;
 
-public class LoginViewModel extends ViewModel {
+public class LoginViewModel extends AndroidViewModel {
     private static final Pattern EMAIL_PATTERN = Pattern.compile("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)])");
-    private final LoginRepository loginRepository = new LoginRepository();
+    private final LoginRepository loginRepository;
     private LoginFormState formState;
     private final MutableLiveData<LoginFormState> loginFormStateMutableLiveData = new MutableLiveData<>(formState);
     private AuthState authState = AuthState.NOTHING;
     private final MutableLiveData<AuthState> authStateMutableLiveData = new MutableLiveData<>(authState);
+
+    public LoginViewModel(Application application) {
+        super(application);
+        loginRepository = new LoginRepository(AppDatabase.getInstance(application).sessionDao());
+    }
 
     public void validateForm(String username, String password) {
         setFormState(
@@ -65,8 +76,8 @@ public class LoginViewModel extends ViewModel {
 
     public void hello() {
         new Thread(() -> {
-            try {
-                loginRepository.getHttpProvider().postAuth("http://192.168.0.15:8080/hello", new byte[1]);
+            try(Response response = loginRepository.getHttpProvider().postAuth("http://192.168.0.15:8080/hello", new byte[1])) {
+                System.out.println(response);
             } catch (Exception e) {
                 e.printStackTrace();
             }

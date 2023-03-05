@@ -1,5 +1,7 @@
 package ru.sejapoe.digitalhotel.data.auth;
 
+import androidx.room.TypeConverter;
+
 import java.math.BigInteger;
 import java.util.Base64;
 
@@ -26,6 +28,7 @@ public final class BitArray256 {
         return new BitArray256(bytes);
     }
 
+    @TypeConverter
     public static BitArray256 fromBase64(String source) {
         return fromByteArray(Base64.getDecoder().decode(source));
     }
@@ -40,6 +43,11 @@ public final class BitArray256 {
             result.append(Integer.toHexString(b));
         }
         return new BigInteger(result.toString(), 16);
+    }
+
+    @TypeConverter
+    public String toBase64(BitArray256 bitArray256) {
+        return bitArray256.asBase64();
     }
 
     public String asBase64() {

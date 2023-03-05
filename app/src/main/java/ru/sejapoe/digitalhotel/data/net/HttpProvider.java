@@ -23,13 +23,22 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import ru.sejapoe.digitalhotel.data.auth.BitArray256;
 
 public class HttpProvider {
+    private static HttpProvider INSTANCE = null;
     private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     private static final MediaType TEXT = MediaType.get("text/plain; charset=utf-8");
     private final OkHttpClient okHttpClient = new OkHttpClient();
     private Session session;
+
+    public static void createInstance(Session session) {
+        INSTANCE = new HttpProvider();
+        INSTANCE.setSession(session);
+    }
+
+    public static HttpProvider getInstance() {
+        return INSTANCE;
+    }
 
     public Session getSession() {
         return session;
@@ -71,24 +80,6 @@ public class HttpProvider {
         } catch (IOException e) {
             e.printStackTrace();
             return null;
-        }
-    }
-
-    public static class Session {
-        private final String sessionId;
-        private final BitArray256 sessionKey;
-
-        public Session(String sessionId, BitArray256 sessionKey) {
-            this.sessionId = sessionId;
-            this.sessionKey = sessionKey;
-        }
-
-        public String getSessionId() {
-            return sessionId;
-        }
-
-        public BitArray256 getSessionKey() {
-            return sessionKey;
         }
     }
 

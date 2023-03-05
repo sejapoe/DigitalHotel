@@ -17,12 +17,20 @@ import com.google.gson.annotations.SerializedName;
 
 import okhttp3.Response;
 import ru.sejapoe.digitalhotel.data.net.HttpProvider;
+import ru.sejapoe.digitalhotel.data.net.Session;
+import ru.sejapoe.digitalhotel.data.net.SessionDao;
 
 public class LoginRepository {
 
     public static final String REGISTER_URL = "http://192.168.0.15:8080/register";
     public static final String LOGIN_URL = "http://192.168.0.15:8080/login";
-    private final HttpProvider httpProvider = new HttpProvider();
+    private final HttpProvider httpProvider = HttpProvider.getInstance();
+
+    private final SessionDao sessionDao;
+
+    public LoginRepository(SessionDao sessionDao) {
+        this.sessionDao = sessionDao;
+    }
 
     public void register(String login, String password) throws GeneralSecurityException, IOException, UserAlreadyExists {
         BitArray256 saltC = random256();
@@ -70,7 +78,9 @@ public class LoginRepository {
         Response post2 = httpProvider.post(LOGIN_URL + "/finish", Base64.getEncoder().encodeToString(M.asByteArray()));
         if (post2.code() != 200) throw new WrongPasswordException();
         String sessionId = new BigInteger(Objects.requireNonNull(post2.body()).string()).toString(16);
-        httpProvider.setSession(new HttpProvider.Session(sessionId, sessionKey));
+        Session session = new Session(sessionId, sessionKey);
+        httpProvider.setSession(session);
+        sessionDao.insert(session);
     }
 
     public HttpProvider getHttpProvider() {
