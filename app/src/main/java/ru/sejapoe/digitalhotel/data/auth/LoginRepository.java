@@ -21,9 +21,10 @@ import ru.sejapoe.digitalhotel.data.net.Session;
 import ru.sejapoe.digitalhotel.data.net.SessionDao;
 
 public class LoginRepository {
+    public static final String HOST = "https://sejapoe.live/"; //
 
-    public static final String REGISTER_URL = "http://192.168.0.15:8080/register";
-    public static final String LOGIN_URL = "http://192.168.0.15:8080/login";
+    public static final String REGISTER_URL = HOST + "register";
+    public static final String LOGIN_URL = HOST + "login";
     private final HttpProvider httpProvider = HttpProvider.getInstance();
 
     private final SessionDao sessionDao;
@@ -43,10 +44,6 @@ public class LoginRepository {
             saltS = BitArray256.fromBase64(Objects.requireNonNull(post.body()).string());
         }
         BitArray256 salt = xorByteArrays(saltC, saltS);
-
-        System.out.println("SaltC : " + Arrays.toString(saltC.asByteArray()));
-        System.out.println("SaltS : " + Arrays.toString(saltS.asByteArray()));
-
         BitArray256 x = hash(password.getBytes(StandardCharsets.UTF_8), salt.asByteArray());
         BigInteger v = modPow(x);
         httpProvider.post(REGISTER_URL + "/finish", new Pair<>(login, v));
@@ -63,9 +60,6 @@ public class LoginRepository {
         BitArray256 x = scrypt(password.getBytes(StandardCharsets.UTF_8), salt);
         BigInteger S = loginServerResponse.getB().subtract(k.multiply(modPow(x))).modPow(a.asBigInteger().add(u.asBigInteger().multiply(x.asBigInteger())), N);
         BitArray256 sessionKey = hash(S.toByteArray());
-
-        System.out.println(sessionKey.asBase64());
-
         BitArray256 M = hash(
                 concatByteArrays(
                         xorByteArrays(BitArray256.fromBigInteger(N), BitArray256.fromBigInteger(g)).asByteArray(),
@@ -80,7 +74,7 @@ public class LoginRepository {
         String sessionId = new BigInteger(Objects.requireNonNull(post2.body()).string()).toString(16);
         Session session = new Session(sessionId, sessionKey);
         httpProvider.setSession(session);
-        sessionDao.insert(session);
+        sessionDao.set(session);
     }
 
     public HttpProvider getHttpProvider() {

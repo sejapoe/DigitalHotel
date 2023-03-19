@@ -8,9 +8,9 @@ import java.util.List;
 
 @Dao
 public interface SessionDao {
-    @Query("SELECT * FROM session")
-    List<Session> getAll();
+    @Query("SELECT * FROM session LIMIT 1")
+    Session get();
 
     @Insert
-    void insert(Session session);
+    void set(Session session);
 }

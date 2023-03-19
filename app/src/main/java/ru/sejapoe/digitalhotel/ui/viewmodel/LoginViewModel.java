@@ -76,7 +76,7 @@ public class LoginViewModel extends AndroidViewModel {
 
     public void hello() {
         new Thread(() -> {
-            try(Response response = loginRepository.getHttpProvider().postAuth("http://192.168.0.15:8080/hello", new byte[1])) {
+            try(Response response = loginRepository.getHttpProvider().postAuth("https://sejapoe.live/hello", new byte[1])) {
                 System.out.println(response);
             } catch (Exception e) {
                 e.printStackTrace();

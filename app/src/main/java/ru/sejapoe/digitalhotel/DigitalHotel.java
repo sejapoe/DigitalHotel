@@ -14,11 +14,12 @@ public class DigitalHotel extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        SessionDao sessionDao = AppDatabase.getInstance(this).sessionDao();
         new Thread(() -> {
-            List<Session> sessions = sessionDao.getAll();
-            Log.d("DigitalHotelApplication", String.valueOf(sessions));
-            HttpProvider.createInstance(sessions.isEmpty() ? null : sessions.get(0));
+            Log.d("DigitalHotelApplication", "Waiting got database");
+            SessionDao sessionDao = AppDatabase.getInstance(this).sessionDao();
+            Session session = sessionDao.get();
+            Log.d("DigitalHotelApplication", String.valueOf(session));
+            HttpProvider.createInstance(session);
         }).start();
     }
 }
