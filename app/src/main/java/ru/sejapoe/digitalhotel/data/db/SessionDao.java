@@ -1,10 +1,10 @@
-package ru.sejapoe.digitalhotel.data.net;
+package ru.sejapoe.digitalhotel.data.db;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import java.util.List;
+import ru.sejapoe.digitalhotel.data.model.Session;
 
 @Dao
 public interface SessionDao {
@@ -13,4 +13,7 @@ public interface SessionDao {
 
     @Insert
     void set(Session session);
+
+    @Query("DELETE FROM session")
+    void drop();
 }

@@ -1,6 +1,5 @@
-package ru.sejapoe.digitalhotel.data;
+package ru.sejapoe.digitalhotel.data.model;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 public final class LoginFormState {
@@ -37,5 +36,9 @@ public final class LoginFormState {
 
     public int getPasswordError() {
         return passwordError;
+    }
+
+    public enum AuthState {
+        NOTHING, WRONG_PASSWORD, INTERNAL_ERROR, FINE
     }
 }

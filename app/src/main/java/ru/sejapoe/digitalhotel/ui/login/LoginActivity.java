@@ -1,5 +1,6 @@
-package ru.sejapoe.digitalhotel.ui.view;
+package ru.sejapoe.digitalhotel.ui.login;
 
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Toast;
@@ -7,15 +8,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-
+import ru.sejapoe.digitalhotel.data.model.LoginFormState;
 import ru.sejapoe.digitalhotel.databinding.ActivityLoginBinding;
-import ru.sejapoe.digitalhotel.ui.viewmodel.LoginViewModel;
+import ru.sejapoe.digitalhotel.ui.main.MainActivity;
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
@@ -69,7 +64,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        loginViewModel.getAuthStateMutableLiveData().observe(this, authState -> Toast.makeText(this, authState.toString(), Toast.LENGTH_LONG).show());
+        loginViewModel.getAuthStateMutableLiveData().observe(this, authState -> {
+            if (authState == LoginFormState.AuthState.FINE) {
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+            Toast.makeText(this, authState.toString(), Toast.LENGTH_LONG).show();
+        });
 
         binding.helloBtn.setOnClickListener(view -> loginViewModel.hello());
 

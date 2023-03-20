@@ -1,14 +1,13 @@
-package ru.sejapoe.digitalhotel.data.auth;
+package ru.sejapoe.digitalhotel.data.repository;
 
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.Objects;
 
-import static ru.sejapoe.digitalhotel.data.auth.Auth.*;
+import static ru.sejapoe.digitalhotel.utils.AuthUtils.*;
 
 import androidx.core.util.Pair;
 
@@ -16,9 +15,10 @@ import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 import okhttp3.Response;
-import ru.sejapoe.digitalhotel.data.net.HttpProvider;
-import ru.sejapoe.digitalhotel.data.net.Session;
-import ru.sejapoe.digitalhotel.data.net.SessionDao;
+import ru.sejapoe.digitalhotel.data.network.HttpProvider;
+import ru.sejapoe.digitalhotel.data.model.Session;
+import ru.sejapoe.digitalhotel.data.db.SessionDao;
+import ru.sejapoe.digitalhotel.utils.BitArray256;
 
 public class LoginRepository {
     public static final String HOST = "https://sejapoe.live/"; //
@@ -46,15 +46,17 @@ public class LoginRepository {
         BitArray256 salt = xorByteArrays(saltC, saltS);
         BitArray256 x = hash(password.getBytes(StandardCharsets.UTF_8), salt.asByteArray());
         BigInteger v = modPow(x);
-        httpProvider.post(REGISTER_URL + "/finish", new Pair<>(login, v));
+        Response response = httpProvider.post(REGISTER_URL + "/finish", new Pair<>(login, v));
     }
 
     public void login(String login, String password) throws IOException, GeneralSecurityException, WrongPasswordException {
         BitArray256 a = random256();
         BigInteger A = modPow(a);
-        Response post = httpProvider.post(LOGIN_URL + "/start", new Pair<>(login, A));
-        String s = Objects.requireNonNull(post.body()).string();
-        LoginServerResponse loginServerResponse = new Gson().fromJson(s, LoginServerResponse.class);
+        String serializedResponse;
+        try (Response post = httpProvider.post(LOGIN_URL + "/start", new Pair<>(login, A))) {
+            serializedResponse = Objects.requireNonNull(post.body()).string();
+        }
+        LoginServerResponse loginServerResponse = new Gson().fromJson(serializedResponse, LoginServerResponse.class);
         BitArray256 u = hash(concatByteArrays(A.toByteArray(), loginServerResponse.getB().toByteArray()));
         byte[] salt = BitArray256.fromBase64(loginServerResponse.getSalt()).asByteArray();
         BitArray256 x = scrypt(password.getBytes(StandardCharsets.UTF_8), salt);
@@ -69,12 +71,21 @@ public class LoginRepository {
                         loginServerResponse.getB().toByteArray(),
                         sessionKey.asByteArray()
                 ));
-        Response post2 = httpProvider.post(LOGIN_URL + "/finish", Base64.getEncoder().encodeToString(M.asByteArray()));
-        if (post2.code() != 200) throw new WrongPasswordException();
-        String sessionId = new BigInteger(Objects.requireNonNull(post2.body()).string()).toString(16);
+        String sessionId;
+        try (Response post2 = httpProvider.post(LOGIN_URL + "/finish", Base64.getEncoder().encodeToString(M.asByteArray()))) {
+            if (post2.code() != 200) throw new WrongPasswordException();
+            sessionId = new BigInteger(Objects.requireNonNull(post2.body()).string()).toString(16);
+        }
         Session session = new Session(sessionId, sessionKey);
         httpProvider.setSession(session);
         sessionDao.set(session);
+    }
+
+    public void logOut() {
+        new Thread(() -> {
+            httpProvider.setSession(null);
+            sessionDao.drop();
+        }).start();
     }
 
     public HttpProvider getHttpProvider() {

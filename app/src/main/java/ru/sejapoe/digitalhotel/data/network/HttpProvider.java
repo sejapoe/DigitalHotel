@@ -1,4 +1,4 @@
-package ru.sejapoe.digitalhotel.data.net;
+package ru.sejapoe.digitalhotel.data.network;
 
 //import com.google.gson.GsonBuilder;
 
@@ -23,6 +23,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import ru.sejapoe.digitalhotel.data.model.Session;
 
 public class HttpProvider {
     private static HttpProvider INSTANCE = null;

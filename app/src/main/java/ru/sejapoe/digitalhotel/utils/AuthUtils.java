@@ -1,4 +1,4 @@
-package ru.sejapoe.digitalhotel.data.auth;
+package ru.sejapoe.digitalhotel.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 
-public class Auth {
+public class AuthUtils {
     public static final BigInteger g = BigInteger.valueOf(2);
     public static final BigInteger N = new BigInteger("EEAF0AB9ADB38DD69C33F80AA8FC5E86072618775FF3C0B9EA2314C9C256576D674DF7", 16);
     public static final BigInteger k;

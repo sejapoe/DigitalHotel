@@ -1,18 +1,13 @@
-package ru.sejapoe.digitalhotel.data.net;
+package ru.sejapoe.digitalhotel.data.model;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 
-import java.io.Serializable;
-
-import javax.annotation.Nonnull;
-
-import ru.sejapoe.digitalhotel.data.auth.BitArray256;
+import ru.sejapoe.digitalhotel.utils.BitArray256;
 
 @Entity
 public class Session {

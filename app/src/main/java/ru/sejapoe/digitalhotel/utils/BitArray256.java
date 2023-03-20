@@ -1,4 +1,4 @@
-package ru.sejapoe.digitalhotel.data.auth;
+package ru.sejapoe.digitalhotel.utils;
 
 import androidx.room.TypeConverter;
 

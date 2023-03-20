@@ -1,4 +1,4 @@
-package ru.sejapoe.digitalhotel.data;
+package ru.sejapoe.digitalhotel.data.db;
 
 import android.content.Context;
 
@@ -6,8 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import ru.sejapoe.digitalhotel.data.net.Session;
-import ru.sejapoe.digitalhotel.data.net.SessionDao;
+import ru.sejapoe.digitalhotel.data.model.Session;
 
 @Database(entities = {Session.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
