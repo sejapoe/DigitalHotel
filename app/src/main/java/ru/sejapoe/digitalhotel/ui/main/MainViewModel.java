@@ -3,6 +3,7 @@ package ru.sejapoe.digitalhotel.ui.main;
 import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -26,7 +27,7 @@ public class MainViewModel extends AndroidViewModel {
         isLoggedMutableLiveData.postValue(false);
     }
 
-    public MutableLiveData<Boolean> getIsLoggedMutableLiveData() {
+    public LiveData<Boolean> getIsLoggedMutableLiveData() {
         return isLoggedMutableLiveData;
     }
 

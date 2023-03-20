@@ -1,6 +1,7 @@
 package ru.sejapoe.digitalhotel.ui.loading;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,17 +22,14 @@ public class LoadingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
+        LoadingViewModel loadingViewModel = new ViewModelProvider(this).get(LoadingViewModel.class);
+        loadingViewModel.load();
 
-        new Thread(() -> {
-            Log.d("DigitalHotelApplication", "Waiting got database");
-            SessionDao sessionDao = AppDatabase.getInstance(this).sessionDao();
-            Session session = sessionDao.get();
-            Log.d("DigitalHotelApplication", String.valueOf(session));
-            HttpProvider.createInstance(session);
-            Class<? extends Activity> cls = session == null ? LoginActivity.class : MainActivity.class;
+        loadingViewModel.getLoadedActivityMutableLiveData().observe(this, cls -> {
+            if (cls == null) return;
             Intent intent = new Intent(this, cls);
             startActivity(intent);
             finish();
-        }).start();
+        });
     }
 }
