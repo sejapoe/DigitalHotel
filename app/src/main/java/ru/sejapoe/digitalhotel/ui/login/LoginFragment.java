@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -40,6 +42,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.fall_out);
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -93,11 +96,12 @@ public class LoginFragment extends Fragment {
             Log.d("DigitalHotelApplication", authState.toString());
             switch (authState) {
                 case LOGIN:
-                    binding.repeatPassword.setVisibility(View.GONE);
+//                    binding.repeatPassword.setVisibility(View.GONE);
                     binding.login.setEnabled(true);
                     break;
                 case REGISTER:
-                    binding.repeatPassword.setVisibility(View.VISIBLE);
+                    binding.repeatPassword.startAnimation(animation);
+//                    binding.repeatPassword.setVisibility(View.VISIBLE);
                     binding.login.setEnabled(false);
                     break;
                 case WRONG_PASSWORD:
@@ -107,6 +111,23 @@ public class LoginFragment extends Fragment {
                 case FINE:
                     switchToMainActivity();
                     break;
+            }
+        });
+
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                binding.repeatPassword.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
             }
         });
 
