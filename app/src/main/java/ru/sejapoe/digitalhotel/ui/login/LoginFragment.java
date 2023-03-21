@@ -1,29 +1,45 @@
 package ru.sejapoe.digitalhotel.ui.login;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
+import ru.sejapoe.digitalhotel.R;
 import ru.sejapoe.digitalhotel.data.model.LoginFormState;
-import ru.sejapoe.digitalhotel.databinding.ActivityLoginBinding;
-import ru.sejapoe.digitalhotel.ui.main.MainActivity;
+import ru.sejapoe.digitalhotel.databinding.FragmentLoginBinding;
 
-public class LoginActivity extends AppCompatActivity {
-    ActivityLoginBinding binding;
+public class LoginFragment extends Fragment {
+    FragmentLoginBinding binding;
     LoginViewModel loginViewModel;
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragmentLoginBinding.inflate(inflater);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -45,12 +61,12 @@ public class LoginActivity extends AppCompatActivity {
         binding.password.addTextChangedListener(textWatcher);
         binding.repeatPassword.addTextChangedListener(textWatcher);
 
-        binding.login.setOnClickListener(view -> loginViewModel.loginOrRegister(
+        binding.login.setOnClickListener(v -> loginViewModel.loginOrRegister(
                 binding.username.getText().toString(),
                 binding.password.getText().toString()
         ));
 
-        loginViewModel.getLoginFormStateMutableLiveData().observe(this, loginFormState -> {
+        loginViewModel.getLoginFormStateMutableLiveData().observe(getViewLifecycleOwner(), loginFormState -> {
             if (loginFormState == null) {
                 binding.login.setEnabled(false);
                 return;
@@ -72,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        loginViewModel.getAuthStateMutableLiveData().observe(this, authState -> {
+        loginViewModel.getAuthStateMutableLiveData().observe(getViewLifecycleOwner(), authState -> {
             binding.login.setEnabled(authState != LoginFormState.AuthState.WAITING);
             Log.d("DigitalHotelApplication", authState.toString());
             switch (authState) {
@@ -86,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                     break;
                 case WRONG_PASSWORD:
                 case INTERNAL_ERROR:
-                    Toast.makeText(this, authState.toString(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), authState.toString(), Toast.LENGTH_LONG).show();
                     break;
                 case FINE:
                     switchToMainActivity();
@@ -95,14 +111,10 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         validateForm();
-
-        setContentView(binding.getRoot());
     }
 
     private void switchToMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
+        NavHostFragment.findNavController(this).navigate(R.id.action_loginFragment_to_mainFragment);
     }
 
     private void validateForm() {
