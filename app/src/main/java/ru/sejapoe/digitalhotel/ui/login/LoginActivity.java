@@ -65,19 +65,27 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         loginViewModel.getAuthStateMutableLiveData().observe(this, authState -> {
-            if (authState == LoginFormState.AuthState.FINE) {
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                finish();
+            binding.login.setEnabled(authState != LoginFormState.AuthState.WAITING);
+            switch (authState) {
+                case WRONG_PASSWORD:
+                case INTERNAL_ERROR:
+                    Toast.makeText(this, authState.toString(), Toast.LENGTH_LONG).show();
+                    break;
+                case FINE:
+                    switchToMainActivity();
+                    break;
             }
-            Toast.makeText(this, authState.toString(), Toast.LENGTH_LONG).show();
         });
-
-        binding.helloBtn.setOnClickListener(view -> loginViewModel.hello());
 
         validateForm();
 
         setContentView(binding.getRoot());
+    }
+
+    private void switchToMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void validateForm() {

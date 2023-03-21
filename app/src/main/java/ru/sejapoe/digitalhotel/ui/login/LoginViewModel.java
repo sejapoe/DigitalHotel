@@ -39,6 +39,7 @@ public class LoginViewModel extends AndroidViewModel {
     }
 
     public void register(String username, String password) {
+        setAuthState(LoginFormState.AuthState.WAITING);
         new Thread(() -> {
             try {
                 loginRepository.register(username, password);
@@ -57,16 +58,6 @@ public class LoginViewModel extends AndroidViewModel {
                 setAuthState(LoginFormState.AuthState.INTERNAL_ERROR);
             } catch (LoginRepository.WrongPasswordException e) {
                 setAuthState(LoginFormState.AuthState.WRONG_PASSWORD); // unreachable
-            }
-        }).start();
-    }
-
-    public void hello() {
-        new Thread(() -> {
-            try(Response response = loginRepository.getHttpProvider().postAuth("https://sejapoe.live/hello", new byte[1])) {
-                System.out.println(response);
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         }).start();
     }

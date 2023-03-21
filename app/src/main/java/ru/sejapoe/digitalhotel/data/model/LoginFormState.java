@@ -39,6 +39,6 @@ public final class LoginFormState {
     }
 
     public enum AuthState {
-        NOTHING, WRONG_PASSWORD, INTERNAL_ERROR, FINE
+        NOTHING, WAITING, WRONG_PASSWORD, INTERNAL_ERROR, FINE
     }
 }
