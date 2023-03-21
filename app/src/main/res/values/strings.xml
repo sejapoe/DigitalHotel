@@ -11,4 +11,6 @@
     <string name="login_failed">"Login failed"</string>
     <string name="hello">Hello</string>
     <string name="log_out">Log Out</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="passwords_don_t_match">Passwords don\'t match</string>
 </resources>

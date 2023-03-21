@@ -46,14 +46,16 @@ public class LoginRepository {
         BitArray256 salt = xorByteArrays(saltC, saltS);
         BitArray256 x = hash(password.getBytes(StandardCharsets.UTF_8), salt.asByteArray());
         BigInteger v = modPow(x);
-        Response response = httpProvider.post(REGISTER_URL + "/finish", new Pair<>(login, v));
+        httpProvider.post(REGISTER_URL + "/finish", new Pair<>(login, v));
     }
 
-    public void login(String login, String password) throws IOException, GeneralSecurityException, WrongPasswordException {
+    public void login(String login, String password) throws IOException, GeneralSecurityException, WrongPasswordException, NoSuchUserException {
         BitArray256 a = random256();
         BigInteger A = modPow(a);
         String serializedResponse;
         try (Response post = httpProvider.post(LOGIN_URL + "/start", new Pair<>(login, A))) {
+            if (post.code() == 404) throw new NoSuchUserException();
+
             serializedResponse = Objects.requireNonNull(post.body()).string();
         }
         LoginServerResponse loginServerResponse = new Gson().fromJson(serializedResponse, LoginServerResponse.class);
@@ -88,10 +90,6 @@ public class LoginRepository {
         }).start();
     }
 
-    public HttpProvider getHttpProvider() {
-        return httpProvider;
-    }
-
     private static class LoginServerResponse {
         @SerializedName("first")
         private final String salt;
@@ -117,5 +115,8 @@ public class LoginRepository {
     }
 
     public static class WrongPasswordException extends Exception {
+    }
+
+    public static class NoSuchUserException extends Exception {
     }
 }

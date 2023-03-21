@@ -3,6 +3,8 @@ package ru.sejapoe.digitalhotel.ui.login;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,8 +43,9 @@ public class LoginActivity extends AppCompatActivity {
 
         binding.username.addTextChangedListener(textWatcher);
         binding.password.addTextChangedListener(textWatcher);
+        binding.repeatPassword.addTextChangedListener(textWatcher);
 
-        binding.login.setOnClickListener(view -> loginViewModel.register(
+        binding.login.setOnClickListener(view -> loginViewModel.loginOrRegister(
                 binding.username.getText().toString(),
                 binding.password.getText().toString()
         ));
@@ -53,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
 
+
             binding.login.setEnabled(loginFormState.isOk());
 
             if (loginFormState.hasUsernameError() && !binding.username.getText().toString().isEmpty()) {
@@ -62,11 +66,24 @@ public class LoginActivity extends AppCompatActivity {
             if (loginFormState.hasPasswordError() && !binding.password.getText().toString().isEmpty()) {
                 binding.password.setError(getString(loginFormState.getPasswordError()));
             }
+
+            if (loginFormState.hasRepeatedPasswordError() && !binding.password.getText().toString().isEmpty()) {
+                binding.repeatPassword.setError(getString(loginFormState.getRepeatedPasswordError()));
+            }
         });
 
         loginViewModel.getAuthStateMutableLiveData().observe(this, authState -> {
             binding.login.setEnabled(authState != LoginFormState.AuthState.WAITING);
+            Log.d("DigitalHotelApplication", authState.toString());
             switch (authState) {
+                case LOGIN:
+                    binding.repeatPassword.setVisibility(View.GONE);
+                    binding.login.setEnabled(true);
+                    break;
+                case REGISTER:
+                    binding.repeatPassword.setVisibility(View.VISIBLE);
+                    binding.login.setEnabled(false);
+                    break;
                 case WRONG_PASSWORD:
                 case INTERNAL_ERROR:
                     Toast.makeText(this, authState.toString(), Toast.LENGTH_LONG).show();
@@ -91,7 +108,8 @@ public class LoginActivity extends AppCompatActivity {
     private void validateForm() {
         loginViewModel.validateForm(
                 binding.username.getText().toString(),
-                binding.password.getText().toString()
+                binding.password.getText().toString(),
+                binding.repeatPassword.getText().toString()
         );
     }
 }

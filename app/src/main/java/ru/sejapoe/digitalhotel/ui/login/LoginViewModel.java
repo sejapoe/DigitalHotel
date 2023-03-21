@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.regex.Pattern;
 
-import okhttp3.Response;
 import ru.sejapoe.digitalhotel.R;
 import ru.sejapoe.digitalhotel.data.db.AppDatabase;
 import ru.sejapoe.digitalhotel.data.model.LoginFormState;
@@ -21,7 +20,7 @@ public class LoginViewModel extends AndroidViewModel {
     private final LoginRepository loginRepository;
     private LoginFormState formState;
     private final MutableLiveData<LoginFormState> loginFormStateMutableLiveData = new MutableLiveData<>(formState);
-    private LoginFormState.AuthState authState = LoginFormState.AuthState.NOTHING;
+    private LoginFormState.AuthState authState = LoginFormState.AuthState.LOGIN;
     private final MutableLiveData<LoginFormState.AuthState> authStateMutableLiveData = new MutableLiveData<>(authState);
 
     public LoginViewModel(Application application) {
@@ -29,13 +28,36 @@ public class LoginViewModel extends AndroidViewModel {
         loginRepository = new LoginRepository(AppDatabase.getInstance(application).sessionDao());
     }
 
-    public void validateForm(String username, String password) {
+    public void validateForm(String username, String password, String repeatedPassword) {
         setFormState(
                 new LoginFormState(
                         EMAIL_PATTERN.matcher(username).matches() ? android.R.string.ok : R.string.invalid_username,
-                        password.length() > 5 ? android.R.string.ok : R.string.invalid_password
+                        password.length() > 5 ? android.R.string.ok : R.string.invalid_password,
+                        (authState != LoginFormState.AuthState.REGISTER || password.equals(repeatedPassword))
+                                ? android.R.string.ok : R.string.passwords_don_t_match
                 )
         );
+    }
+
+    public void loginOrRegister(String username, String password) {
+        if (authState == LoginFormState.AuthState.REGISTER) register(username, password);
+        else login(username, password);
+    }
+
+    public void login(String username, String password) {
+        setAuthState(LoginFormState.AuthState.WAITING);
+        new Thread(() -> {
+            try {
+                loginRepository.login(username, password);
+                setAuthState(LoginFormState.AuthState.FINE);
+            } catch (LoginRepository.NoSuchUserException e) {
+                setAuthState(LoginFormState.AuthState.REGISTER);
+            } catch (LoginRepository.WrongPasswordException e) {
+                setAuthState(LoginFormState.AuthState.WRONG_PASSWORD);
+            } catch (GeneralSecurityException | IOException e) {
+                setAuthState(LoginFormState.AuthState.INTERNAL_ERROR);
+            }
+        }).start();
     }
 
     public void register(String username, String password) {
@@ -46,33 +68,19 @@ public class LoginViewModel extends AndroidViewModel {
                 loginRepository.login(username, password);
                 setAuthState(LoginFormState.AuthState.FINE);
             } catch (LoginRepository.UserAlreadyExists e) {
-                try {
-                    loginRepository.login(username, password);
-                    setAuthState(LoginFormState.AuthState.FINE);
-                } catch (LoginRepository.WrongPasswordException ex) {
-                    setAuthState(LoginFormState.AuthState.WRONG_PASSWORD);
-                } catch (IOException | GeneralSecurityException ex) {
-                    setAuthState(LoginFormState.AuthState.INTERNAL_ERROR);
-                }
+                setAuthState(LoginFormState.AuthState.LOGIN);
             } catch (GeneralSecurityException | IOException e) {
                 setAuthState(LoginFormState.AuthState.INTERNAL_ERROR);
-            } catch (LoginRepository.WrongPasswordException e) {
-                setAuthState(LoginFormState.AuthState.WRONG_PASSWORD); // unreachable
+            } catch (LoginRepository.WrongPasswordException |
+                     LoginRepository.NoSuchUserException e) {
+                setAuthState(LoginFormState.AuthState.INTERNAL_ERROR); // unreachable
             }
         }).start();
-    }
-
-    public LoginFormState getFormState() {
-        return formState;
     }
 
     private void setFormState(LoginFormState formState) {
         this.formState = formState;
         loginFormStateMutableLiveData.postValue(this.formState);
-    }
-
-    public LoginFormState.AuthState getAuthState() {
-        return authState;
     }
 
     public void setAuthState(LoginFormState.AuthState authState) {
