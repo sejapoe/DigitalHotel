@@ -7,12 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.dynamicanimation.animation.DynamicAnimation;
+import androidx.dynamicanimation.animation.SpringAnimation;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -42,7 +42,6 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.fall_out);
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -91,18 +90,21 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        final SpringAnimation animation = new SpringAnimation(binding.repeatPassword, DynamicAnimation.TRANSLATION_Y, 0);
+        animation.setStartValue(-48);
+
         loginViewModel.getAuthStateMutableLiveData().observe(getViewLifecycleOwner(), authState -> {
             binding.login.setEnabled(authState != LoginFormState.AuthState.WAITING);
             Log.d("DigitalHotelApplication", authState.toString());
             switch (authState) {
                 case LOGIN:
-//                    binding.repeatPassword.setVisibility(View.GONE);
-                    binding.login.setEnabled(true);
+                    binding.username.setFreezesText(false);
                     break;
                 case REGISTER:
-                    binding.repeatPassword.startAnimation(animation);
-//                    binding.repeatPassword.setVisibility(View.VISIBLE);
+                    binding.username.setEnabled(false);
                     binding.login.setEnabled(false);
+                    binding.repeatPassword.setVisibility(View.VISIBLE);
+                    animation.start();
                     break;
                 case WRONG_PASSWORD:
                 case INTERNAL_ERROR:
@@ -111,23 +113,6 @@ public class LoginFragment extends Fragment {
                 case FINE:
                     switchToMainActivity();
                     break;
-            }
-        });
-
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                binding.repeatPassword.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
             }
         });
 
