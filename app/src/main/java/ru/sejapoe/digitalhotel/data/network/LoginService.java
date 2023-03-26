@@ -6,6 +6,7 @@ import java.math.BigInteger;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import ru.sejapoe.digitalhotel.data.repository.LoginRepository;
 
@@ -14,11 +15,15 @@ public interface LoginService {
     Call<String> startRegistration(@Body Pair<String, String> body);
 
     @POST("/register/finish")
-    Call<Object> finishRegistration(@Body Pair<String, BigInteger> body);
+    Call<Void> finishRegistration(@Body Pair<String, BigInteger> body);
 
     @POST("/login/start")
     Call<LoginRepository.LoginServerResponse> startLogin(@Body Pair<String, BigInteger> body);
 
     @POST("/login/finish")
     Call<String> finishLogin(@Body String body);
+
+    @AuthorizationRequired
+    @GET("/hello")
+    Call<String> hello();
 }

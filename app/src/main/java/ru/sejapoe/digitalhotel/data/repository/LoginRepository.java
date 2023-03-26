@@ -1,37 +1,40 @@
 package ru.sejapoe.digitalhotel.data.repository;
 
+import static ru.sejapoe.digitalhotel.utils.AuthUtils.N;
+import static ru.sejapoe.digitalhotel.utils.AuthUtils.concatByteArrays;
+import static ru.sejapoe.digitalhotel.utils.AuthUtils.g;
+import static ru.sejapoe.digitalhotel.utils.AuthUtils.hash;
+import static ru.sejapoe.digitalhotel.utils.AuthUtils.k;
+import static ru.sejapoe.digitalhotel.utils.AuthUtils.modPow;
+import static ru.sejapoe.digitalhotel.utils.AuthUtils.random256;
+import static ru.sejapoe.digitalhotel.utils.AuthUtils.scrypt;
+import static ru.sejapoe.digitalhotel.utils.AuthUtils.xorByteArrays;
+
+import androidx.core.util.Pair;
+
+import com.google.gson.annotations.SerializedName;
+
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.util.Base64;
-import java.util.Objects;
-
-import static ru.sejapoe.digitalhotel.utils.AuthUtils.*;
-
-import androidx.core.util.Pair;
-
-import com.google.gson.Gson;
-import com.google.gson.annotations.SerializedName;
 
 import retrofit2.Call;
 import retrofit2.Response;
-import ru.sejapoe.digitalhotel.data.network.HttpProvider;
-import ru.sejapoe.digitalhotel.data.model.Session;
 import ru.sejapoe.digitalhotel.data.db.SessionDao;
+import ru.sejapoe.digitalhotel.data.model.Session;
 import ru.sejapoe.digitalhotel.data.network.LoginService;
 import ru.sejapoe.digitalhotel.data.network.RetrofitProvider;
 import ru.sejapoe.digitalhotel.utils.BitArray256;
 
 public class LoginRepository {
-    private final HttpProvider httpProvider = HttpProvider.getInstance();
-
     private final SessionDao sessionDao;
     private final LoginService loginService;
 
     public LoginRepository(SessionDao sessionDao) {
         this.sessionDao = sessionDao;
-        this.loginService = RetrofitProvider.createLoginService();
+        this.loginService = RetrofitProvider.getInstance().createLoginService();
     }
 
     public void register(String login, String password) throws GeneralSecurityException, IOException, UserAlreadyExists {
@@ -52,9 +55,11 @@ public class LoginRepository {
     public void login(String login, String password) throws IOException, GeneralSecurityException, WrongPasswordException, NoSuchUserException {
         BitArray256 a = random256();
         BigInteger A = modPow(a);
-        Response<LoginServerResponse> response = loginService.startLogin(new Pair<>(login, A)).execute();
+        Call<LoginServerResponse> serverResponseCall = loginService.startLogin(new Pair<>(login, A));
+        Response<LoginServerResponse> response = serverResponseCall.execute();
         if (response.code() == 404) throw new NoSuchUserException();
         LoginServerResponse loginServerResponse = response.body();
+        if (loginServerResponse == null) throw new IOException();
         BitArray256 u = hash(concatByteArrays(A.toByteArray(), loginServerResponse.getB().toByteArray()));
         byte[] salt = BitArray256.fromBase64(loginServerResponse.getSalt()).asByteArray();
         BitArray256 x = scrypt(password.getBytes(StandardCharsets.UTF_8), salt);
@@ -73,15 +78,16 @@ public class LoginRepository {
         Call<String> finishLogin = loginService.finishLogin(Base64.getEncoder().encodeToString(M.asByteArray()));
         Response<String> post2 = finishLogin.execute();
         if (post2.code() != 200) throw new WrongPasswordException();
+        if (post2.body() == null) throw new IOException();
         sessionId = new BigInteger(post2.body()).toString(16);
         Session session = new Session(sessionId, sessionKey);
-        httpProvider.setSession(session);
+        RetrofitProvider.getInstance().setSession(session);
         sessionDao.set(session);
     }
 
     public void logOut() {
         new Thread(() -> {
-            httpProvider.setSession(null);
+            RetrofitProvider.getInstance().setSession(null);
             sessionDao.drop();
         }).start();
     }
