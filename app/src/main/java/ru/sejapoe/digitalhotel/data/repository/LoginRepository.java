@@ -49,10 +49,12 @@ public class LoginRepository {
         loginService.finishRegistration(new Pair<>(login, v)).execute();
     }
 
-    public void login(String login, String password) throws IOException, GeneralSecurityException, WrongPasswordException {
+    public void login(String login, String password) throws IOException, GeneralSecurityException, WrongPasswordException, NoSuchUserException {
         BitArray256 a = random256();
         BigInteger A = modPow(a);
-        LoginServerResponse loginServerResponse = loginService.startLogin(new Pair<>(login, A)).execute().body();
+        Response<LoginServerResponse> response = loginService.startLogin(new Pair<>(login, A)).execute();
+        if (response.code() == 404) throw new NoSuchUserException();
+        LoginServerResponse loginServerResponse = response.body();
         BitArray256 u = hash(concatByteArrays(A.toByteArray(), loginServerResponse.getB().toByteArray()));
         byte[] salt = BitArray256.fromBase64(loginServerResponse.getSalt()).asByteArray();
         BitArray256 x = scrypt(password.getBytes(StandardCharsets.UTF_8), salt);
@@ -109,5 +111,8 @@ public class LoginRepository {
     }
 
     public static class WrongPasswordException extends Exception {
+    }
+
+    public static class NoSuchUserException extends Exception {
     }
 }
