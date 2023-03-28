@@ -23,7 +23,7 @@ public class MainFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        mViewModel.getIsLoggedMutableLiveData().observe(this, isLogged -> {
+        mViewModel.isLogged().observe(this, isLogged -> {
             if (!isLogged) {
                 NavHostFragment.findNavController(this).navigate(R.id.action_mainFragment_to_loadingFragment);
             }

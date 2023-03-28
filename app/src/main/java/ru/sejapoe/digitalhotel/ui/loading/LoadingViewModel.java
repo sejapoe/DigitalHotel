@@ -14,7 +14,7 @@ import ru.sejapoe.digitalhotel.data.network.RetrofitProvider;
 
 public class LoadingViewModel extends AndroidViewModel {
     private final SessionDao sessionDao;
-    private final MutableLiveData<Boolean> isLoggedMutableLiveData = new MutableLiveData<>(null);
+    private final MutableLiveData<Boolean> isLogged = new MutableLiveData<>(null);
 
     public LoadingViewModel(@NonNull Application application) {
         super(application);
@@ -25,11 +25,11 @@ public class LoadingViewModel extends AndroidViewModel {
         new Thread(() -> {
             Session session = sessionDao.get();
             RetrofitProvider.createInstance(session);
-            isLoggedMutableLiveData.postValue(session != null);
+            isLogged.postValue(session != null);
         }).start();
     }
 
-    public LiveData<Boolean> getIsLoggedMutableLiveData() {
-        return isLoggedMutableLiveData;
+    public LiveData<Boolean> isLogged() {
+        return isLogged;
     }
 }

@@ -11,6 +11,10 @@ public final class LoginFormState {
     @StringRes
     private final int repeatedPasswordError;
 
+    public LoginFormState() {
+        this(android.R.string.ok, android.R.string.ok, android.R.string.ok);
+    }
+
     public LoginFormState(@StringRes int usernameError, @StringRes int passwordError, @StringRes int repeatedPasswordError) {
         this.usernameError = usernameError;
         this.passwordError = passwordError;
