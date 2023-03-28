@@ -10,7 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import ru.sejapoe.digitalhotel.data.db.AppDatabase;
 import ru.sejapoe.digitalhotel.data.db.SessionDao;
 import ru.sejapoe.digitalhotel.data.model.Session;
-import ru.sejapoe.digitalhotel.data.network.HttpProvider;
+import ru.sejapoe.digitalhotel.data.network.RetrofitProvider;
 
 public class LoadingViewModel extends AndroidViewModel {
     private final SessionDao sessionDao;
@@ -24,7 +24,7 @@ public class LoadingViewModel extends AndroidViewModel {
     public void load() {
         new Thread(() -> {
             Session session = sessionDao.get();
-            HttpProvider.createInstance(session);
+            RetrofitProvider.createInstance(session);
             isLoggedMutableLiveData.postValue(session != null);
         }).start();
     }
