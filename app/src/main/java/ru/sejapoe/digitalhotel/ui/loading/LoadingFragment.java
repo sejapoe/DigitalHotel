@@ -35,7 +35,7 @@ public class LoadingFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel.load();
-        viewModel.getIsLoggedMutableLiveData().observe(getViewLifecycleOwner(), isLogged -> {
+        viewModel.isLogged().observe(getViewLifecycleOwner(), isLogged -> {
             if (isLogged != null)
                 NavHostFragment.findNavController(this).navigate(
                         isLogged ? R.id.action_loadingFragment_to_mainFragment

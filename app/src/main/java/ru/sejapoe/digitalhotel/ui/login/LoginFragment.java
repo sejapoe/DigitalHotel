@@ -68,7 +68,7 @@ public class LoginFragment extends Fragment {
                 binding.password.getText().toString()
         ));
 
-        loginViewModel.getLoginFormStateMutableLiveData().observe(getViewLifecycleOwner(), loginFormState -> {
+        loginViewModel.getLoginFormState().observe(getViewLifecycleOwner(), loginFormState -> {
             if (loginFormState == null) {
                 binding.login.setEnabled(false);
                 return;
@@ -93,7 +93,7 @@ public class LoginFragment extends Fragment {
         final SpringAnimation animation = new SpringAnimation(binding.repeatPassword, DynamicAnimation.TRANSLATION_Y, 0);
         animation.setStartValue(-48);
 
-        loginViewModel.getAuthStateMutableLiveData().observe(getViewLifecycleOwner(), authState -> {
+        loginViewModel.getAuthState().observe(getViewLifecycleOwner(), authState -> {
             binding.login.setEnabled(authState != LoginFormState.AuthState.WAITING);
             Log.d("DigitalHotelApplication", authState.toString());
             switch (authState) {
