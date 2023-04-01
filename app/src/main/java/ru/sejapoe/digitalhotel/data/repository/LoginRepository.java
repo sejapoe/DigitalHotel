@@ -86,10 +86,12 @@ public class LoginRepository {
     }
 
     public void logOut() {
-        new Thread(() -> {
-            RetrofitProvider.getInstance().setSession(null);
-            sessionDao.drop();
-        }).start();
+        try {
+            loginService.logOut().execute();
+        } catch (IOException ignored) {
+        }
+        RetrofitProvider.getInstance().setSession(null);
+        sessionDao.drop();
     }
 
     public static class LoginServerResponse {

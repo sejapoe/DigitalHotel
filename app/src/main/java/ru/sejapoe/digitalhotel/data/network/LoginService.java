@@ -26,4 +26,8 @@ public interface LoginService {
     @AuthorizationRequired
     @GET("/hello")
     Call<String> hello();
+
+    @AuthorizationRequired
+    @POST("/logout")
+    Call<Void> logOut();
 }

@@ -9,7 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import ru.sejapoe.digitalhotel.R;
 import ru.sejapoe.digitalhotel.databinding.FragmentMainBinding;
@@ -41,6 +45,12 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.buttonLogOut.setOnClickListener(v -> mViewModel.logOut());
+        NavHostFragment navHostFragment = (NavHostFragment) getChildFragmentManager().findFragmentById(R.id.main_nav_host_fragment);
+        if (navHostFragment != null) {
+            NavController navController = navHostFragment.getNavController();
+            BottomNavigationView navigationBar = binding.bottomNavigationBar;
+            NavigationUI.setupWithNavController(navigationBar, navController);
+        }
+//        binding.buttonLogOut.setOnClickListener(v -> mViewModel.logOut());
     }
 }

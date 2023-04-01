@@ -13,4 +13,7 @@
     <string name="log_out">Log Out</string>
     <string name="repeat_password">Repeat Password</string>
     <string name="passwords_don_t_match">Passwords don\'t match</string>
+    <string name="booking">Booking</string>
+    <string name="room">Room</string>
+    <string name="profile">Profile</string>
 </resources>

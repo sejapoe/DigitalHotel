@@ -5,10 +5,8 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import ru.sejapoe.digitalhotel.data.db.AppDatabase;
-import ru.sejapoe.digitalhotel.data.network.HttpProvider;
 import ru.sejapoe.digitalhotel.data.repository.LoginRepository;
 
 public class MainViewModel extends AndroidViewModel {
@@ -22,9 +20,11 @@ public class MainViewModel extends AndroidViewModel {
     }
 
     public void logOut() {
-        loginRepository.logOut();
-        isLogged = false;
-        isLoggedMutableLiveData.postValue(false);
+        new Thread(() -> {
+            loginRepository.logOut();
+            isLogged = false;
+            isLoggedMutableLiveData.postValue(false);
+        }).start();
     }
 
     public LiveData<Boolean> getIsLoggedMutableLiveData() {
