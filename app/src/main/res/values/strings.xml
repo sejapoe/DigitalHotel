@@ -16,4 +16,5 @@
     <string name="booking">Booking</string>
     <string name="room">Room</string>
     <string name="profile">Profile</string>
+    <string name="select_dates">Select dates</string>
 </resources>

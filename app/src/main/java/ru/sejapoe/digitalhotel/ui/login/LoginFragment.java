@@ -111,16 +111,12 @@ public class LoginFragment extends Fragment {
                     Toast.makeText(getContext(), authState.toString(), Toast.LENGTH_LONG).show();
                     break;
                 case FINE:
-                    switchToMainActivity();
+                    NavHostFragment.findNavController(this).navigate(R.id.action_loginFragment_to_mainFragment);
                     break;
             }
         });
 
         validateForm();
-    }
-
-    private void switchToMainActivity() {
-        NavHostFragment.findNavController(this).navigate(R.id.action_loginFragment_to_mainFragment);
     }
 
     private void validateForm() {

@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -20,19 +19,7 @@ import ru.sejapoe.digitalhotel.databinding.FragmentMainBinding;
 
 public class MainFragment extends Fragment {
 
-    private MainViewModel mViewModel;
     private FragmentMainBinding binding;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        mViewModel.isLogged().observe(this, isLogged -> {
-            if (!isLogged) {
-                NavHostFragment.findNavController(this).navigate(R.id.action_mainFragment_to_loadingFragment);
-            }
-        });
-    }
 
     @Nullable
     @Override
@@ -51,6 +38,5 @@ public class MainFragment extends Fragment {
             BottomNavigationView navigationBar = binding.bottomNavigationBar;
             NavigationUI.setupWithNavController(navigationBar, navController);
         }
-//        binding.buttonLogOut.setOnClickListener(v -> mViewModel.logOut());
     }
 }

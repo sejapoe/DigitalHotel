@@ -10,4 +10,10 @@
         <item name="android:selectAllOnFocus">true</item>
         <item name="android:textColor">?colorOnBackground</item>
     </style>
+
+    <style name="IcebergFont">
+        <item name="fontFamily">@font/iceberg</item>
+        <item name="android:fontFamily">@font/iceberg</item>
+    </style>
+
 </resources>

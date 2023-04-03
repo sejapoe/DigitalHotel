@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/bookingFragment"
-        android:icon="@android:drawable/ic_input_add"
+        android:icon="@drawable/calendar_clock_24"
         android:title="@string/booking" />
     <item
         android:id="@+id/roomFragment"
-        android:icon="@android:drawable/ic_btn_speak_now"
+        android:icon="@drawable/home_24"
         android:title="@string/room" />
     <item
         android:id="@+id/profileFragment"
-        android:icon="@android:drawable/ic_input_get"
+        android:icon="@drawable/user_24"
         android:title="@string/profile" />
 </menu>

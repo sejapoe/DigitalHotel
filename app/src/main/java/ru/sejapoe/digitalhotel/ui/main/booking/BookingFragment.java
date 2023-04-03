@@ -7,17 +7,67 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.DateValidatorPointForward;
+import com.google.android.material.datepicker.MaterialDatePicker;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
+
+import ru.sejapoe.digitalhotel.R;
 import ru.sejapoe.digitalhotel.databinding.FragmentBookingBinding;
 
 public class BookingFragment extends Fragment {
     private FragmentBookingBinding binding;
+    private BookingViewModel viewModel;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(BookingViewModel.class);
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentBookingBinding.inflate(inflater);
+
+        View.OnClickListener listener = v -> {
+            MaterialDatePicker<Pair<Long, Long>> dateRangePicker = MaterialDatePicker.Builder
+                    .dateRangePicker()
+                    .setTitleText(R.string.select_dates)
+                    .setCalendarConstraints(
+                            new CalendarConstraints.Builder()
+                                    .setStart(MaterialDatePicker.todayInUtcMilliseconds())
+                                    .setOpenAt(MaterialDatePicker.todayInUtcMilliseconds())
+                                    .setEnd(MaterialDatePicker.todayInUtcMilliseconds() + (long) 365 * 24 * 60 * 60 * 1000)
+                                    .setValidator(DateValidatorPointForward.now())
+                                    .build()
+                    )
+                    .setSelection(Objects.requireNonNull(viewModel.getBookingDates().getValue()).asMillisPair())
+                    .build();
+            dateRangePicker.addOnPositiveButtonClickListener(viewModel::setBookingDates);
+            dateRangePicker.show(getChildFragmentManager(), "booking_dates");
+        };
+
+        binding.checkInDate.setOnClickListener(listener);
+        binding.checkOutDate.setOnClickListener(listener);
+
+        viewModel.getBookingDates().observe(this.getViewLifecycleOwner(), bookingDates -> {
+            binding.checkInDate.setText(getDateString(bookingDates.getCheckIn()));
+            binding.checkOutDate.setText(getDateString(bookingDates.getCheckOut()));
+        });
+
         return binding.getRoot();
+    }
+
+
+    private static String getDateString(LocalDate localDate) {
+        return DateTimeFormatter.ofPattern("MMMM d, EEEE").format(localDate);
     }
 }
