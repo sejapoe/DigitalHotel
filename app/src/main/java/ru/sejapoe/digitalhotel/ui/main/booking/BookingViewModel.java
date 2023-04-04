@@ -12,12 +12,22 @@ public class BookingViewModel extends ViewModel {
     private final MutableLiveData<BookingDates> bookingDates =
             new MutableLiveData<>(new BookingDates());
 
+    private final MutableLiveData<GuestsCount> guestsCount = new MutableLiveData<>(new GuestsCount());
+
+    public void setGuestsCount(int adultsCount, int childrenCount) {
+        guestsCount.postValue(new GuestsCount(adultsCount, childrenCount));
+    }
+
     public void setBookingDates(Pair<Long, Long> bookingDates) {
         this.bookingDates.postValue(new BookingDates(bookingDates));
     }
 
     public LiveData<BookingDates> getBookingDates() {
         return bookingDates;
+    }
+
+    public LiveData<GuestsCount> getGuestsCount() {
+        return guestsCount;
     }
 
     public static class BookingDates {
@@ -58,6 +68,28 @@ public class BookingViewModel extends ViewModel {
 
         public LocalDate getCheckOut() {
             return checkOut;
+        }
+    }
+
+    public static class GuestsCount {
+        private final int adultsCount;
+        private final int childrenCount;
+
+        public GuestsCount() {
+            this(1, 0);
+        }
+
+        public GuestsCount(int adultsCount, int childrenCount) {
+            this.adultsCount = adultsCount;
+            this.childrenCount = childrenCount;
+        }
+
+        public int getAdultsCount() {
+            return adultsCount;
+        }
+
+        public int getChildrenCount() {
+            return childrenCount;
         }
     }
 }

@@ -20,7 +20,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_bar"
         app:itemTextAppearanceActive="@style/IcebergFont"
-        app:itemTextAppearanceInactive="@style/IcebergFont"
+        app:labelVisibilityMode="selected"
         style="Widget.Design.BottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

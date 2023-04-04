@@ -17,4 +17,12 @@
     <string name="room">Room</string>
     <string name="profile">Profile</string>
     <string name="select_dates">Select dates</string>
+    <plurals name="adults_count">
+        <item quantity="one">%d adult</item>
+        <item quantity="other">%d adults</item>
+    </plurals>
+    <plurals name="children_count">
+        <item quantity="one">%d child</item>
+        <item quantity="other">%d children</item>
+    </plurals>
 </resources>

@@ -21,6 +21,7 @@ import java.util.Objects;
 
 import ru.sejapoe.digitalhotel.R;
 import ru.sejapoe.digitalhotel.databinding.FragmentBookingBinding;
+import ru.sejapoe.digitalhotel.ui.main.booking.guestcount.GuestCountDialogFragment;
 
 public class BookingFragment extends Fragment {
     private FragmentBookingBinding binding;
@@ -36,6 +37,18 @@ public class BookingFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentBookingBinding.inflate(inflater);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        binding.guestsCount.setOnClickListener(v -> {
+            GuestCountDialogFragment guestCountDialogFragment = new GuestCountDialogFragment(Objects.requireNonNull(viewModel.getGuestsCount().getValue()));
+            guestCountDialogFragment.setGuestCountListener(viewModel::setGuestsCount);
+            guestCountDialogFragment.show(getChildFragmentManager(), "guest_count");
+        });
 
         View.OnClickListener listener = v -> {
             MaterialDatePicker<Pair<Long, Long>> dateRangePicker = MaterialDatePicker.Builder
@@ -63,9 +76,16 @@ public class BookingFragment extends Fragment {
             binding.checkOutDate.setText(getDateString(bookingDates.getCheckOut()));
         });
 
-        return binding.getRoot();
+        viewModel.getGuestsCount().observe(this.getViewLifecycleOwner(), guestsCount -> {
+            int adultCount = guestsCount.getAdultsCount();
+            int childrenCount = guestsCount.getChildrenCount();
+            String text = getResources().getQuantityString(R.plurals.adults_count, adultCount, adultCount);
+            if (childrenCount > 0) {
+                text += ", " + getResources().getQuantityString(R.plurals.children_count, childrenCount, childrenCount);
+            }
+            binding.guestsCount.setText(text);
+        });
     }
-
 
     private static String getDateString(LocalDate localDate) {
         return DateTimeFormatter.ofPattern("MMMM d, EEEE").format(localDate);

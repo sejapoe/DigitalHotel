@@ -12,6 +12,8 @@
         <item name="colorOnSecondary">@color/gray</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+
+        <item name="android:buttonCornerRadius">8dp</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>
