@@ -7,10 +7,10 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import ru.sejapoe.digitalhotel.data.db.AppDatabase;
-import ru.sejapoe.digitalhotel.data.db.SessionDao;
 import ru.sejapoe.digitalhotel.data.model.Session;
-import ru.sejapoe.digitalhotel.data.network.RetrofitProvider;
+import ru.sejapoe.digitalhotel.data.source.db.AppDatabase;
+import ru.sejapoe.digitalhotel.data.source.db.SessionDao;
+import ru.sejapoe.digitalhotel.data.source.network.RetrofitProvider;
 
 public class LoadingViewModel extends AndroidViewModel {
     private final SessionDao sessionDao;

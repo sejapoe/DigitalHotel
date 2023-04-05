@@ -1,4 +1,4 @@
-package ru.sejapoe.digitalhotel.data.db;
+package ru.sejapoe.digitalhotel.data.source.db;
 
 import androidx.room.Dao;
 import androidx.room.Insert;

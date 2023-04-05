@@ -6,8 +6,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import ru.sejapoe.digitalhotel.data.db.AppDatabase;
 import ru.sejapoe.digitalhotel.data.repository.LoginRepository;
+import ru.sejapoe.digitalhotel.data.source.db.AppDatabase;
 
 public class ProfileViewModel extends AndroidViewModel {
     private final LoginRepository loginRepository;

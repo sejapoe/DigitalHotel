@@ -1,4 +1,4 @@
-package ru.sejapoe.digitalhotel.data.network;
+package ru.sejapoe.digitalhotel.data.source.network;
 
 import androidx.annotation.NonNull;
 
