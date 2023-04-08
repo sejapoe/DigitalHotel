@@ -16,25 +16,23 @@ public class Session {
     private final int id;
 
     @ColumnInfo(name = "session_id")
-    @NonNull
-    private final String sessionId;
+    private final int sessionId;
     @ColumnInfo(name = "session_key")
     @TypeConverters(BitArray256.class)
     private final BitArray256 sessionKey;
 
     @Ignore
-    public Session(@NonNull String sessionId, BitArray256 sessionKey) {
+    public Session(int sessionId, BitArray256 sessionKey) {
         this(sessionId, sessionKey, 0);
     }
 
-    public Session(@NonNull String sessionId, BitArray256 sessionKey, int id) {
+    public Session(int sessionId, BitArray256 sessionKey, int id) {
         this.sessionId = sessionId;
         this.sessionKey = sessionKey;
         this.id = id;
     }
 
-    @NonNull
-    public String getSessionId() {
+    public int getSessionId() {
         return sessionId;
     }
 

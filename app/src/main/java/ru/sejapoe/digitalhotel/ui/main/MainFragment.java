@@ -37,7 +37,6 @@ public class MainFragment extends Fragment {
             NavController navController = navHostFragment.getNavController();
             BottomNavigationView navigationBar = binding.bottomNavigationBar;
             NavigationUI.setupWithNavController(navigationBar, navController);
-            navigationBar.getMenu().findItem(R.id.roomFragment).setEnabled(false);
         }
     }
 }

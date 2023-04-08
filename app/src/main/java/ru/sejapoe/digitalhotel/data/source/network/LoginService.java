@@ -14,10 +14,10 @@ public interface LoginService {
     Call<String> startRegistration(@Body Pair<String, String> body);
 
     @POST("/register/finish")
-    Call<Void> finishRegistration(@Body Pair<String, BigInteger> body);
+    Call<Void> finishRegistration(@Body Pair<String, String> body);
 
     @POST("/login/start")
-    Call<LoginRepository.LoginServerResponse> startLogin(@Body Pair<String, BigInteger> body);
+    Call<LoginRepository.LoginServerResponse> startLogin(@Body Pair<String, String> body);
 
     @POST("/login/finish")
     Call<String> finishLogin(@Body String body);

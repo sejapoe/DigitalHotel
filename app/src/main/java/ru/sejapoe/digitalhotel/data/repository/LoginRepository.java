@@ -44,18 +44,20 @@ public class LoginRepository {
         Call<String> startRegistration = loginService.startRegistration(new Pair<>(login, saltC.asBase64()));
         Response<String> post = startRegistration.execute();
         if (post.code() == 302) throw new UserAlreadyExists();
+        String body = post.body();
+        if (body == null) throw new IOException();
 
-        saltS = BitArray256.fromBase64(post.body());
+        saltS = BitArray256.fromBase64(body);
         BitArray256 salt = xorByteArrays(saltC, saltS);
         BitArray256 x = hash(password.getBytes(StandardCharsets.UTF_8), salt.asByteArray());
         BigInteger v = modPow(x);
-        loginService.finishRegistration(new Pair<>(login, v)).execute();
+        loginService.finishRegistration(new Pair<>(login, v.toString())).execute();
     }
 
     public void login(String login, String password) throws IOException, GeneralSecurityException, WrongPasswordException, NoSuchUserException {
         BitArray256 a = random256();
         BigInteger A = modPow(a);
-        Call<LoginServerResponse> serverResponseCall = loginService.startLogin(new Pair<>(login, A));
+        Call<LoginServerResponse> serverResponseCall = loginService.startLogin(new Pair<>(login, A.toString()));
         Response<LoginServerResponse> response = serverResponseCall.execute();
         if (response.code() == 404) throw new NoSuchUserException();
         LoginServerResponse loginServerResponse = response.body();
@@ -79,8 +81,8 @@ public class LoginRepository {
         Response<String> post2 = finishLogin.execute();
         if (post2.code() != 200) throw new WrongPasswordException();
         if (post2.body() == null) throw new IOException();
-        sessionId = new BigInteger(post2.body()).toString(16);
-        Session session = new Session(sessionId, sessionKey);
+        sessionId = post2.body();
+        Session session = new Session(Integer.parseInt(sessionId), sessionKey);
         RetrofitProvider.getInstance().setSession(session);
         sessionDao.set(session);
     }
@@ -98,9 +100,9 @@ public class LoginRepository {
         @SerializedName("first")
         private final String salt;
         @SerializedName("second")
-        private final BigInteger B;
+        private final String B;
 
-        public LoginServerResponse(String salt, BigInteger b) {
+        public LoginServerResponse(String salt, String b) {
             this.salt = salt;
             B = b;
         }
@@ -111,7 +113,7 @@ public class LoginRepository {
 
 
         public BigInteger getB() {
-            return B;
+            return new BigInteger(B);
         }
     }
 

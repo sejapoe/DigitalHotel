@@ -48,7 +48,7 @@ public class TokenInterceptor implements Interceptor {
         Session session = RetrofitProvider.getInstance().getSession();
         if (session == null) return null;
         Key key = Keys.hmacShaKeyFor(session.getSessionKey().asByteArray());
-        JwtBuilder jwtBuilder = Jwts.builder().setSubject(session.getSessionId())
+        JwtBuilder jwtBuilder = Jwts.builder().setSubject(String.valueOf(session.getSessionId()))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 3600000))
                 .signWith(key);

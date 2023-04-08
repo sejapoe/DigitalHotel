@@ -7,7 +7,8 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 import ru.sejapoe.digitalhotel.data.model.Session;
 
 public class RetrofitProvider {
-    private static final String HOST = "https://sejapoe.live"; //
+//    private static final String HOST = "http://192.168.0.15:8080";
+    private static final String HOST = "https://sejapoe.live";
     private static RetrofitProvider INSTANCE;
     private final OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .addInterceptor(new TokenInterceptor())
