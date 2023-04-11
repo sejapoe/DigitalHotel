@@ -14,9 +14,11 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import ru.sejapoe.digitalhotel.R;
 import ru.sejapoe.digitalhotel.databinding.FragmentMainBinding;
 
+@AndroidEntryPoint
 public class MainFragment extends Fragment {
 
     private FragmentMainBinding binding;

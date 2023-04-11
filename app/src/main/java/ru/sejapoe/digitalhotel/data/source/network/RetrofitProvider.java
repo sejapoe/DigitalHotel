@@ -7,7 +7,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 import ru.sejapoe.digitalhotel.data.model.Session;
 
 public class RetrofitProvider {
-//    private static final String HOST = "http://192.168.0.15:8080";
+    //    private static final String HOST = "http://192.168.0.15:8080";
     private static final String HOST = "https://sejapoe.live";
     private static RetrofitProvider INSTANCE;
     private final OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -23,7 +23,7 @@ public class RetrofitProvider {
 
     private Session session;
 
-    public RetrofitProvider(Session session) {
+    private RetrofitProvider(Session session) {
         this.session = session;
     }
 
@@ -36,6 +36,9 @@ public class RetrofitProvider {
     }
 
     public static RetrofitProvider getInstance() {
+        if (INSTANCE == null) {
+            createInstance(null);
+        }
         return INSTANCE;
     }
 

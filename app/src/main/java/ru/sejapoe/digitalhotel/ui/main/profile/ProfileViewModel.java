@@ -1,21 +1,22 @@
 package ru.sejapoe.digitalhotel.ui.main.profile;
 
-import android.app.Application;
-
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
 import ru.sejapoe.digitalhotel.data.repository.LoginRepository;
-import ru.sejapoe.digitalhotel.data.source.db.AppDatabase;
 
-public class ProfileViewModel extends AndroidViewModel {
+@HiltViewModel
+public class ProfileViewModel extends ViewModel {
     private final LoginRepository loginRepository;
     private final MutableLiveData<Boolean> isLogged = new MutableLiveData<>(true);
 
-    public ProfileViewModel(Application application) {
-        super(application);
-        loginRepository = new LoginRepository(AppDatabase.getInstance(application).sessionDao());
+    @Inject
+    public ProfileViewModel(LoginRepository loginRepository) {
+        this.loginRepository = loginRepository;
     }
 
     public void logOut() {

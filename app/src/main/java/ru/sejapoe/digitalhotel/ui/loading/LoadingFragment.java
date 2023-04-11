@@ -11,18 +11,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import ru.sejapoe.digitalhotel.R;
+import ru.sejapoe.digitalhotel.data.source.network.RetrofitProvider;
 import ru.sejapoe.digitalhotel.databinding.FragmentLoadingBinding;
 
+@AndroidEntryPoint
 public class LoadingFragment extends Fragment {
     private LoadingViewModel viewModel;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        viewModel = new ViewModelProvider(this).get(LoadingViewModel.class);
-    }
 
     @Nullable
     @Override
@@ -34,13 +30,14 @@ public class LoadingFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel.load();
-        viewModel.isLogged().observe(getViewLifecycleOwner(), isLogged -> {
-            if (isLogged != null)
-                NavHostFragment.findNavController(this).navigate(
-                        isLogged ? R.id.action_loadingFragment_to_mainFragment
-                                : R.id.action_loadingFragment_to_loginFragment
-                );
+        viewModel = new ViewModelProvider(this).get(LoadingViewModel.class);
+        viewModel.getSession().observe(getViewLifecycleOwner(), session -> {
+            RetrofitProvider.createInstance(session);
+            NavHostFragment.findNavController(this).navigate(
+                    session != null
+                            ? R.id.action_loadingFragment_to_mainFragment
+                            : R.id.action_loadingFragment_to_loginFragment
+            );
         });
     }
 }

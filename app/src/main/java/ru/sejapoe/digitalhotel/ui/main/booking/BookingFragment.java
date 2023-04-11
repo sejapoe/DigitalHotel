@@ -19,19 +19,15 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import ru.sejapoe.digitalhotel.R;
 import ru.sejapoe.digitalhotel.databinding.FragmentBookingBinding;
 import ru.sejapoe.digitalhotel.ui.main.booking.guestcount.GuestCountDialogFragment;
 
+@AndroidEntryPoint
 public class BookingFragment extends Fragment {
     private FragmentBookingBinding binding;
     private BookingViewModel viewModel;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(BookingViewModel.class);
-    }
 
     @Nullable
     @Override
@@ -43,6 +39,7 @@ public class BookingFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(BookingViewModel.class);
 
         binding.guestsCount.setOnClickListener(v -> {
             GuestCountDialogFragment guestCountDialogFragment = new GuestCountDialogFragment(Objects.requireNonNull(viewModel.getGuestsCount().getValue()));

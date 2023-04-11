@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "DigitalHotel"
-include ':app'
+include(":app")

@@ -1,35 +1,24 @@
 package ru.sejapoe.digitalhotel.ui.loading;
 
-import android.app.Application;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
 import ru.sejapoe.digitalhotel.data.model.Session;
-import ru.sejapoe.digitalhotel.data.source.db.AppDatabase;
-import ru.sejapoe.digitalhotel.data.source.db.SessionDao;
-import ru.sejapoe.digitalhotel.data.source.network.RetrofitProvider;
+import ru.sejapoe.digitalhotel.data.repository.SessionRepository;
 
-public class LoadingViewModel extends AndroidViewModel {
-    private final SessionDao sessionDao;
-    private final MutableLiveData<Boolean> isLogged = new MutableLiveData<>(null);
+@HiltViewModel
+public class LoadingViewModel extends ViewModel {
+    private final SessionRepository sessionRepository;
 
-    public LoadingViewModel(@NonNull Application application) {
-        super(application);
-        sessionDao = AppDatabase.getInstance(application).sessionDao();
+    @Inject
+    public LoadingViewModel(SessionRepository sessionRepository) {
+        this.sessionRepository = sessionRepository;
     }
 
-    public void load() {
-        new Thread(() -> {
-            Session session = sessionDao.get();
-            RetrofitProvider.createInstance(session);
-            isLogged.postValue(session != null);
-        }).start();
-    }
-
-    public LiveData<Boolean> isLogged() {
-        return isLogged;
+    public LiveData<Session> getSession() {
+        return sessionRepository.getSession();
     }
 }

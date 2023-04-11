@@ -17,20 +17,15 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import ru.sejapoe.digitalhotel.R;
 import ru.sejapoe.digitalhotel.data.model.LoginFormState;
 import ru.sejapoe.digitalhotel.databinding.FragmentLoginBinding;
 
+@AndroidEntryPoint
 public class LoginFragment extends Fragment {
     FragmentLoginBinding binding;
     LoginViewModel loginViewModel;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
-
-    }
 
     @Nullable
     @Override
@@ -42,6 +37,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

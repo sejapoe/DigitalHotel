@@ -20,21 +20,24 @@ import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.util.Base64;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import retrofit2.Call;
 import retrofit2.Response;
 import ru.sejapoe.digitalhotel.data.model.Session;
-import ru.sejapoe.digitalhotel.data.source.db.SessionDao;
 import ru.sejapoe.digitalhotel.data.source.network.LoginService;
-import ru.sejapoe.digitalhotel.data.source.network.RetrofitProvider;
 import ru.sejapoe.digitalhotel.utils.BitArray256;
 
+@Singleton
 public class LoginRepository {
-    private final SessionDao sessionDao;
+    private final SessionRepository sessionRepository;
     private final LoginService loginService;
 
-    public LoginRepository(SessionDao sessionDao) {
-        this.sessionDao = sessionDao;
-        this.loginService = RetrofitProvider.getInstance().createLoginService();
+    @Inject
+    public LoginRepository(SessionRepository sessionRepository, LoginService loginService) {
+        this.sessionRepository = sessionRepository;
+        this.loginService = loginService;
     }
 
     public void register(String login, String password) throws GeneralSecurityException, IOException, UserAlreadyExists {
@@ -83,8 +86,7 @@ public class LoginRepository {
         if (post2.body() == null) throw new IOException();
         sessionId = post2.body();
         Session session = new Session(Integer.parseInt(sessionId), sessionKey);
-        RetrofitProvider.getInstance().setSession(session);
-        sessionDao.set(session);
+        sessionRepository.setSession(session);
     }
 
     public void logOut() {
@@ -92,8 +94,7 @@ public class LoginRepository {
             loginService.logOut().execute();
         } catch (IOException ignored) {
         }
-        RetrofitProvider.getInstance().setSession(null);
-        sessionDao.drop();
+        sessionRepository.dropSession();
     }
 
     public static class LoginServerResponse {

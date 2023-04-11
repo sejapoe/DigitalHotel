@@ -25,15 +25,6 @@ public class GuestCountDialogFragment extends DialogFragment {
         setArguments(args);
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-//        setStyle(DialogFragment.STYLE_NO_FRAME, android.R.style.Theme_DeviceDefault);
-        viewModel = new ViewModelProvider(this).get(GuestCountViewModel.class);
-        assert getArguments() != null;
-        viewModel.setCounts(getArguments().getInt("adults_count"), getArguments().getInt("children_count"));
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -44,6 +35,9 @@ public class GuestCountDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(GuestCountViewModel.class);
+        assert getArguments() != null;
+        viewModel.setCounts(getArguments().getInt("adults_count"), getArguments().getInt("children_count"));
 
         viewModel.getStatus().observe(this, status -> {
             binding.adultCallback.setText(String.valueOf(status.getAdultsCount()));

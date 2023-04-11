@@ -9,8 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import ru.sejapoe.digitalhotel.databinding.FragmentRoomBinding;
 
+@AndroidEntryPoint
 public class RoomFragment extends Fragment {
     private FragmentRoomBinding binding;
 
