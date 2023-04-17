@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.hilt.android.gradle.plugin)
+    alias(libs.plugins.com.google.services)
 }
 
 @Suppress("UnstableApiUsage")
@@ -37,6 +38,9 @@ android {
 }
 
 dependencies {
+    implementation(platform("com.google.firebase:firebase-bom:31.5.0"))
+    implementation("com.google.firebase:firebase-messaging")
+    implementation("com.google.firebase:firebase-analytics")
     implementation(libs.hilt.android)
     annotationProcessor(libs.hilt.android.compiler)
     implementation(libs.dynamicanimation)

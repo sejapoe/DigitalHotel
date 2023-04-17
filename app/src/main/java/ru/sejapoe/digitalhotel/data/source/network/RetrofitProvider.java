@@ -9,10 +9,11 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 import ru.sejapoe.digitalhotel.data.model.login.Session;
 import ru.sejapoe.digitalhotel.data.source.network.service.HotelService;
 import ru.sejapoe.digitalhotel.data.source.network.service.LoginService;
+import ru.sejapoe.digitalhotel.data.source.network.service.RoomService;
 
 public class RetrofitProvider {
-    private static final String HOST = "http://192.168.0.15:8080";
-    //    private static final String HOST = "https://sejapoe.live";
+    //    private static final String HOST = "http://192.168.0.15:8080";
+    private static final String HOST = "https://sejapoe.live";
     private static RetrofitProvider INSTANCE;
     private final OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .addInterceptor(new TokenInterceptor())
@@ -38,6 +39,10 @@ public class RetrofitProvider {
 
     public HotelService createHotelService() {
         return retrofit.create(HotelService.class);
+    }
+
+    public RoomService createRoomService() {
+        return retrofit.create(RoomService.class);
     }
 
     public static void createInstance(Session session) {

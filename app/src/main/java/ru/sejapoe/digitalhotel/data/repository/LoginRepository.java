@@ -12,6 +12,7 @@ import static ru.sejapoe.digitalhotel.utils.AuthUtils.xorByteArrays;
 
 import androidx.core.util.Pair;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.util.Base64;
+import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -87,6 +89,7 @@ public class LoginRepository {
         sessionId = post2.body();
         Session session = new Session(Integer.parseInt(sessionId), sessionKey);
         sessionRepository.setSession(session);
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(Executors.newSingleThreadExecutor(), this::subscribe);
     }
 
     public void logOut() {
@@ -95,6 +98,14 @@ public class LoginRepository {
         } catch (IOException ignored) {
         }
         sessionRepository.dropSession();
+    }
+
+    public void subscribe(String token) {
+        try {
+            loginService.subscribe(token).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static class LoginServerResponse {

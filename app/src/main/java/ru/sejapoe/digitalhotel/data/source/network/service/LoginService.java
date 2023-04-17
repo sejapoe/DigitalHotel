@@ -24,4 +24,8 @@ public interface LoginService {
     @AuthorizationRequired
     @POST("/logout")
     Call<Void> logOut();
+
+    @AuthorizationRequired
+    @POST("/subscribe")
+    Call<Void> subscribe(@Body String token);
 }

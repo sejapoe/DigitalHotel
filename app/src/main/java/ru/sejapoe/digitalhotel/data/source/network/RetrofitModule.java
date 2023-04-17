@@ -8,6 +8,7 @@ import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
 import ru.sejapoe.digitalhotel.data.source.network.service.HotelService;
 import ru.sejapoe.digitalhotel.data.source.network.service.LoginService;
+import ru.sejapoe.digitalhotel.data.source.network.service.RoomService;
 
 @Module
 @InstallIn(SingletonComponent.class)
@@ -28,5 +29,11 @@ public class RetrofitModule {
     @Singleton
     public static HotelService provideHotelService(RetrofitProvider retrofitProvider) {
         return retrofitProvider.createHotelService();
+    }
+
+    @Provides
+    @Singleton
+    public static RoomService provideRoomService(RetrofitProvider retrofitProvider) {
+        return retrofitProvider.createRoomService();
     }
 }
