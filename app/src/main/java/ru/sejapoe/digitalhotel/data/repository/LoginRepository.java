@@ -25,8 +25,8 @@ import javax.inject.Singleton;
 
 import retrofit2.Call;
 import retrofit2.Response;
-import ru.sejapoe.digitalhotel.data.model.Session;
-import ru.sejapoe.digitalhotel.data.source.network.LoginService;
+import ru.sejapoe.digitalhotel.data.model.login.Session;
+import ru.sejapoe.digitalhotel.data.source.network.service.LoginService;
 import ru.sejapoe.digitalhotel.utils.BitArray256;
 
 @Singleton

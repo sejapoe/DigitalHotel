@@ -46,6 +46,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.retrofit.converter.scalars)
+    implementation(libs.retrofit.livedata.adapter)
     implementation(libs.navigation.compose)
     implementation(libs.navigation.ui)
     implementation(libs.navigation.dynamic.features.fragment)

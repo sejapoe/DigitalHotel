@@ -3,6 +3,7 @@ android-gradle-plugin = "7.4.2"
 dynamicanimation = "1.0.0"
 jjwt = "0.11.2"
 retrofit = "2.9.0"
+retrofit-livedata-adapter = "1.1.2"
 gson = "2.10"
 okhttp = "4.10.0"
 room = "2.5.1"
@@ -27,6 +28,7 @@ jjwt-jackson = { group = "io.jsonwebtoken", name = "jjwt-jackson", version.ref =
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 retrofit-converter-scalars = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofit" }
+retrofit-livedata-adapter = { group = "com.github.leonardoxh", name = "retrofit2-livedata-adapter", version.ref = "retrofit-livedata-adapter" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }

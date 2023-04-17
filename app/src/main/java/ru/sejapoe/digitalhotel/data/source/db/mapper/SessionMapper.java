@@ -1,6 +1,6 @@
 package ru.sejapoe.digitalhotel.data.source.db.mapper;
 
-import ru.sejapoe.digitalhotel.data.model.Session;
+import ru.sejapoe.digitalhotel.data.model.login.Session;
 import ru.sejapoe.digitalhotel.data.source.db.entity.SessionEntity;
 
 public class SessionMapper {

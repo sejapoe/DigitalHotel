@@ -1,4 +1,4 @@
-package ru.sejapoe.digitalhotel.data.model;
+package ru.sejapoe.digitalhotel.data.model.login;
 
 import ru.sejapoe.digitalhotel.utils.BitArray256;
 

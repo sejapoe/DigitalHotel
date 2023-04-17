@@ -1,13 +1,12 @@
-package ru.sejapoe.digitalhotel.data.source.network;
+package ru.sejapoe.digitalhotel.data.source.network.service;
 
 import androidx.core.util.Pair;
-
-import java.math.BigInteger;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import ru.sejapoe.digitalhotel.data.repository.LoginRepository;
+import ru.sejapoe.digitalhotel.data.source.network.AuthorizationRequired;
 
 public interface LoginService {
     @POST("/register/start")

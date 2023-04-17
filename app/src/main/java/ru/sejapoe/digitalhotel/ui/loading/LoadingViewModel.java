@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import ru.sejapoe.digitalhotel.data.model.Session;
+import ru.sejapoe.digitalhotel.data.model.login.Session;
 import ru.sejapoe.digitalhotel.data.repository.SessionRepository;
 
 @HiltViewModel

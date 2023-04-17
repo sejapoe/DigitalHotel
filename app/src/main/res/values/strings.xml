@@ -17,6 +17,13 @@
     <string name="room">Room</string>
     <string name="profile">Profile</string>
     <string name="select_dates">Select dates</string>
+    <string name="search">Search</string>
+    <string name="no_rooms_found">No rooms found</string>
+    <string name="price" translatable="false">%d $</string>
+    <plurals name="rooms_count">
+        <item quantity="one">%d room left</item>
+        <item quantity="other">%d rooms left</item>
+    </plurals>
     <plurals name="adults_count">
         <item quantity="one">%d adult</item>
         <item quantity="other">%d adults</item>

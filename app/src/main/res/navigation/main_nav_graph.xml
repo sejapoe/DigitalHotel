@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph.xml"
     app:startDestination="@id/bookingFragment">
 
     <fragment
         android:id="@+id/bookingFragment"
         android:name="ru.sejapoe.digitalhotel.ui.main.booking.BookingFragment"
-        android:label="BookingFragment" />
+        android:label="BookingFragment"
+        tools:layout="@layout/fragment_booking" />
+
+    <fragment
+        android:id="@+id/bookableRoomsFragment"
+        android:name="ru.sejapoe.digitalhotel.ui.main.booking.bookableooms.BookableRoomsFragment"
+        android:label="BookableRoomsFragment"
+        tools:layout="@layout/fragment_bookable_rooms" />
+
     <fragment
         android:id="@+id/profileFragment"
         android:name="ru.sejapoe.digitalhotel.ui.main.profile.ProfileFragment"
-        android:label="ProfileFragment" />
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/roomFragment"
         android:name="ru.sejapoe.digitalhotel.ui.main.room.RoomFragment"
-        android:label="RoomFragment" />
+        android:label="RoomFragment"
+        tools:layout="@layout/fragment_room" />
 </navigation>

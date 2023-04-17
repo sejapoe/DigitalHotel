@@ -25,4 +25,11 @@
         <item quantity="few">%d ребёнка</item>
         <item quantity="many">%d детей</item>
     </plurals>
+    <string name="search">Поиск</string>
+    <string name="no_rooms_found">Комнат не найдено</string>
+    <plurals name="rooms_count">
+        <item quantity="one">Осталась %d комната</item>
+        <item quantity="few">Осталось %d комнаты</item>
+        <item quantity="many">Осталось %d комнат</item>
+    </plurals>
 </resources>

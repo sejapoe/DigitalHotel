@@ -12,7 +12,7 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import ru.sejapoe.digitalhotel.R;
-import ru.sejapoe.digitalhotel.data.model.LoginFormState;
+import ru.sejapoe.digitalhotel.data.model.login.LoginFormState;
 import ru.sejapoe.digitalhotel.data.repository.LoginRepository;
 
 @HiltViewModel

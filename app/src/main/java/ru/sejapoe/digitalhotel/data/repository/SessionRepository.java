@@ -6,7 +6,7 @@ import androidx.lifecycle.Transformations;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import ru.sejapoe.digitalhotel.data.model.Session;
+import ru.sejapoe.digitalhotel.data.model.login.Session;
 import ru.sejapoe.digitalhotel.data.source.db.AppDatabase;
 import ru.sejapoe.digitalhotel.data.source.db.dao.SessionDao;
 import ru.sejapoe.digitalhotel.data.source.db.mapper.SessionMapper;
