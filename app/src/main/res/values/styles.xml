@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="StandartEditTextStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:background">@drawable/custom_input</item>
+        <item name="android:fontFamily">@font/iceberg</item>
+        <item name="android:paddingHorizontal">12dp</item>
+        <item name="android:selectAllOnFocus">true</item>
+        <item name="android:textColor">?colorOnBackground</item>
+    </style>
+
+    <style name="IcebergFont">
+        <item name="fontFamily">@font/iceberg</item>
+        <item name="android:fontFamily">@font/iceberg</item>
+    </style>
+
+</resources>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "281498737775",
+    "project_id": "digital-hotel-6cd04",
+    "storage_bucket": "digital-hotel-6cd04.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:281498737775:android:d3073d2772fa249fe6019a",
+        "android_client_info": {
+          "package_name": "ru.sejapoe.digitalhotel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "281498737775-eh20a12btjpe8o8m5o8l5dpm3ku974eg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD66n1S9HX7mLQQix7A_Q_MmepHdxPpzGo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "281498737775-eh20a12btjpe8o8m5o8l5dpm3ku974eg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

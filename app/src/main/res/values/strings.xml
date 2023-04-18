@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">DigitalHotel</string>
+    <string name="app_name" translatable="false">DigitalHotel</string>
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
+    <string name="prompt_email" translatable="false">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in">Log In or Sign Up</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
@@ -11,4 +11,25 @@
     <string name="login_failed">"Login failed"</string>
     <string name="hello">Hello</string>
     <string name="log_out">Log Out</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="passwords_don_t_match">Passwords don\'t match</string>
+    <string name="booking">Booking</string>
+    <string name="room">Room</string>
+    <string name="profile">Profile</string>
+    <string name="select_dates">Select dates</string>
+    <string name="search">Search</string>
+    <string name="no_rooms_found">No rooms found</string>
+    <string name="price" translatable="false">%d $</string>
+    <plurals name="rooms_count">
+        <item quantity="one">%d room left</item>
+        <item quantity="other">%d rooms left</item>
+    </plurals>
+    <plurals name="adults_count">
+        <item quantity="one">%d adult</item>
+        <item quantity="other">%d adults</item>
+    </plurals>
+    <plurals name="children_count">
+        <item quantity="one">%d child</item>
+        <item quantity="other">%d children</item>
+    </plurals>
 </resources>
