@@ -34,7 +34,7 @@ jobs:
         with:
           name: apk
       - name: Rename apk
-        run: mv apk/app-debug.apk apk/DigitalHotel_v${{ github.ref_tag }}.apk
+        run: mv apk/app-debug.apk apk/DigitalHotel.apk
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
@@ -43,4 +43,4 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          files: DigitalHotel_v${{ github.ref_tag }}.apk
+          files: apk/DigitalHotel.apk
