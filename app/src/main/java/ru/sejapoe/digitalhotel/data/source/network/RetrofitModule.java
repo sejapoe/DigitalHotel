@@ -12,6 +12,7 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import ru.sejapoe.digitalhotel.data.repository.SessionRepository;
 import ru.sejapoe.digitalhotel.data.source.network.service.HotelService;
 import ru.sejapoe.digitalhotel.data.source.network.service.LoginService;
 import ru.sejapoe.digitalhotel.data.source.network.service.RoomService;
@@ -19,14 +20,14 @@ import ru.sejapoe.digitalhotel.data.source.network.service.RoomService;
 @Module
 @InstallIn(SingletonComponent.class)
 public class RetrofitModule {
-    //            private static final String HOST = "http://192.168.0.15:8080";
-    private static final String HOST = "https://sejapoe.live";
+    private static final String HOST = "http://192.168.0.15:8080";
+//    private static final String HOST = "https://sejapoe.live";
 
     @Provides
     @Singleton
-    public static Retrofit provideRetrofit() {
+    public static Retrofit provideRetrofit(SessionRepository sessionRepository) {
         final OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(new TokenInterceptor())
+                .addInterceptor(new TokenInterceptor(sessionRepository))
                 .build();
 
         return new Retrofit.Builder()
