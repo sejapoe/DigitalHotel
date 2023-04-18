@@ -8,6 +8,8 @@ import java.security.Key;
 import java.util.Date;
 import java.util.Objects;
 
+import javax.inject.Inject;
+
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -17,8 +19,13 @@ import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Invocation;
 import ru.sejapoe.digitalhotel.data.model.login.Session;
+import ru.sejapoe.digitalhotel.data.source.db.dao.SessionDao;
+import ru.sejapoe.digitalhotel.data.source.db.mapper.SessionMapper;
 
 public class TokenInterceptor implements Interceptor {
+    @Inject
+    public SessionDao sessionDao;
+
     @NonNull
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
@@ -45,7 +52,8 @@ public class TokenInterceptor implements Interceptor {
     }
 
     private String getToken() {
-        Session session = RetrofitProvider.getInstance().getSession();
+//        Session session = RetrofitProvider.getInstance().getSession();
+        Session session = SessionMapper.fromEntity(sessionDao.get());
         if (session == null) return null;
         Key key = Keys.hmacShaKeyFor(session.getSessionKey().asByteArray());
         JwtBuilder jwtBuilder = Jwts.builder().setSubject(String.valueOf(session.getSessionId()))

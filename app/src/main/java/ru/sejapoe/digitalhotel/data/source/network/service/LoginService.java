@@ -28,4 +28,8 @@ public interface LoginService {
     @AuthorizationRequired
     @POST("/subscribe")
     Call<Void> subscribe(@Body String token);
+
+    @AuthorizationRequired
+    @POST("/ping")
+    Call<Void> ping();
 }

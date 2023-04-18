@@ -6,19 +6,18 @@ import androidx.lifecycle.ViewModel;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import ru.sejapoe.digitalhotel.data.model.login.Session;
-import ru.sejapoe.digitalhotel.data.repository.SessionRepository;
+import ru.sejapoe.digitalhotel.data.repository.LoginRepository;
 
 @HiltViewModel
 public class LoadingViewModel extends ViewModel {
-    private final SessionRepository sessionRepository;
+    private final LoginRepository loginRepository;
 
     @Inject
-    public LoadingViewModel(SessionRepository sessionRepository) {
-        this.sessionRepository = sessionRepository;
+    public LoadingViewModel(LoginRepository loginRepository) {
+        this.loginRepository = loginRepository;
     }
 
-    public LiveData<Session> getSession() {
-        return sessionRepository.getSession();
+    public LiveData<Boolean> isLogged() {
+        return loginRepository.isLogged();
     }
 }

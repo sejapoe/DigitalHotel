@@ -10,7 +10,10 @@ import static ru.sejapoe.digitalhotel.utils.AuthUtils.random256;
 import static ru.sejapoe.digitalhotel.utils.AuthUtils.scrypt;
 import static ru.sejapoe.digitalhotel.utils.AuthUtils.xorByteArrays;
 
+import androidx.annotation.NonNull;
 import androidx.core.util.Pair;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.annotations.SerializedName;
@@ -26,6 +29,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 import ru.sejapoe.digitalhotel.data.model.login.Session;
 import ru.sejapoe.digitalhotel.data.source.network.service.LoginService;
@@ -106,6 +110,24 @@ public class LoginRepository {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public LiveData<Boolean> isLogged() {
+        MutableLiveData<Boolean> isLogged = new MutableLiveData<>();
+        loginService.ping().enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                isLogged.postValue(response.isSuccessful());
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                t.printStackTrace();
+                // TODO: Error page, "application not working without network"
+            }
+        });
+
+        return isLogged;
     }
 
     public static class LoginServerResponse {
