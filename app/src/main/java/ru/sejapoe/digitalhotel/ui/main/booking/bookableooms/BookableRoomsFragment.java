@@ -44,8 +44,8 @@ public class BookableRoomsFragment extends Fragment {
 
         BookableRoomsAdapter.OnItemClickListener listener = bookableRoom -> {
             Toast.makeText(getContext(), "Click", Toast.LENGTH_SHORT).show();
-            viewModel.book(hotelId, checkIn, checkOut, bookableRoom.getRoomType().getId());
-            NavHostFragment.findNavController(this).navigate(R.id.bookingFragment);
+            viewModel.book(hotelId, checkIn, checkOut, bookableRoom.getRoomType().getId()).observe(getViewLifecycleOwner(), unused ->
+                    NavHostFragment.findNavController(this).navigate(R.id.action_bookableRoomsFragment_to_bookingFragment));
         };
         binding.bookableRoomsRecyclerView.addItemDecoration(new BookableRoomsAdapter.ItemPaddingDecorator(getResources().getDimensionPixelSize(R.dimen.item_padding)));
         if (bookableRooms != null) {

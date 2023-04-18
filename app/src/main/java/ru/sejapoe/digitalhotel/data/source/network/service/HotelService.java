@@ -8,6 +8,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import ru.sejapoe.digitalhotel.data.model.hotel.BookableRoom;
 import ru.sejapoe.digitalhotel.data.model.hotel.HotelLess;
+import ru.sejapoe.digitalhotel.data.model.hotel.Reservation;
 import ru.sejapoe.digitalhotel.data.source.network.AuthorizationRequired;
 
 public interface HotelService {
@@ -20,4 +21,8 @@ public interface HotelService {
     @AuthorizationRequired
     @POST("/book/{hotelId}/{checkIn}/{checkOut}/{roomTypeId}")
     Call<Void> book(@Path("hotelId") int hotelId, @Path("checkIn") String checkIn, @Path("checkOut") String checkOut, @Path("roomTypeId") int roomTypeId);
+
+    @AuthorizationRequired
+    @GET("/reservations")
+    Call<List<Reservation>> getReservations();
 }

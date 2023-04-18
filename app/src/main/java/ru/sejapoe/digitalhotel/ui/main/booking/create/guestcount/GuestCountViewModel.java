@@ -1,4 +1,4 @@
-package ru.sejapoe.digitalhotel.ui.main.booking.guestcount;
+package ru.sejapoe.digitalhotel.ui.main.booking.create.guestcount;
 
 import android.view.View;
 

@@ -1,5 +1,6 @@
 package ru.sejapoe.digitalhotel.ui.main.booking.bookableooms;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import javax.inject.Inject;
@@ -16,7 +17,7 @@ public class BookableRoomsViewModel extends ViewModel {
         this.hotelRepository = hotelRepository;
     }
 
-    public void book(int hotelId, String checkIn, String checkOut, int roomTypeId) {
-        hotelRepository.book(hotelId, checkIn, checkOut, roomTypeId);
+    public LiveData<Void> book(int hotelId, String checkIn, String checkOut, int roomTypeId) {
+        return hotelRepository.book(hotelId, checkIn, checkOut, roomTypeId);
     }
 }

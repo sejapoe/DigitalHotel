@@ -20,6 +20,8 @@
     <string name="search">Search</string>
     <string name="no_rooms_found">No rooms found</string>
     <string name="price" translatable="false">%d $</string>
+    <string name="dates" translatable="false">%s - %s</string>
+    <string name="add_booking">Add booking</string>
     <plurals name="rooms_count">
         <item quantity="one">%d room left</item>
         <item quantity="other">%d rooms left</item>

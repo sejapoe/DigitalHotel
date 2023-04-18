@@ -1,6 +1,10 @@
 package ru.sejapoe.digitalhotel.data.source.network;
 
 import com.github.leonardoxh.livedatacalladapter.LiveDataCallAdapterFactory;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.time.LocalDate;
 
 import javax.inject.Singleton;
 
@@ -16,6 +20,7 @@ import ru.sejapoe.digitalhotel.data.repository.SessionRepository;
 import ru.sejapoe.digitalhotel.data.source.network.service.HotelService;
 import ru.sejapoe.digitalhotel.data.source.network.service.LoginService;
 import ru.sejapoe.digitalhotel.data.source.network.service.RoomService;
+import ru.sejapoe.digitalhotel.utils.LocalDateAdapter;
 
 @Module
 @InstallIn(SingletonComponent.class)
@@ -30,11 +35,15 @@ public class RetrofitModule {
                 .addInterceptor(new TokenInterceptor(sessionRepository))
                 .build();
 
+        final Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .create();
+
         return new Retrofit.Builder()
                 .baseUrl(HOST)
                 .addCallAdapterFactory(LiveDataCallAdapterFactory.create())
                 .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(okHttpClient)
                 .build();
     }

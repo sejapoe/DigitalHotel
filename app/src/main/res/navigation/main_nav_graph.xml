@@ -3,19 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph.xml"
-    app:startDestination="@id/bookingFragment">
-
-    <fragment
-        android:id="@+id/bookingFragment"
-        android:name="ru.sejapoe.digitalhotel.ui.main.booking.BookingFragment"
-        android:label="BookingFragment"
-        tools:layout="@layout/fragment_booking" />
-
-    <fragment
-        android:id="@+id/bookableRoomsFragment"
-        android:name="ru.sejapoe.digitalhotel.ui.main.booking.bookableooms.BookableRoomsFragment"
-        android:label="BookableRoomsFragment"
-        tools:layout="@layout/fragment_bookable_rooms" />
+    app:startDestination="@id/profileFragment">
 
     <fragment
         android:id="@+id/profileFragment"
@@ -27,4 +15,36 @@
         android:name="ru.sejapoe.digitalhotel.ui.main.room.RoomFragment"
         android:label="RoomFragment"
         tools:layout="@layout/fragment_room" />
+
+    <navigation
+        android:id="@+id/bookingNavigation"
+        app:startDestination="@id/bookingFragment">
+        <fragment
+            android:id="@+id/bookingFragment"
+            android:name="ru.sejapoe.digitalhotel.ui.main.booking.BookingFragment"
+            android:label="BookingFragment"
+            tools:layout="@layout/fragment_booking">
+            <action
+                android:id="@+id/action_bookingFragment_to_bookingCreateFragment"
+                app:destination="@id/bookingCreateFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/bookableRoomsFragment"
+            android:name="ru.sejapoe.digitalhotel.ui.main.booking.bookableooms.BookableRoomsFragment"
+            android:label="BookableRoomsFragment"
+            tools:layout="@layout/fragment_bookable_rooms">
+            <action
+                android:id="@+id/action_bookableRoomsFragment_to_bookingFragment"
+                app:destination="@id/bookingFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/bookingCreateFragment"
+            android:name="ru.sejapoe.digitalhotel.ui.main.booking.create.BookingCreateFragment"
+            android:label="CreateBookingFragment"
+            tools:layout="@layout/fragment_booking_create">
+            <action
+                android:id="@+id/action_bookingCreateFragment_to_bookableRoomsFragment"
+                app:destination="@id/bookableRoomsFragment" />
+        </fragment>
+    </navigation>
 </navigation>

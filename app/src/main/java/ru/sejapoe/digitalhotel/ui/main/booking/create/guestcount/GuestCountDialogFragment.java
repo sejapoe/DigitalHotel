@@ -1,4 +1,4 @@
-package ru.sejapoe.digitalhotel.ui.main.booking.guestcount;
+package ru.sejapoe.digitalhotel.ui.main.booking.create.guestcount;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,14 +11,14 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import ru.sejapoe.digitalhotel.databinding.GuestsCountFormBinding;
-import ru.sejapoe.digitalhotel.ui.main.booking.BookingViewModel;
+import ru.sejapoe.digitalhotel.ui.main.booking.create.BookingCreateViewModel;
 
 public class GuestCountDialogFragment extends DialogFragment {
     private GuestsCountFormBinding binding;
     private GuestCountViewModel viewModel;
     private GuestCountListener guestCountListener;
 
-    public GuestCountDialogFragment(BookingViewModel.GuestsCount value) {
+    public GuestCountDialogFragment(BookingCreateViewModel.GuestsCount value) {
         Bundle args = Bundle.EMPTY.deepCopy();
         args.putInt("adults_count", value.getAdultsCount());
         args.putInt("children_count", value.getChildrenCount());
