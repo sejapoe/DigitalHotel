@@ -2,8 +2,6 @@ name: Minimal Android CI Workflow
 
 on:
   push:
-    branches:
-      - master
     tags:
       - 'v*'
 
@@ -36,7 +34,7 @@ jobs:
         with:
           name: apk
       - name: Rename apk
-        run: bash mv apk/app-debug.apk apk/DigitalHotel_v${{ github.ref_tag }}.apk
+        run: mv apk/app-debug.apk apk/DigitalHotel_v${{ github.ref_tag }}.apk
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
