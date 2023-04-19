@@ -15,6 +15,10 @@ import java.time.format.DateTimeFormatter;
 public class LocalDateAdapter implements JsonSerializer<LocalDate>, JsonDeserializer<LocalDate> {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
 
+    public static String getDateString(LocalDate localDate) {
+        return DateTimeFormatter.ofPattern("MMMM d, EEEE").format(localDate);
+    }
+
     @Override
     public JsonElement serialize(LocalDate localDate, Type type, JsonSerializationContext jsonSerializationContext) {
         return new JsonPrimitive(formatter.format(localDate));

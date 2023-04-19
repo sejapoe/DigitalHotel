@@ -26,7 +26,18 @@
             tools:layout="@layout/fragment_booking">
             <action
                 android:id="@+id/action_bookingFragment_to_bookingCreateFragment"
-                app:destination="@id/bookingCreateFragment" />
+                app:destination="@id/bookingCreateFragment"
+                app:enterAnim="@android:anim/fade_in"
+                app:exitAnim="@android:anim/fade_out"
+                app:popEnterAnim="@android:anim/fade_in"
+                app:popExitAnim="@android:anim/fade_out" />
+            <action
+                android:id="@+id/action_bookingFragment_to_bookingInfoFragment"
+                app:destination="@id/bookingInfoFragment"
+                app:enterAnim="@android:anim/fade_in"
+                app:exitAnim="@android:anim/fade_out"
+                app:popEnterAnim="@android:anim/fade_in"
+                app:popExitAnim="@android:anim/fade_out" />
         </fragment>
         <fragment
             android:id="@+id/bookableRoomsFragment"
@@ -35,7 +46,11 @@
             tools:layout="@layout/fragment_bookable_rooms">
             <action
                 android:id="@+id/action_bookableRoomsFragment_to_bookingFragment"
-                app:destination="@id/bookingFragment" />
+                app:destination="@id/bookingFragment"
+                app:enterAnim="@android:anim/fade_in"
+                app:exitAnim="@android:anim/fade_out"
+                app:popEnterAnim="@android:anim/fade_in"
+                app:popExitAnim="@android:anim/fade_out" />
         </fragment>
         <fragment
             android:id="@+id/bookingCreateFragment"
@@ -44,7 +59,24 @@
             tools:layout="@layout/fragment_booking_create">
             <action
                 android:id="@+id/action_bookingCreateFragment_to_bookableRoomsFragment"
-                app:destination="@id/bookableRoomsFragment" />
+                app:destination="@id/bookableRoomsFragment"
+                app:enterAnim="@android:anim/fade_in"
+                app:exitAnim="@android:anim/fade_out"
+                app:popEnterAnim="@android:anim/fade_in"
+                app:popExitAnim="@android:anim/fade_out" />
+        </fragment>
+        <fragment
+            android:id="@+id/bookingInfoFragment"
+            android:name="ru.sejapoe.digitalhotel.ui.main.booking.info.BookingInfoFragment"
+            android:label="BookingInfoFragment"
+            tools:layout="@layout/fragment_booking_info">
+            <action
+                android:id="@+id/action_bookingInfoFragment_to_bookingFragment"
+                app:destination="@id/bookingFragment"
+                app:enterAnim="@android:anim/fade_in"
+                app:exitAnim="@android:anim/fade_out"
+                app:popEnterAnim="@android:anim/fade_in"
+                app:popExitAnim="@android:anim/fade_out" />
         </fragment>
     </navigation>
 </navigation>

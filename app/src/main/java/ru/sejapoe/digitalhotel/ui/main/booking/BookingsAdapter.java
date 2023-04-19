@@ -11,13 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.sejapoe.digitalhotel.R;
-import ru.sejapoe.digitalhotel.data.model.hotel.Reservation;
+import ru.sejapoe.digitalhotel.data.model.hotel.Booking;
 import ru.sejapoe.digitalhotel.databinding.BookingItemBinding;
 
 public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHolder> {
-    private List<Reservation> items = new ArrayList<>();
+    private List<Booking> items = new ArrayList<>();
 
-    public void setItems(List<Reservation> items) {
+    private final OnItemClickListener listener;
+
+    public BookingsAdapter(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+
+    public void setItems(List<Booking> items) {
         this.items = items;
         notifyItemRangeChanged(0, items.size());
     }
@@ -38,11 +45,16 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Reservation item = items.get(position);
+        Booking item = items.get(position);
         holder.binding.hotelName.setText(item.getHotel().getName());
         holder.binding.roomType.setText(item.getRoomType().getName());
         holder.binding.price.setText(holder.itemView.getResources().getString(R.string.price, item.getRoomType().getPrice()));
         holder.binding.dates.setText(holder.itemView.getResources().getString(R.string.dates, item.getCheckInDate(), item.getCheckOutDate()));
+        holder.binding.getRoot().setOnClickListener(v -> listener.onClick(items.get(position)));
+    }
+
+    interface OnItemClickListener {
+        void onClick(Booking booking);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

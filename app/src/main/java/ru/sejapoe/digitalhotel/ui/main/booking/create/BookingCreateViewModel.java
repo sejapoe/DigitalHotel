@@ -89,6 +89,13 @@ public class BookingCreateViewModel extends ViewModel {
         return hotelId;
     }
 
+    public void reset() {
+        hotelId.postValue(null);
+        bookingDates.postValue(new BookingDates());
+        guestsCount.postValue(new GuestsCount());
+        bookableRooms.postValue(null);
+    }
+
     public static class BookingDates {
         public static final long MILLIS_IN_DAY = 24 * 60 * 60 * 1000;
         private final LocalDate checkIn;

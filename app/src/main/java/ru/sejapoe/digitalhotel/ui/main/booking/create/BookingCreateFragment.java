@@ -20,8 +20,6 @@ import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -30,6 +28,7 @@ import ru.sejapoe.digitalhotel.data.model.hotel.BookableRoom;
 import ru.sejapoe.digitalhotel.data.model.hotel.HotelLess;
 import ru.sejapoe.digitalhotel.databinding.FragmentBookingCreateBinding;
 import ru.sejapoe.digitalhotel.ui.main.booking.create.guestcount.GuestCountDialogFragment;
+import ru.sejapoe.digitalhotel.utils.LocalDateAdapter;
 
 @AndroidEntryPoint
 public class BookingCreateFragment extends Fragment {
@@ -39,7 +38,7 @@ public class BookingCreateFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentBookingCreateBinding.inflate(inflater);
+        binding = FragmentBookingCreateBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -94,8 +93,8 @@ public class BookingCreateFragment extends Fragment {
         binding.checkOutDate.setOnClickListener(listener);
 
         viewModel.getBookingDates().observe(this.getViewLifecycleOwner(), bookingDates -> {
-            binding.checkInDate.setText(getDateString(bookingDates.getCheckIn()));
-            binding.checkOutDate.setText(getDateString(bookingDates.getCheckOut()));
+            binding.checkInDate.setText(LocalDateAdapter.getDateString(bookingDates.getCheckIn()));
+            binding.checkOutDate.setText(LocalDateAdapter.getDateString(bookingDates.getCheckOut()));
         });
 
         viewModel.getGuestsCount().observe(this.getViewLifecycleOwner(), guestsCount -> {
@@ -125,13 +124,11 @@ public class BookingCreateFragment extends Fragment {
             args.putString("checkIn", value.getCheckIn().toString());
             args.putString("checkOut", value.getCheckOut().toString());
             args.putInt("hotelId", hotelId);
+            viewModel.reset();
 
             NavController navController = NavHostFragment.findNavController(this);
             navController.navigate(R.id.action_bookingCreateFragment_to_bookableRoomsFragment, args);
         });
     }
 
-    private static String getDateString(LocalDate localDate) {
-        return DateTimeFormatter.ofPattern("MMMM d, EEEE").format(localDate);
-    }
 }

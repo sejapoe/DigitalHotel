@@ -26,7 +26,7 @@ public class BookingFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = FragmentBookingBinding.inflate(inflater);
+        binding = FragmentBookingBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -36,7 +36,13 @@ public class BookingFragment extends Fragment {
 
         binding.addFab.setOnClickListener(v -> NavHostFragment.findNavController(this).navigate(R.id.action_bookingFragment_to_bookingCreateFragment));
 
-        binding.bookingsRecyclerView.setAdapter(new BookingsAdapter());
+        BookingsAdapter.OnItemClickListener listener = booking -> {
+            Bundle args = new Bundle();
+            args.putInt("booking_id", booking.getId());
+            NavHostFragment.findNavController(this).navigate(R.id.action_bookingFragment_to_bookingInfoFragment, args);
+        };
+
+        binding.bookingsRecyclerView.setAdapter(new BookingsAdapter(listener));
         binding.bookingsRecyclerView.addItemDecoration(new BookableRoomsAdapter.ItemPaddingDecorator(getResources().getDimensionPixelSize(R.dimen.item_padding)));
         viewModel.getBookings().observe(getViewLifecycleOwner(), bookings -> ((BookingsAdapter) Objects.requireNonNull(binding.bookingsRecyclerView.getAdapter())).setItems(bookings));
     }

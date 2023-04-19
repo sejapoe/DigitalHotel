@@ -21,7 +21,7 @@ public class RoomFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentRoomBinding.inflate(inflater);
+        binding = FragmentRoomBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 

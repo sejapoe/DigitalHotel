@@ -22,7 +22,7 @@ public class LoadingFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        FragmentLoadingBinding binding = FragmentLoadingBinding.inflate(inflater);
+        FragmentLoadingBinding binding = FragmentLoadingBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 

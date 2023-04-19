@@ -14,9 +14,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ru.sejapoe.digitalhotel.data.model.hotel.BookableRoom;
+import ru.sejapoe.digitalhotel.data.model.hotel.Booking;
 import ru.sejapoe.digitalhotel.data.model.hotel.HotelLess;
-import ru.sejapoe.digitalhotel.data.model.hotel.Reservation;
 import ru.sejapoe.digitalhotel.data.source.network.service.HotelService;
+import ru.sejapoe.digitalhotel.utils.LiveDataUtils;
 
 @Singleton
 public class HotelRepository {
@@ -51,72 +52,27 @@ public class HotelRepository {
         return hotelsLiveData;
     }
 
-    public LiveData<List<Reservation>> getReservations() {
-        MutableLiveData<List<Reservation>> reservationsLiveData = new MutableLiveData<>();
-        hotelService.getReservations().enqueue(
-                new Callback<List<Reservation>>() {
-                    @Override
-                    public void onResponse(@NonNull Call<List<Reservation>> call, @NonNull Response<List<Reservation>> response) {
-                        if (response.isSuccessful()) {
-                            List<Reservation> reservations = response.body();
-                            if (reservations != null) {
-                                reservationsLiveData.postValue(reservations);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<List<Reservation>> call, @NonNull Throwable t) {
-                        t.printStackTrace();
-                        reservationsLiveData.postValue(Collections.emptyList());
-                    }
-                }
-        );
-        return reservationsLiveData;
+    public LiveData<List<Booking>> getBookings() {
+        return LiveDataUtils.callToListLiveData(hotelService.getBookings());
     }
 
     public LiveData<List<BookableRoom>> getBookableRooms(int hotelId, String checkIn, String checkOut) {
-        MutableLiveData<List<BookableRoom>> reservationsLiveData = new MutableLiveData<>();
-        hotelService.getReservations(hotelId, checkIn, checkOut).enqueue(
-                new Callback<List<BookableRoom>>() {
-                    @Override
-                    public void onResponse(@NonNull Call<List<BookableRoom>> call, @NonNull Response<List<BookableRoom>> response) {
-                        if (response.isSuccessful()) {
-                            List<BookableRoom> reservations = response.body();
-                            if (reservations != null) {
-                                reservationsLiveData.postValue(reservations);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<List<BookableRoom>> call, @NonNull Throwable t) {
-                        t.printStackTrace();
-                        reservationsLiveData.postValue(Collections.emptyList());
-                    }
-                }
-        );
-        return reservationsLiveData;
+        return LiveDataUtils.callToListLiveData(hotelService.getBookings(hotelId, checkIn, checkOut));
     }
 
     public LiveData<Void> book(int hotelId, String checkIn, String checkOut, int roomTypeId) {
-        MutableLiveData<Void> bookLiveData = new MutableLiveData<>();
-        hotelService.book(hotelId, checkIn, checkOut, roomTypeId).enqueue(
-                new Callback<Void>() {
-                    @Override
-                    public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                        if (response.isSuccessful()) {
-                            bookLiveData.postValue(null);
-                        }
-                    }
+        return LiveDataUtils.callToBodyLiveData(hotelService.book(hotelId, checkIn, checkOut, roomTypeId));
+    }
 
-                    @Override
-                    public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                        t.printStackTrace();
-                        bookLiveData.postValue(null);
-                    }
-                }
-        );
-        return bookLiveData;
+    public LiveData<Booking> getBooking(int id) {
+        return LiveDataUtils.callToBodyLiveData(hotelService.getBooking(id));
+    }
+
+    public LiveData<Boolean> deleteBooking(int id) {
+        return LiveDataUtils.callToSuccessLiveData(hotelService.deleteBooking(id));
+    }
+
+    public LiveData<Boolean> payBooking(int id) {
+        return LiveDataUtils.callToSuccessLiveData(hotelService.payBooking(id));
     }
 }

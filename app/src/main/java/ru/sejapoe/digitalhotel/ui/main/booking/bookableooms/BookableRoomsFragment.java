@@ -27,7 +27,7 @@ public class BookableRoomsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentBookableRoomsBinding.inflate(inflater);
+        binding = FragmentBookableRoomsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 

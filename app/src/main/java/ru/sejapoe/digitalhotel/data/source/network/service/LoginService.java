@@ -6,7 +6,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import ru.sejapoe.digitalhotel.data.repository.LoginRepository;
-import ru.sejapoe.digitalhotel.data.source.network.AuthorizationRequired;
+import ru.sejapoe.digitalhotel.data.source.network.Authenticated;
 
 public interface LoginService {
     @POST("/register/start")
@@ -21,15 +21,15 @@ public interface LoginService {
     @POST("/login/finish")
     Call<String> finishLogin(@Body String body);
 
-    @AuthorizationRequired
+    @Authenticated
     @POST("/logout")
     Call<Void> logOut();
 
-    @AuthorizationRequired
+    @Authenticated
     @POST("/subscribe")
     Call<Void> subscribe(@Body String token);
 
-    @AuthorizationRequired
+    @Authenticated
     @POST("/ping")
     Call<Void> ping();
 }

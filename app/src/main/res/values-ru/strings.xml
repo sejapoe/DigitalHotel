@@ -32,4 +32,7 @@
         <item quantity="few">Осталось %d комнаты</item>
         <item quantity="many">Осталось %d комнат</item>
     </plurals>
+    <string name="add_booking">Добавить бронь</string>
+    <string name="pay">Оплатить</string>
+    <string name="cancel_booking">Отменить бронь</string>
 </resources>

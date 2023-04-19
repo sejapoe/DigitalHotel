@@ -36,7 +36,7 @@ public class TokenInterceptor implements Interceptor {
 
         try {
             Method method = Objects.requireNonNull(originalRequest.tag(Invocation.class)).method();
-            if (method.isAnnotationPresent(AuthorizationRequired.class)) {
+            if (method.isAnnotationPresent(Authenticated.class)) {
                 String token = getToken();
                 if (token == null) return new Response.Builder()
                         .request(originalRequest)

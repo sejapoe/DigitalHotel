@@ -22,6 +22,8 @@
     <string name="price" translatable="false">%d $</string>
     <string name="dates" translatable="false">%s - %s</string>
     <string name="add_booking">Add booking</string>
+    <string name="pay">Pay</string>
+    <string name="cancel_booking">Cancel booking</string>
     <plurals name="rooms_count">
         <item quantity="one">%d room left</item>
         <item quantity="other">%d rooms left</item>

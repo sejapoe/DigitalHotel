@@ -8,7 +8,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import ru.sejapoe.digitalhotel.data.model.hotel.Reservation;
+import ru.sejapoe.digitalhotel.data.model.hotel.Booking;
 import ru.sejapoe.digitalhotel.data.repository.HotelRepository;
 
 @HiltViewModel
@@ -20,7 +20,7 @@ public class BookingViewModel extends ViewModel {
         this.hotelRepository = hotelRepository;
     }
 
-    public LiveData<List<Reservation>> getBookings() {
-        return hotelRepository.getReservations();
+    public LiveData<List<Booking>> getBookings() {
+        return hotelRepository.getBookings();
     }
 }
