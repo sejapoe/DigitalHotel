@@ -4,6 +4,7 @@ import androidx.core.util.Pair;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import ru.sejapoe.digitalhotel.data.repository.LoginRepository;
 import ru.sejapoe.digitalhotel.data.source.network.Authenticated;
@@ -30,6 +31,6 @@ public interface LoginService {
     Call<Void> subscribe(@Body String token);
 
     @Authenticated
-    @POST("/ping")
+    @GET("/ping")
     Call<Void> ping();
 }
