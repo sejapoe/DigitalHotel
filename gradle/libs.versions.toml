@@ -1,6 +1,8 @@
 [versions]
+zxing = "4.3.0"
+firebase = "31.5.0"
 google-services = "4.3.15"
-android-gradle-plugin = "7.4.2"
+android-gradle-plugin = "8.0.0"
 dynamicanimation = "1.0.0"
 jjwt = "0.11.2"
 retrofit = "2.9.0"
@@ -23,7 +25,11 @@ legacy-support-v4 = "1.0.0"
 lifecycle-livedata-ktx = "2.6.1"
 lifecycle-viewmodel-ktx = "2.6.1"
 [libraries]
+zxing-android = { group = "com.journeyapps", name = "zxing-android-embedded", version.ref = "zxing" }
 dynamicanimation = { module = "androidx.dynamicanimation:dynamicanimation", version.ref = "dynamicanimation" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebase" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebase" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 jjwt-api = { group = "io.jsonwebtoken", name = "jjwt-api", version.ref = "jjwt" }

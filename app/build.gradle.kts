@@ -38,6 +38,10 @@ android {
 }
 
 dependencies {
+    implementation(libs.zxing.android)
+//    implementation(platform(libs.firebase.bom))
+//    implementation(libs.firebase.messaging)
+//    implementation(libs.firebase.analytics)
     implementation(platform("com.google.firebase:firebase-bom:31.5.0"))
     implementation("com.google.firebase:firebase-messaging")
     implementation("com.google.firebase:firebase-analytics")
