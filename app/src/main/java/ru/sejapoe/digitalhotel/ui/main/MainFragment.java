@@ -43,7 +43,7 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = FragmentMainBinding.inflate(inflater);
+        binding = FragmentMainBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 

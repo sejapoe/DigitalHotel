@@ -1,11 +1,19 @@
 package ru.sejapoe.digitalhotel.data.source.network.service;
 
-import retrofit2.Call;
-import retrofit2.http.POST;
-import ru.sejapoe.digitalhotel.data.source.network.AuthorizationRequired;
+import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
+import ru.sejapoe.digitalhotel.data.model.hotel.Occupation;
+import ru.sejapoe.digitalhotel.data.source.network.Authenticated;
+
+@Authenticated
 public interface RoomService {
-    @AuthorizationRequired
-    @POST("/test")
-    Call<Void> test();
+    @GET("/occupations")
+    Call<List<Occupation>> getOccupations();
+
+    @POST("/room/{id}/open")
+    Call<Void> open(@Path("id") int id);
 }

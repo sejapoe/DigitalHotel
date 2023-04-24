@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_loadingFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_loadingFragment_to_surveyFragment"
+            app:destination="@id/surveyFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -22,8 +25,8 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
         <action
-            android:id="@+id/action_loginFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            android:id="@+id/action_loginFragment_to_loadingFragment"
+            app:destination="@id/loadingFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
@@ -32,6 +35,14 @@
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_loadingFragment"
+            app:destination="@id/loadingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/surveyFragment"
+        android:name="ru.sejapoe.digitalhotel.ui.survey.SurveyFragment"
+        android:label="SurveyFragment">
+        <action
+            android:id="@+id/action_surveyFragment_to_loadingFragment"
             app:destination="@id/loadingFragment" />
     </fragment>
 </navigation>

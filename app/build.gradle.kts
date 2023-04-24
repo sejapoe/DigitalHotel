@@ -38,10 +38,17 @@ android {
 }
 
 dependencies {
+    implementation(libs.zxing.android)
+//    implementation(platform(libs.firebase.bom))
+//    implementation(libs.firebase.messaging)
+//    implementation(libs.firebase.analytics)
     implementation(platform("com.google.firebase:firebase-bom:31.5.0"))
     implementation("com.google.firebase:firebase-messaging")
     implementation("com.google.firebase:firebase-analytics")
     implementation(libs.hilt.android)
+    implementation(libs.legacy.support.v4)
+    implementation(libs.lifecycle.livedata.ktx)
+    implementation(libs.lifecycle.viewmodel.ktx)
     annotationProcessor(libs.hilt.android.compiler)
     implementation(libs.dynamicanimation)
     implementation(libs.jjwt.api)

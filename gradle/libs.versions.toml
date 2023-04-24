@@ -1,6 +1,8 @@
 [versions]
+zxing = "4.3.0"
+firebase = "31.5.0"
 google-services = "4.3.15"
-android-gradle-plugin = "7.4.2"
+android-gradle-plugin = "8.0.0"
 dynamicanimation = "1.0.0"
 jjwt = "0.11.2"
 retrofit = "2.9.0"
@@ -19,8 +21,15 @@ junit = "4.13.2"
 androidJunit = "1.1.5"
 espresso = "3.5.1"
 hilt = "2.44"
+legacy-support-v4 = "1.0.0"
+lifecycle-livedata-ktx = "2.6.1"
+lifecycle-viewmodel-ktx = "2.6.1"
 [libraries]
+zxing-android = { group = "com.journeyapps", name = "zxing-android-embedded", version.ref = "zxing" }
 dynamicanimation = { module = "androidx.dynamicanimation:dynamicanimation", version.ref = "dynamicanimation" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebase" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebase" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 jjwt-api = { group = "io.jsonwebtoken", name = "jjwt-api", version.ref = "jjwt" }
@@ -49,6 +58,9 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 android-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidJunit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
 com-google-services = { group = "com.google.gms", name = "google-services", version.ref = "google-services" }
+legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacy-support-v4" }
+lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle-livedata-ktx" }
+lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle-viewmodel-ktx" }
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
 com-android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }

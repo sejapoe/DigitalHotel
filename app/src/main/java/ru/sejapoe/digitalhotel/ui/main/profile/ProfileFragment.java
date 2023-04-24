@@ -23,8 +23,7 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentProfileBinding.inflate(inflater);
-        binding.logoutBtn.setOnClickListener(v -> viewModel.logOut());
+        binding = FragmentProfileBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -32,6 +31,8 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+
+        binding.logoutBtn.setOnClickListener(v -> viewModel.logOut());
         viewModel.isLogged().observe(this.getViewLifecycleOwner(), isLogged -> {
             if (!isLogged) {
                 assert getParentFragment() != null;

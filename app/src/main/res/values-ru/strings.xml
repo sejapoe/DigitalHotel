@@ -32,4 +32,17 @@
         <item quantity="few">Осталось %d комнаты</item>
         <item quantity="many">Осталось %d комнат</item>
     </plurals>
+    <string name="add_booking">Добавить бронь</string>
+    <string name="pay">Оплатить</string>
+    <string name="cancel_booking">Отменить бронь</string>
+    <string name="male">Мужчина</string>
+    <string name="female">Женщина</string>
+    <string name="submit">Отправить</string>
+    <string name="choose_date">Выбрать дату</string>
+    <string name="first_name">Имя</string>
+    <string name="last_name">Фамилия</string>
+    <string name="patronymic">Отчество (если есть)</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="error_field_required">Пожалуйста, заполните это поле</string>
+    <string name="error_invalid_phone_number">Неверный формат номера</string>
 </resources>

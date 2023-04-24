@@ -20,6 +20,21 @@
     <string name="search">Search</string>
     <string name="no_rooms_found">No rooms found</string>
     <string name="price" translatable="false">%d $</string>
+    <string name="dates" translatable="false">%s - %s</string>
+    <string name="add_booking">Add booking</string>
+    <string name="pay">Pay</string>
+    <string name="cancel_booking">Cancel booking</string>
+    <string name="qr_code" translatable="false">Qr Code</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="submit">Submit</string>
+    <string name="choose_date">Choose date</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="patronymic">Patronymic (if any)</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="error_field_required">Please, fill this field</string>
+    <string name="error_invalid_phone_number">Invalid phone number</string>
     <plurals name="rooms_count">
         <item quantity="one">%d room left</item>
         <item quantity="other">%d rooms left</item>

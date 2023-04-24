@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,8 +14,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ru.sejapoe.digitalhotel.data.model.hotel.BookableRoom;
+import ru.sejapoe.digitalhotel.data.model.hotel.Booking;
 import ru.sejapoe.digitalhotel.data.model.hotel.HotelLess;
 import ru.sejapoe.digitalhotel.data.source.network.service.HotelService;
+import ru.sejapoe.digitalhotel.utils.LiveDataUtils;
 
 @Singleton
 public class HotelRepository {
@@ -51,37 +52,31 @@ public class HotelRepository {
         return hotelsLiveData;
     }
 
-    public LiveData<List<BookableRoom>> getBookableRooms(int hotelId, String checkIn, String checkOut) {
-        MutableLiveData<List<BookableRoom>> reservationsLiveData = new MutableLiveData<>();
-        hotelService.getReservations(hotelId, checkIn, checkOut).enqueue(
-                new Callback<List<BookableRoom>>() {
-                    @Override
-                    public void onResponse(@NonNull Call<List<BookableRoom>> call, @NonNull Response<List<BookableRoom>> response) {
-                        if (response.isSuccessful()) {
-                            List<BookableRoom> reservations = response.body();
-                            if (reservations != null) {
-                                reservationsLiveData.postValue(reservations);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<List<BookableRoom>> call, @NonNull Throwable t) {
-                        t.printStackTrace();
-                        reservationsLiveData.postValue(Collections.emptyList());
-                    }
-                }
-        );
-        return reservationsLiveData;
+    public LiveData<List<Booking>> getBookings() {
+        return LiveDataUtils.callToListLiveData(hotelService.getBookings());
     }
 
-    public void book(int hotelId, String checkIn, String checkOut, int roomTypeId) {
-        new Thread(() -> {
-            try {
-                hotelService.book(hotelId, checkIn, checkOut, roomTypeId).execute();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
+    public LiveData<List<BookableRoom>> getBookableRooms(int hotelId, String checkIn, String checkOut) {
+        return LiveDataUtils.callToListLiveData(hotelService.getBookings(hotelId, checkIn, checkOut));
+    }
+
+    public LiveData<Void> book(int hotelId, String checkIn, String checkOut, int roomTypeId) {
+        return LiveDataUtils.callToBodyLiveData(hotelService.book(hotelId, checkIn, checkOut, roomTypeId));
+    }
+
+    public LiveData<Booking> getBooking(int id) {
+        return LiveDataUtils.callToBodyLiveData(hotelService.getBooking(id));
+    }
+
+    public LiveData<Boolean> deleteBooking(int id) {
+        return LiveDataUtils.callToSuccessLiveData(hotelService.deleteBooking(id));
+    }
+
+    public LiveData<Boolean> payBooking(int id) {
+        return LiveDataUtils.callToSuccessLiveData(hotelService.payBooking(id));
+    }
+
+    public LiveData<Boolean> checkIn(int id) {
+        return LiveDataUtils.callToSuccessLiveData(hotelService.checkIn(id));
     }
 }

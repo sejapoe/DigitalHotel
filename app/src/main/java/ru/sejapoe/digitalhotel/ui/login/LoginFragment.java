@@ -30,7 +30,7 @@ public class LoginFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentLoginBinding.inflate(inflater);
+        binding = FragmentLoginBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -107,7 +107,7 @@ public class LoginFragment extends Fragment {
                     Toast.makeText(getContext(), authState.toString(), Toast.LENGTH_LONG).show();
                     break;
                 case FINE:
-                    NavHostFragment.findNavController(this).navigate(R.id.action_loginFragment_to_mainFragment);
+                    NavHostFragment.findNavController(this).navigate(R.id.action_loginFragment_to_loadingFragment);
                     break;
             }
         });
