@@ -16,7 +16,6 @@ import java.time.LocalDate;
 import dagger.hilt.android.AndroidEntryPoint;
 import ru.sejapoe.digitalhotel.R;
 import ru.sejapoe.digitalhotel.databinding.FragmentBookingInfoBinding;
-import ru.sejapoe.digitalhotel.ui.qr.QrCodeDialogFragment;
 import ru.sejapoe.digitalhotel.utils.LocalDateAdapter;
 
 @AndroidEntryPoint
@@ -37,7 +36,8 @@ public class BookingInfoFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(BookingInfoViewModel.class);
         int bookingId = requireArguments().getInt("booking_id");
 
-        binding.qr.setOnClickListener(v -> new QrCodeDialogFragment("https://www.youtube.com/watch?v=jfKfPfyJRdk").show(getChildFragmentManager(), "QR"));
+//        binding.qr.setOnClickListener(v -> new QrCodeDialogFragment("https://www.youtube.com/watch?v=jfKfPfyJRdk").show(getChildFragmentManager(), "QR"));
+        binding.qr.setOnClickListener(v -> viewModel.checkIn(bookingId));
 
         viewModel.getBooking(bookingId).observe(getViewLifecycleOwner(), booking -> {
             binding.hotelName.setText(booking.getHotel().getName());

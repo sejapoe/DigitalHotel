@@ -34,4 +34,7 @@ public interface HotelService {
 
     @POST("/booking/{id}/pay")
     Call<Void> payBooking(@Path("id") int id);
+
+    @POST("/booking/{id}/checkIn")
+    Call<Void> checkIn(@Path("id") int id);
 }

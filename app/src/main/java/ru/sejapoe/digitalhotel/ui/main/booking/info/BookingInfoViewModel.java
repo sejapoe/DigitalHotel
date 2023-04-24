@@ -29,4 +29,8 @@ public class BookingInfoViewModel extends ViewModel {
     public LiveData<Boolean> payBooking(int bookingId) {
         return hotelRepository.payBooking(bookingId);
     }
+
+    public void checkIn(int bookingId) {
+        hotelRepository.checkIn(bookingId);
+    }
 }

@@ -10,7 +10,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.tabs.TabLayoutMediator;
+
 import dagger.hilt.android.AndroidEntryPoint;
+import ru.sejapoe.digitalhotel.data.model.hotel.Occupation;
 import ru.sejapoe.digitalhotel.databinding.FragmentRoomBinding;
 
 @AndroidEntryPoint
@@ -29,6 +32,11 @@ public class RoomFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(RoomViewModel.class);
-        binding.textView.setOnClickListener(v -> viewModel.test());
+        binding.pager.setAdapter(new RoomPagerAdapter(this));
+        new TabLayoutMediator(binding.tabLayout, binding.pager, (tab, position) -> {
+            Occupation occupation = ((RoomPagerAdapter) binding.pager.getAdapter()).getItem(position);
+            tab.setText(occupation.getRoom().getHotel().getName() + ":" + occupation.getRoom().getNumber());
+        }).attach();
+        viewModel.getOccupations().observe(getViewLifecycleOwner(), occupations -> ((RoomPagerAdapter) binding.pager.getAdapter()).setOccupations(occupations));
     }
 }

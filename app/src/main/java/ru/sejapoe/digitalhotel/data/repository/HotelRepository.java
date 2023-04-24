@@ -75,4 +75,8 @@ public class HotelRepository {
     public LiveData<Boolean> payBooking(int id) {
         return LiveDataUtils.callToSuccessLiveData(hotelService.payBooking(id));
     }
+
+    public LiveData<Boolean> checkIn(int id) {
+        return LiveDataUtils.callToSuccessLiveData(hotelService.checkIn(id));
+    }
 }
