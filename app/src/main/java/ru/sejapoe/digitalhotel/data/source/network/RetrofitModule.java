@@ -25,8 +25,8 @@ import ru.sejapoe.digitalhotel.utils.LocalDateAdapter;
 @Module
 @InstallIn(SingletonComponent.class)
 public class RetrofitModule {
-    private static final String HOST = "http://192.168.0.15:8080";
-//    private static final String HOST = "https://sejapoe.live";
+//    private static final String HOST = "http://192.168.0.15:8080";
+private static final String HOST = "https://sejapoe.live";
 
     @Provides
     @Singleton

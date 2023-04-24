@@ -45,4 +45,8 @@ public class LiveDataUtils {
     public static <T> LiveData<List<T>> callToListLiveData(@NonNull Call<List<T>> call) {
         return callToBodyLiveData(call, Collections.emptyList());
     }
+
+    public static LiveData<Integer> callToStatusLiveData(@NonNull Call<?> call) {
+        return Transformations.map(callToResponseLiveData(call), response -> response == null ? -1 : response.code());
+    }
 }

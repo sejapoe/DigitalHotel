@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
+import ru.sejapoe.digitalhotel.data.model.login.UserStatus;
 import ru.sejapoe.digitalhotel.data.repository.LoginRepository;
 
 @HiltViewModel
@@ -17,7 +18,7 @@ public class LoadingViewModel extends ViewModel {
         this.loginRepository = loginRepository;
     }
 
-    public LiveData<Boolean> isLogged() {
-        return loginRepository.isLogged();
+    public LiveData<UserStatus> userStatus() {
+        return loginRepository.userStatus();
     }
 }

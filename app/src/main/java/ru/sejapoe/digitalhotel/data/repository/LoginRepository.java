@@ -10,10 +10,11 @@ import static ru.sejapoe.digitalhotel.utils.AuthUtils.random256;
 import static ru.sejapoe.digitalhotel.utils.AuthUtils.scrypt;
 import static ru.sejapoe.digitalhotel.utils.AuthUtils.xorByteArrays;
 
-import androidx.annotation.NonNull;
+import android.util.Log;
+
 import androidx.core.util.Pair;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.annotations.SerializedName;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
+import java.time.LocalDate;
 import java.util.Base64;
 import java.util.concurrent.Executors;
 
@@ -29,11 +31,13 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
+import ru.sejapoe.digitalhotel.data.model.UserInfo;
 import ru.sejapoe.digitalhotel.data.model.login.Session;
+import ru.sejapoe.digitalhotel.data.model.login.UserStatus;
 import ru.sejapoe.digitalhotel.data.source.network.service.LoginService;
 import ru.sejapoe.digitalhotel.utils.BitArray256;
+import ru.sejapoe.digitalhotel.utils.LiveDataUtils;
 
 @Singleton
 public class LoginRepository {
@@ -112,22 +116,25 @@ public class LoginRepository {
         }
     }
 
-    public LiveData<Boolean> isLogged() {
-        MutableLiveData<Boolean> isLogged = new MutableLiveData<>();
-        loginService.ping().enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                isLogged.postValue(response.isSuccessful());
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                t.printStackTrace();
-                // TODO: Error page, "application not working without network"
+    public LiveData<UserStatus> userStatus() {
+        return Transformations.map(LiveDataUtils.callToStatusLiveData(loginService.ping()), integer -> {
+            Log.d("Test", String.valueOf(integer));
+            switch (integer) {
+                case 401:
+                    return UserStatus.NO_USER;
+                case 403:
+                    return UserStatus.NO_SURVEY;
+                case 200:
+                    return UserStatus.READY;
+                default:
+                    return UserStatus.NO_INTERNET;
             }
         });
+    }
 
-        return isLogged;
+    public LiveData<Boolean> sendSurvey(String firstName, String lastName, String parentheses, String phoneNumber, LocalDate date, boolean isMale) {
+        UserInfo userInfo = new UserInfo(0, firstName, lastName, parentheses, phoneNumber, date, isMale ? UserInfo.Sex.MALE : UserInfo.Sex.FEMALE);
+        return LiveDataUtils.callToSuccessLiveData(loginService.setInfo(userInfo));
     }
 
     public static class LoginServerResponse {
