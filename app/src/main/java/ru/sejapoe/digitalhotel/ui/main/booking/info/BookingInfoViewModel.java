@@ -30,7 +30,7 @@ public class BookingInfoViewModel extends ViewModel {
         return hotelRepository.payBooking(bookingId);
     }
 
-    public void checkIn(int bookingId) {
-        hotelRepository.checkIn(bookingId);
+    public LiveData<Boolean> checkIn(int bookingId) {
+        return hotelRepository.checkIn(bookingId);
     }
 }

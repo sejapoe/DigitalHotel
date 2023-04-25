@@ -37,7 +37,11 @@ public class BookingInfoFragment extends Fragment {
         int bookingId = requireArguments().getInt("booking_id");
 
 //        binding.qr.setOnClickListener(v -> new QrCodeDialogFragment("https://www.youtube.com/watch?v=jfKfPfyJRdk").show(getChildFragmentManager(), "QR"));
-        binding.qr.setOnClickListener(v -> viewModel.checkIn(bookingId));
+        binding.qr.setOnClickListener(v -> viewModel.checkIn(bookingId).observe(getViewLifecycleOwner(), aBoolean -> {
+            if (aBoolean) {
+                NavHostFragment.findNavController(this).navigate(R.id.action_bookingInfoFragment_to_bookingFragment);
+            }
+        }));
 
         viewModel.getBooking(bookingId).observe(getViewLifecycleOwner(), booking -> {
             binding.hotelName.setText(booking.getHotel().getName());
