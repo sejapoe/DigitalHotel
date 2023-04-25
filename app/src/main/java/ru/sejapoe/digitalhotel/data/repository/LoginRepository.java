@@ -34,6 +34,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 import ru.sejapoe.digitalhotel.data.model.UserInfo;
 import ru.sejapoe.digitalhotel.data.model.login.Session;
+import ru.sejapoe.digitalhotel.data.model.login.User;
 import ru.sejapoe.digitalhotel.data.model.login.UserStatus;
 import ru.sejapoe.digitalhotel.data.source.network.service.LoginService;
 import ru.sejapoe.digitalhotel.utils.BitArray256;
@@ -135,6 +136,10 @@ public class LoginRepository {
     public LiveData<Boolean> sendSurvey(String firstName, String lastName, String parentheses, String phoneNumber, LocalDate date, boolean isMale) {
         UserInfo userInfo = new UserInfo(0, firstName, lastName, parentheses, phoneNumber, date, isMale ? UserInfo.Sex.MALE : UserInfo.Sex.FEMALE);
         return LiveDataUtils.callToSuccessLiveData(loginService.setInfo(userInfo));
+    }
+
+    public LiveData<User> getUser() {
+        return LiveDataUtils.callToBodyLiveData(loginService.getUser());
     }
 
     public static class LoginServerResponse {

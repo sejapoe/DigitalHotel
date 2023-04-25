@@ -50,6 +50,10 @@ public class UserInfo {
         return sex;
     }
 
+    public String getFullName() {
+        return lastName + " " + firstName + " " + parentheses;
+    }
+
     public enum Sex {
         MALE, FEMALE
     }

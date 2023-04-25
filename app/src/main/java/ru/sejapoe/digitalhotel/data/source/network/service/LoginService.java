@@ -7,6 +7,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import ru.sejapoe.digitalhotel.data.model.UserInfo;
+import ru.sejapoe.digitalhotel.data.model.login.User;
 import ru.sejapoe.digitalhotel.data.repository.LoginRepository;
 import ru.sejapoe.digitalhotel.data.source.network.Authenticated;
 
@@ -38,4 +39,8 @@ public interface LoginService {
     @Authenticated
     @POST("/user/info")
     Call<Void> setInfo(@Body UserInfo userInfo);
+
+    @Authenticated
+    @GET("/user")
+    Call<User> getUser();
 }

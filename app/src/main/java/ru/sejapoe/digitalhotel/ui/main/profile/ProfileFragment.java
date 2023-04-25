@@ -13,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import ru.sejapoe.digitalhotel.R;
+import ru.sejapoe.digitalhotel.data.model.UserInfo;
 import ru.sejapoe.digitalhotel.databinding.FragmentProfileBinding;
 
 @AndroidEntryPoint
@@ -31,6 +32,12 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+
+        viewModel.getUser().observe(getViewLifecycleOwner(), user -> {
+            UserInfo userInfo = user.getUserInfo();
+            binding.fullName.setText(userInfo.getFullName());
+            binding.sex.setText(userInfo.getSex().name());
+        });
 
         binding.logoutBtn.setOnClickListener(v -> viewModel.logOut());
         viewModel.isLogged().observe(this.getViewLifecycleOwner(), isLogged -> {
