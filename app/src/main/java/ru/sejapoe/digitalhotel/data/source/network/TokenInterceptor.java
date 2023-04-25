@@ -12,9 +12,11 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import okhttp3.Interceptor;
+import okhttp3.MediaType;
 import okhttp3.Protocol;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 import retrofit2.Invocation;
 import ru.sejapoe.digitalhotel.data.model.login.Session;
 import ru.sejapoe.digitalhotel.data.repository.SessionRepository;
@@ -40,6 +42,7 @@ public class TokenInterceptor implements Interceptor {
                 String token = getToken();
                 if (token == null) return new Response.Builder()
                         .request(originalRequest)
+                        .body(ResponseBody.create("", MediaType.get("text/plain")))
                         .protocol(Protocol.HTTP_1_1)
                         .code(401)
                         .message("Unauthorized")
