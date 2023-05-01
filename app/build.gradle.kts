@@ -68,6 +68,7 @@ dependencies {
     implementation(libs.room.runtime)
     annotationProcessor(libs.room.compiler)
     implementation(libs.material)
+    implementation(libs.material.dialogs)
     implementation(libs.constraintlayout)
     implementation(libs.annotation)
     implementation(libs.appcompat)

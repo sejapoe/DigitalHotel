@@ -10,11 +10,7 @@ import static ru.sejapoe.digitalhotel.utils.AuthUtils.random256;
 import static ru.sejapoe.digitalhotel.utils.AuthUtils.scrypt;
 import static ru.sejapoe.digitalhotel.utils.AuthUtils.xorByteArrays;
 
-import android.util.Log;
-
 import androidx.core.util.Pair;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Transformations;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.annotations.SerializedName;
@@ -23,7 +19,6 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
-import java.time.LocalDate;
 import java.util.Base64;
 import java.util.concurrent.Executors;
 
@@ -32,22 +27,20 @@ import javax.inject.Singleton;
 
 import retrofit2.Call;
 import retrofit2.Response;
-import ru.sejapoe.digitalhotel.data.model.UserInfo;
 import ru.sejapoe.digitalhotel.data.model.login.Session;
-import ru.sejapoe.digitalhotel.data.model.login.User;
-import ru.sejapoe.digitalhotel.data.model.login.UserStatus;
 import ru.sejapoe.digitalhotel.data.source.network.service.LoginService;
 import ru.sejapoe.digitalhotel.utils.BitArray256;
-import ru.sejapoe.digitalhotel.utils.LiveDataUtils;
 
 @Singleton
 public class LoginRepository {
     private final SessionRepository sessionRepository;
+    private final UserRepository userRepository;
     private final LoginService loginService;
 
     @Inject
-    public LoginRepository(SessionRepository sessionRepository, LoginService loginService) {
+    public LoginRepository(SessionRepository sessionRepository, UserRepository userRepository, LoginService loginService) {
         this.sessionRepository = sessionRepository;
+        this.userRepository = userRepository;
         this.loginService = loginService;
     }
 
@@ -98,7 +91,7 @@ public class LoginRepository {
         sessionId = post2.body();
         Session session = new Session(Integer.parseInt(sessionId), sessionKey);
         sessionRepository.setSession(session);
-        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(Executors.newSingleThreadExecutor(), this::subscribe);
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(Executors.newSingleThreadExecutor(), userRepository::subscribe);
     }
 
     public void logOut() {
@@ -107,39 +100,6 @@ public class LoginRepository {
         } catch (IOException ignored) {
         }
         sessionRepository.dropSession();
-    }
-
-    public void subscribe(String token) {
-        try {
-            loginService.subscribe(token).execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public LiveData<UserStatus> userStatus() {
-        return Transformations.map(LiveDataUtils.callToStatusLiveData(loginService.ping()), integer -> {
-            Log.d("Test", String.valueOf(integer));
-            switch (integer) {
-                case 401:
-                    return UserStatus.NO_USER;
-                case 403:
-                    return UserStatus.NO_SURVEY;
-                case 200:
-                    return UserStatus.READY;
-                default:
-                    return UserStatus.NO_INTERNET;
-            }
-        });
-    }
-
-    public LiveData<Boolean> sendSurvey(String firstName, String lastName, String parentheses, String phoneNumber, LocalDate date, boolean isMale) {
-        UserInfo userInfo = new UserInfo(0, firstName, lastName, parentheses, phoneNumber, date, isMale ? UserInfo.Sex.MALE : UserInfo.Sex.FEMALE);
-        return LiveDataUtils.callToSuccessLiveData(loginService.setInfo(userInfo));
-    }
-
-    public LiveData<User> getUser() {
-        return LiveDataUtils.callToBodyLiveData(loginService.getUser());
     }
 
     public static class LoginServerResponse {

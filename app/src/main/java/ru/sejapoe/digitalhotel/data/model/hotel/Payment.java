@@ -1,6 +1,6 @@
 package ru.sejapoe.digitalhotel.data.model.hotel;
 
-import ru.sejapoe.digitalhotel.data.model.login.User;
+import ru.sejapoe.digitalhotel.data.model.user.User;
 
 public class Payment {
     private final int id;

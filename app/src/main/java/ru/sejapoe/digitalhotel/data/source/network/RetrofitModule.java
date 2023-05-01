@@ -20,13 +20,14 @@ import ru.sejapoe.digitalhotel.data.repository.SessionRepository;
 import ru.sejapoe.digitalhotel.data.source.network.service.HotelService;
 import ru.sejapoe.digitalhotel.data.source.network.service.LoginService;
 import ru.sejapoe.digitalhotel.data.source.network.service.RoomService;
+import ru.sejapoe.digitalhotel.data.source.network.service.UserService;
 import ru.sejapoe.digitalhotel.utils.LocalDateAdapter;
 
 @Module
 @InstallIn(SingletonComponent.class)
 public class RetrofitModule {
-//    private static final String HOST = "http://192.168.0.15:8080";
-private static final String HOST = "https://sejapoe.live";
+    //    private static final String HOST = "http://192.168.0.15:8080";
+    private static final String HOST = "https://sejapoe.live";
 
     @Provides
     @Singleton
@@ -64,5 +65,11 @@ private static final String HOST = "https://sejapoe.live";
     @Singleton
     public static RoomService provideRoomService(Retrofit retrofit) {
         return retrofit.create(RoomService.class);
+    }
+
+    @Provides
+    @Singleton
+    public static UserService provideUserService(Retrofit retrofit) {
+        return retrofit.create(UserService.class);
     }
 }

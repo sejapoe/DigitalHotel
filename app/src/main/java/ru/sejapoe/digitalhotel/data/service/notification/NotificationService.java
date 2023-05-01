@@ -11,13 +11,13 @@ import java.util.Objects;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import ru.sejapoe.digitalhotel.data.repository.LoginRepository;
 import ru.sejapoe.digitalhotel.data.repository.RoomRepository;
+import ru.sejapoe.digitalhotel.data.repository.UserRepository;
 
 @AndroidEntryPoint
 public class NotificationService extends FirebaseMessagingService {
     @Inject
-    public LoginRepository loginRepository;
+    public UserRepository userRepository;
 
     @Inject
     public RoomRepository roomRepository;
@@ -25,7 +25,7 @@ public class NotificationService extends FirebaseMessagingService {
     @Override
     public void onNewToken(@NonNull String token) {
         super.onNewToken(token);
-        loginRepository.subscribe(token);
+        userRepository.subscribe(token);
     }
 
     @Override

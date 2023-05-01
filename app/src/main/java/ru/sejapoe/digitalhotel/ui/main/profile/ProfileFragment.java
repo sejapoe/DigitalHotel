@@ -13,7 +13,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import ru.sejapoe.digitalhotel.R;
-import ru.sejapoe.digitalhotel.data.model.UserInfo;
+import ru.sejapoe.digitalhotel.data.model.user.UserInfo;
 import ru.sejapoe.digitalhotel.databinding.FragmentProfileBinding;
 
 @AndroidEntryPoint
@@ -38,6 +38,8 @@ public class ProfileFragment extends Fragment {
             binding.fullName.setText(userInfo.getFullName());
             binding.sex.setText(userInfo.getSex().name());
         });
+
+        binding.friendsBtn.setOnClickListener(v -> NavHostFragment.findNavController(this).navigate(R.id.action_profileFragment_to_friendsFragment));
 
         binding.logoutBtn.setOnClickListener(v -> viewModel.logOut());
         viewModel.isLogged().observe(this.getViewLifecycleOwner(), isLogged -> {

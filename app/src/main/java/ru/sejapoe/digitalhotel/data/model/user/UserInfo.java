@@ -1,4 +1,4 @@
-package ru.sejapoe.digitalhotel.data.model;
+package ru.sejapoe.digitalhotel.data.model.user;
 
 import java.time.LocalDate;
 

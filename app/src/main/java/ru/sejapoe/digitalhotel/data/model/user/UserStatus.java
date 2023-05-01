@@ -1,4 +1,4 @@
-package ru.sejapoe.digitalhotel.data.model.login;
+package ru.sejapoe.digitalhotel.data.model.user;
 
 public enum UserStatus {
     NO_INTERNET,

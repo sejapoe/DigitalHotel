@@ -11,20 +11,20 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import ru.sejapoe.digitalhotel.R;
-import ru.sejapoe.digitalhotel.data.model.SurveyFormState;
-import ru.sejapoe.digitalhotel.data.repository.LoginRepository;
+import ru.sejapoe.digitalhotel.data.model.user.SurveyFormState;
+import ru.sejapoe.digitalhotel.data.repository.UserRepository;
 
 @HiltViewModel
 public class SurveyViewModel extends ViewModel {
     private static final Pattern PHONE_REGEX = Pattern.compile("^\\+7\\d{10}$");
 
-    private final LoginRepository repository;
+    private final UserRepository repository;
     private final MutableLiveData<LocalDate> date = new MutableLiveData<>();
 
     private final MutableLiveData<SurveyFormState> formState = new MutableLiveData<>(new SurveyFormState());
 
     @Inject
-    public SurveyViewModel(LoginRepository repository) {
+    public SurveyViewModel(UserRepository repository) {
         this.repository = repository;
     }
 

@@ -45,4 +45,13 @@
     <string name="phone_number">Номер телефона</string>
     <string name="error_field_required">Пожалуйста, заполните это поле</string>
     <string name="error_invalid_phone_number">Неверный формат номера</string>
+    <string name="add">Добавить</string>
+    <string name="search_friend">Поиск друзей...</string>
+    <string name="friend_s_email">Email друга</string>
+    <string name="user_not_found">Пользователь не найден</string>
+    <string name="already_friends">Вы уже друзья</string>
+    <string name="friend_request_accepted_title">Запрос дружбы был принят</string>
+    <string name="friend_request_accepted_body">%s и Вы теперь друзья</string>
+    <string name="new_friend_request_title">Входящий запрос дружбы</string>
+    <string name="new_friend_request_body">%s хочет быть Вашим другом</string>
 </resources>

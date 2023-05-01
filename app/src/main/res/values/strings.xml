@@ -35,6 +35,15 @@
     <string name="phone_number">Phone Number</string>
     <string name="error_field_required">Please, fill this field</string>
     <string name="error_invalid_phone_number">Invalid phone number</string>
+    <string name="add">Add</string>
+    <string name="search_friend">Search friend…</string>
+    <string name="friend_s_email">Friend\'s email</string>
+    <string name="user_not_found">User not found</string>
+    <string name="already_friends">You are friends already</string>
+    <string name="friend_request_accepted_title">Friend request has been accepted</string>
+    <string name="friend_request_accepted_body">%s and you now are friends</string>
+    <string name="new_friend_request_title">New friend request</string>
+    <string name="new_friend_request_body">%s wants to be your friend</string>
     <plurals name="rooms_count">
         <item quantity="one">%d room left</item>
         <item quantity="other">%d rooms left</item>

@@ -3,13 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph.xml"
-    app:startDestination="@id/profileFragment">
+    app:startDestination="@id/profileNavigation">
 
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="ru.sejapoe.digitalhotel.ui.main.profile.ProfileFragment"
-        android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/roomFragment"
         android:name="ru.sejapoe.digitalhotel.ui.main.room.RoomFragment"
@@ -78,5 +73,22 @@
                 app:popEnterAnim="@android:anim/fade_in"
                 app:popExitAnim="@android:anim/fade_out" />
         </fragment>
+    </navigation>
+    <navigation
+        android:id="@+id/profileNavigation"
+        app:startDestination="@id/profileFragment">
+        <fragment
+            android:id="@+id/profileFragment"
+            android:name="ru.sejapoe.digitalhotel.ui.main.profile.ProfileFragment"
+            android:label="ProfileFragment"
+            tools:layout="@layout/fragment_profile">
+            <action
+                android:id="@+id/action_profileFragment_to_friendsFragment"
+                app:destination="@id/friendsFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/friendsFragment"
+            android:name="ru.sejapoe.digitalhotel.ui.main.profile.friends.FriendsFragment"
+            android:label="FriendsFragment" />
     </navigation>
 </navigation>

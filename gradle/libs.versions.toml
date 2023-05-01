@@ -14,6 +14,7 @@ navigation = "2.5.3"
 guava = "31.1-android"
 appcompat = "1.6.1"
 material = "1.8.0"
+material-dialogs = "0.9.6.0"
 constraintLayout = "2.1.4"
 lifecycle = "2.6.1"
 annotation = "1.6.0"
@@ -45,6 +46,7 @@ gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+material-dialogs = { group = "com.afollestad.material-dialogs", name = "core", version.ref = "material-dialogs" }
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigation" }
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigation" }
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }

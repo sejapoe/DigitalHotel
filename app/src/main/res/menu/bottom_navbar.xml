@@ -9,7 +9,7 @@
         android:icon="@drawable/home_24"
         android:title="@string/room" />
     <item
-        android:id="@+id/profileFragment"
+        android:id="@+id/profileNavigation"
         android:icon="@drawable/user_24"
         android:title="@string/profile" />
 </menu>

@@ -1,6 +1,4 @@
-package ru.sejapoe.digitalhotel.data.model.login;
-
-import ru.sejapoe.digitalhotel.data.model.UserInfo;
+package ru.sejapoe.digitalhotel.data.model.user;
 
 public class User {
     private final int id;
