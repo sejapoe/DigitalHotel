@@ -37,7 +37,13 @@ public class FriendsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(FriendViewModel.class);
 
-        binding.friendsRecycler.setAdapter(new FriendsAdapter());
+        FriendsAdapter adapter = new FriendsAdapter();
+        adapter.setOnClickListener(friend -> {
+            if (friend.getFriendStatus() == FriendsAdapter.FriendStatus.INCOME) {
+                viewModel.sendOrAcceptRequest(friend.getUserLess().getUsername()).observe(getViewLifecycleOwner(), this::sendOrAcceptRequestObserver);
+            }
+        });
+        binding.friendsRecycler.setAdapter(adapter);
         initFriends();
 
         binding.addFriend.setOnClickListener(v -> {
@@ -54,22 +60,24 @@ public class FriendsFragment extends Fragment {
                     .positiveText(R.string.search)
                     .cancelable(true)
                     .onPositive((dialog, which) -> {
-                        viewModel.sendOrAcceptRequest(dialog.getInputEditText().getEditableText().toString()).observe(getViewLifecycleOwner(), integer -> {
-                            switch (integer) {
-                                case 200:
-                                    initFriends();
-                                    break;
-                                case 404:
-                                    Toast.makeText(requireContext(), R.string.user_not_found, Toast.LENGTH_SHORT).show();
-                                    break;
-                                case 302:
-                                    Toast.makeText(requireContext(), R.string.already_friends, Toast.LENGTH_SHORT).show();
-                                    break;
-                            }
-                        });
+                        viewModel.sendOrAcceptRequest(dialog.getInputEditText().getEditableText().toString()).observe(getViewLifecycleOwner(), this::sendOrAcceptRequestObserver);
                     })
                     .show();
         });
+    }
+
+    private void sendOrAcceptRequestObserver(int integer) {
+        switch (integer) {
+            case 200:
+                initFriends();
+                break;
+            case 404:
+                Toast.makeText(requireContext(), R.string.user_not_found, Toast.LENGTH_SHORT).show();
+                break;
+            case 302:
+                Toast.makeText(requireContext(), R.string.already_friends, Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
     private void initFriends() {

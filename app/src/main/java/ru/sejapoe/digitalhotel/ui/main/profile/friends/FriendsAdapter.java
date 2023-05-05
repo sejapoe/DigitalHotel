@@ -19,6 +19,7 @@ import ru.sejapoe.digitalhotel.data.model.user.UserLess;
 import ru.sejapoe.digitalhotel.databinding.FriendItemBinding;
 
 public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHolder> {
+    private OnClickListener onClickListener;
     private final SortedList<Friend> friends = new SortedList<>(Friend.class, new SortedListAdapterCallback<Friend>(this) {
         @Override
         public int compare(Friend o1, Friend o2) {
@@ -63,6 +64,9 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.binding.text.setText(friends.get(position).userLess.getFullName());
+        holder.binding.getRoot().setOnClickListener(v -> {
+            if (onClickListener != null) onClickListener.onClick(friends.get(position));
+        });
         switch (friends.get(position).friendStatus) {
             case ACCEPTED:
                 holder.binding.text.setTextColor(Color.GREEN);
@@ -81,6 +85,14 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         return friends.size();
     }
 
+    public void setOnClickListener(OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+
+    public interface OnClickListener {
+        void onClick(Friend friend);
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final FriendItemBinding binding;
 
@@ -97,6 +109,14 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         public Friend(UserLess userLess, FriendStatus friendStatus) {
             this.userLess = userLess;
             this.friendStatus = friendStatus;
+        }
+
+        public UserLess getUserLess() {
+            return userLess;
+        }
+
+        public FriendStatus getFriendStatus() {
+            return friendStatus;
         }
 
         @Override

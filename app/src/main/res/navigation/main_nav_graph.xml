@@ -5,12 +5,6 @@
     android:id="@+id/main_nav_graph.xml"
     app:startDestination="@id/profileNavigation">
 
-    <fragment
-        android:id="@+id/roomFragment"
-        android:name="ru.sejapoe.digitalhotel.ui.main.room.RoomFragment"
-        android:label="RoomFragment"
-        tools:layout="@layout/fragment_room" />
-
     <navigation
         android:id="@+id/bookingNavigation"
         app:startDestination="@id/bookingFragment">
@@ -89,6 +83,25 @@
         <fragment
             android:id="@+id/friendsFragment"
             android:name="ru.sejapoe.digitalhotel.ui.main.profile.friends.FriendsFragment"
-            android:label="FriendsFragment" />
+            android:label="FriendsFragment"
+            tools:layout="@layout/fragment_friends" />
+    </navigation>
+    <navigation
+        android:id="@+id/roomNavigation"
+        app:startDestination="@id/roomFragment">
+        <fragment
+            android:id="@+id/accessFragment"
+            android:name="ru.sejapoe.digitalhotel.ui.main.room.access.AccessFragment"
+            android:label="AccessFragment"
+            tools:layout="@layout/fragment_access" />
+        <fragment
+            android:id="@+id/roomFragment"
+            android:name="ru.sejapoe.digitalhotel.ui.main.room.RoomFragment"
+            android:label="RoomFragment"
+            tools:layout="@layout/fragment_room">
+            <action
+                android:id="@+id/action_roomFragment_to_accessFragment"
+                app:destination="@id/accessFragment" />
+        </fragment>
     </navigation>
 </navigation>

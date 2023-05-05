@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import ru.sejapoe.digitalhotel.R;
@@ -47,5 +48,6 @@ public class OccupationFragment extends Fragment {
         viewModel.isOpen().observe(getViewLifecycleOwner(), isOpen -> binding.lock.setImageResource(isOpen ? R.drawable.unlock_48 : R.drawable.lock_48));
 
         binding.lock.setOnClickListener(v -> viewModel.open());
+        binding.access.setOnClickListener(v -> NavHostFragment.findNavController(getParentFragment().getParentFragment()).navigate(R.id.action_roomFragment_to_accessFragment));
     }
 }

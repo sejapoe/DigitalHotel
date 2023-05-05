@@ -5,7 +5,7 @@
         android:icon="@drawable/calendar_clock_24"
         android:title="@string/booking" />
     <item
-        android:id="@+id/roomFragment"
+        android:id="@+id/roomNavigation"
         android:icon="@drawable/home_24"
         android:title="@string/room" />
     <item
