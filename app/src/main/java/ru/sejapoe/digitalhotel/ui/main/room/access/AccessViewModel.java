@@ -9,10 +9,15 @@ import ru.sejapoe.digitalhotel.data.repository.AccessRepository;
 
 @HiltViewModel
 public class AccessViewModel extends ViewModel {
+    private int occupationId;
     private final AccessRepository accessRepository;
 
     @Inject
     public AccessViewModel(AccessRepository accessRepository) {
         this.accessRepository = accessRepository;
+    }
+
+    public void setOccupationId(int occupationId) {
+        this.occupationId = occupationId;
     }
 }

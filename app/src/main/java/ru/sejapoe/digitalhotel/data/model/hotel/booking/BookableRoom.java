@@ -1,9 +1,11 @@
-package ru.sejapoe.digitalhotel.data.model.hotel;
+package ru.sejapoe.digitalhotel.data.model.hotel.booking;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+
+import ru.sejapoe.digitalhotel.data.model.hotel.room.RoomType;
 
 public class BookableRoom implements Parcelable {
     private final int count;

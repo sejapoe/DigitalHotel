@@ -1,6 +1,10 @@
-package ru.sejapoe.digitalhotel.data.model.hotel;
+package ru.sejapoe.digitalhotel.data.model.hotel.booking;
 
 import java.time.LocalDate;
+
+import ru.sejapoe.digitalhotel.data.model.hotel.HotelLess;
+import ru.sejapoe.digitalhotel.data.model.hotel.Payment;
+import ru.sejapoe.digitalhotel.data.model.hotel.room.RoomType;
 
 public class Booking {
     private final int id;

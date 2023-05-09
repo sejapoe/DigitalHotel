@@ -13,9 +13,9 @@ import javax.inject.Singleton;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import ru.sejapoe.digitalhotel.data.model.hotel.BookableRoom;
-import ru.sejapoe.digitalhotel.data.model.hotel.Booking;
 import ru.sejapoe.digitalhotel.data.model.hotel.HotelLess;
+import ru.sejapoe.digitalhotel.data.model.hotel.booking.BookableRoom;
+import ru.sejapoe.digitalhotel.data.model.hotel.booking.Booking;
 import ru.sejapoe.digitalhotel.data.source.network.service.HotelService;
 import ru.sejapoe.digitalhotel.utils.LiveDataUtils;
 

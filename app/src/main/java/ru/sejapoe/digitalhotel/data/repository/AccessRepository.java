@@ -2,10 +2,13 @@ package ru.sejapoe.digitalhotel.data.repository;
 
 import androidx.lifecycle.LiveData;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import ru.sejapoe.digitalhotel.data.model.hotel.AccessShareEdit;
+import ru.sejapoe.digitalhotel.data.model.hotel.access.AccessShare;
+import ru.sejapoe.digitalhotel.data.model.hotel.access.AccessShareEdit;
 import ru.sejapoe.digitalhotel.data.source.network.service.AccessService;
 import ru.sejapoe.digitalhotel.utils.LiveDataUtils;
 
@@ -16,6 +19,10 @@ public class AccessRepository {
     @Inject
     public AccessRepository(AccessService accessService) {
         this.accessService = accessService;
+    }
+
+    public LiveData<List<AccessShare>> getSharedAccesses(int roomId) {
+        return LiveDataUtils.callToListLiveData(accessService.getSharedAccesses(roomId));
     }
 
     public LiveData<Boolean> shareAccess(int roomId, String username) {

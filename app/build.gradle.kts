@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.hilt.android.gradle.plugin)
     alias(libs.plugins.com.google.services)
+    alias(libs.plugins.androidx.navigation.safeargs)
 }
 
 @Suppress("UnstableApiUsage")

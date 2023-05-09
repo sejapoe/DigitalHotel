@@ -6,7 +6,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
-import ru.sejapoe.digitalhotel.data.model.hotel.Occupation;
+import ru.sejapoe.digitalhotel.data.model.hotel.room.Occupation;
 import ru.sejapoe.digitalhotel.data.source.network.Authenticated;
 
 @Authenticated

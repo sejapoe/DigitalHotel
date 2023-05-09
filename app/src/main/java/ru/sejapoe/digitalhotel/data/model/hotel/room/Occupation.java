@@ -1,4 +1,4 @@
-package ru.sejapoe.digitalhotel.data.model.hotel;
+package ru.sejapoe.digitalhotel.data.model.hotel.room;
 
 import java.io.Serializable;
 import java.time.LocalDate;

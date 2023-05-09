@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import ru.sejapoe.digitalhotel.data.model.hotel.Occupation;
+import ru.sejapoe.digitalhotel.data.model.hotel.room.Occupation;
 import ru.sejapoe.digitalhotel.databinding.FragmentRoomBinding;
 
 @AndroidEntryPoint

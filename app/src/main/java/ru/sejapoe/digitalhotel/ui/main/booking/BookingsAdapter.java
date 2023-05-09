@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.sejapoe.digitalhotel.R;
-import ru.sejapoe.digitalhotel.data.model.hotel.Booking;
+import ru.sejapoe.digitalhotel.data.model.hotel.booking.Booking;
 import ru.sejapoe.digitalhotel.databinding.BookingItemBinding;
 
 public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHolder> {

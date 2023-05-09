@@ -16,7 +16,7 @@ import java.util.Arrays;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import ru.sejapoe.digitalhotel.R;
-import ru.sejapoe.digitalhotel.data.model.hotel.BookableRoom;
+import ru.sejapoe.digitalhotel.data.model.hotel.booking.BookableRoom;
 import ru.sejapoe.digitalhotel.databinding.FragmentBookableRoomsBinding;
 
 @AndroidEntryPoint

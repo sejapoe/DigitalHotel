@@ -7,9 +7,9 @@ import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
-import ru.sejapoe.digitalhotel.data.model.hotel.BookableRoom;
-import ru.sejapoe.digitalhotel.data.model.hotel.Booking;
 import ru.sejapoe.digitalhotel.data.model.hotel.HotelLess;
+import ru.sejapoe.digitalhotel.data.model.hotel.booking.BookableRoom;
+import ru.sejapoe.digitalhotel.data.model.hotel.booking.Booking;
 import ru.sejapoe.digitalhotel.data.source.network.Authenticated;
 
 @Authenticated

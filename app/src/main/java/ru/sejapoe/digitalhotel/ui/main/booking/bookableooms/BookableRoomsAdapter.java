@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ru.sejapoe.digitalhotel.R;
-import ru.sejapoe.digitalhotel.data.model.hotel.BookableRoom;
+import ru.sejapoe.digitalhotel.data.model.hotel.booking.BookableRoom;
 import ru.sejapoe.digitalhotel.databinding.BookableRoomItemBinding;
 
 public class BookableRoomsAdapter extends RecyclerView.Adapter<BookableRoomsAdapter.ViewHolder> {

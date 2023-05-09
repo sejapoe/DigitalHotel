@@ -93,7 +93,11 @@
             android:id="@+id/accessFragment"
             android:name="ru.sejapoe.digitalhotel.ui.main.room.access.AccessFragment"
             android:label="AccessFragment"
-            tools:layout="@layout/fragment_access" />
+            tools:layout="@layout/fragment_access">
+            <argument
+                android:name="occupation_id"
+                app:argType="integer" />
+        </fragment>
         <fragment
             android:id="@+id/roomFragment"
             android:name="ru.sejapoe.digitalhotel.ui.main.room.RoomFragment"

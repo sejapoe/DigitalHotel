@@ -1,4 +1,6 @@
-package ru.sejapoe.digitalhotel.data.model.hotel;
+package ru.sejapoe.digitalhotel.data.model.hotel.room;
+
+import ru.sejapoe.digitalhotel.data.model.hotel.HotelLess;
 
 public class Room {
     private final int id;

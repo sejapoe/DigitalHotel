@@ -26,6 +26,7 @@ legacy-support-v4 = "1.0.0"
 lifecycle-livedata-ktx = "2.6.1"
 lifecycle-viewmodel-ktx = "2.6.1"
 [libraries]
+navigation-safe-args-gradle-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigation" }
 zxing-android = { group = "com.journeyapps", name = "zxing-android-embedded", version.ref = "zxing" }
 dynamicanimation = { module = "androidx.dynamicanimation:dynamicanimation", version.ref = "dynamicanimation" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase" }
@@ -68,3 +69,4 @@ com-android-application = { id = "com.android.application", version.ref = "andro
 com-android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
 com-google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 hilt-android-gradle-plugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+androidx-navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "navigation" }

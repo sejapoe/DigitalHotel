@@ -8,7 +8,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import ru.sejapoe.digitalhotel.data.model.hotel.Booking;
+import ru.sejapoe.digitalhotel.data.model.hotel.booking.Booking;
 import ru.sejapoe.digitalhotel.data.repository.HotelRepository;
 
 @HiltViewModel

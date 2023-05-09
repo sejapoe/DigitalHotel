@@ -14,8 +14,9 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import ru.sejapoe.digitalhotel.R;
-import ru.sejapoe.digitalhotel.data.model.hotel.Occupation;
+import ru.sejapoe.digitalhotel.data.model.hotel.room.Occupation;
 import ru.sejapoe.digitalhotel.databinding.FragmentOccupationBinding;
+import ru.sejapoe.digitalhotel.ui.main.room.RoomFragmentDirections;
 
 @AndroidEntryPoint
 public class OccupationFragment extends Fragment {
@@ -48,6 +49,9 @@ public class OccupationFragment extends Fragment {
         viewModel.isOpen().observe(getViewLifecycleOwner(), isOpen -> binding.lock.setImageResource(isOpen ? R.drawable.unlock_48 : R.drawable.lock_48));
 
         binding.lock.setOnClickListener(v -> viewModel.open());
-        binding.access.setOnClickListener(v -> NavHostFragment.findNavController(getParentFragment().getParentFragment()).navigate(R.id.action_roomFragment_to_accessFragment));
+//        .actionLoadingFragmentToLoginFragment();
+        // R.id.action_roomFragment_to_accessFragment
+        RoomFragmentDirections.ActionRoomFragmentToAccessFragment action = RoomFragmentDirections.actionRoomFragmentToAccessFragment(occupation.getId());
+        binding.access.setOnClickListener(v -> NavHostFragment.findNavController(getParentFragment().getParentFragment()).navigate(action));
     }
 }

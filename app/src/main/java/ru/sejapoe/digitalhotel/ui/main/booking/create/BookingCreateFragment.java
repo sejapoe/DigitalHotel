@@ -24,8 +24,8 @@ import java.util.Objects;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import ru.sejapoe.digitalhotel.R;
-import ru.sejapoe.digitalhotel.data.model.hotel.BookableRoom;
 import ru.sejapoe.digitalhotel.data.model.hotel.HotelLess;
+import ru.sejapoe.digitalhotel.data.model.hotel.booking.BookableRoom;
 import ru.sejapoe.digitalhotel.databinding.FragmentBookingCreateBinding;
 import ru.sejapoe.digitalhotel.ui.main.booking.create.guestcount.GuestCountDialogFragment;
 import ru.sejapoe.digitalhotel.utils.LocalDateAdapter;
