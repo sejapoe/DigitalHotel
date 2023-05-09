@@ -5,9 +5,11 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
+import java.util.Objects;
+
 import ru.sejapoe.digitalhotel.data.model.hotel.room.RoomType;
 
-public class BookableRoom implements Parcelable {
+public class BookableRoom implements Parcelable, Comparable<BookableRoom> {
     private final int count;
     private final RoomType roomType;
 
@@ -50,5 +52,24 @@ public class BookableRoom implements Parcelable {
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeInt(this.count);
         dest.writeParcelable(this.roomType, flags);
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BookableRoom that = (BookableRoom) o;
+        return count == that.count && Objects.equals(roomType, that.roomType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(count, roomType);
+    }
+
+    @Override
+    public int compareTo(@NonNull BookableRoom o) {
+        return Integer.compare(roomType.getId(), o.roomType.getId());
     }
 }

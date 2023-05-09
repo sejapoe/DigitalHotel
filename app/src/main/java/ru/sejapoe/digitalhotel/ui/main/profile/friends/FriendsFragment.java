@@ -36,7 +36,6 @@ public class FriendsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(FriendViewModel.class);
-
         FriendsAdapter adapter = new FriendsAdapter();
         adapter.setOnClickListener(friend -> {
             if (friend.getFriendStatus() == FriendsAdapter.FriendStatus.INCOME) {
@@ -45,7 +44,6 @@ public class FriendsFragment extends Fragment {
         });
         binding.friendsRecycler.setAdapter(adapter);
         initFriends();
-
         binding.addFriend.setOnClickListener(v -> {
             new MaterialDialog.Builder(requireContext())
                     .title(R.string.search_friend)
@@ -81,7 +79,7 @@ public class FriendsFragment extends Fragment {
     }
 
     private void initFriends() {
-        ((FriendsAdapter) binding.friendsRecycler.getAdapter()).clear();
+        ((FriendsAdapter) binding.friendsRecycler.getAdapter()).clearItems();
         viewModel.getFriends().observe(getViewLifecycleOwner(), friends -> {
             ((FriendsAdapter) binding.friendsRecycler.getAdapter()).addFriends(friends);
         });

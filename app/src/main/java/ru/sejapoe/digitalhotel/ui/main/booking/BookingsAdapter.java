@@ -1,68 +1,23 @@
 package ru.sejapoe.digitalhotel.ui.main.booking;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import ru.sejapoe.digitalhotel.R;
 import ru.sejapoe.digitalhotel.data.model.hotel.booking.Booking;
 import ru.sejapoe.digitalhotel.databinding.BookingItemBinding;
+import ru.sejapoe.digitalhotel.ui.core.ClickableItemListAdapter;
 
-public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHolder> {
-    private List<Booking> items = new ArrayList<>();
-
-    private final OnItemClickListener listener;
-
-    public BookingsAdapter(OnItemClickListener listener) {
-        this.listener = listener;
-    }
-
-
-    public void setItems(List<Booking> items) {
-        this.items = items;
-        notifyItemRangeChanged(0, items.size());
-    }
-
-
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        BookingItemBinding binding = BookingItemBinding.inflate(inflater, parent, false);
-        return new ViewHolder(binding.getRoot());
+public class BookingsAdapter extends ClickableItemListAdapter<BookingItemBinding, Booking> {
+    public BookingsAdapter(OnItemClickListener<Booking> listener) {
+        super(BookingItemBinding.class, Booking.class);
+        setOnClickListener(listener);
     }
 
     @Override
-    public int getItemCount() {
-        return items.size();
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Booking item = items.get(position);
-        holder.binding.hotelName.setText(item.getHotel().getName());
-        holder.binding.roomType.setText(item.getRoomType().getName());
-        holder.binding.price.setText(holder.itemView.getResources().getString(R.string.price, item.getRoomType().getPrice()));
-        holder.binding.dates.setText(holder.itemView.getResources().getString(R.string.dates, item.getCheckInDate(), item.getCheckOutDate()));
-        holder.binding.getRoot().setOnClickListener(v -> listener.onClick(items.get(position)));
-    }
-
-    interface OnItemClickListener {
-        void onClick(Booking booking);
-    }
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final BookingItemBinding binding;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            binding = BookingItemBinding.bind(itemView);
-        }
+    public void onBindViewHolder(@NonNull BookingItemBinding binding, @NonNull Booking booking) {
+        binding.hotelName.setText(booking.getHotel().getName());
+        binding.roomType.setText(booking.getRoomType().getName());
+        binding.price.setText(binding.getRoot().getResources().getString(R.string.price, booking.getRoomType().getPrice()));
+        binding.dates.setText(binding.getRoot().getResources().getString(R.string.dates, booking.getCheckInDate(), booking.getCheckOutDate()));
     }
 }

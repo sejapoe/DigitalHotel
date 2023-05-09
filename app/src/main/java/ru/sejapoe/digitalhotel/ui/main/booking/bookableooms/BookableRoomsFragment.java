@@ -18,6 +18,8 @@ import dagger.hilt.android.AndroidEntryPoint;
 import ru.sejapoe.digitalhotel.R;
 import ru.sejapoe.digitalhotel.data.model.hotel.booking.BookableRoom;
 import ru.sejapoe.digitalhotel.databinding.FragmentBookableRoomsBinding;
+import ru.sejapoe.digitalhotel.ui.core.ClickableItemListAdapter;
+import ru.sejapoe.digitalhotel.ui.core.ItemPaddingDecorator;
 
 @AndroidEntryPoint
 public class BookableRoomsFragment extends Fragment {
@@ -42,12 +44,12 @@ public class BookableRoomsFragment extends Fragment {
         String checkOut = arguments.getString("checkOut");
         int hotelId = arguments.getInt("hotelId");
 
-        BookableRoomsAdapter.OnItemClickListener listener = bookableRoom -> {
+        ClickableItemListAdapter.OnItemClickListener<BookableRoom> listener = bookableRoom -> {
             Toast.makeText(getContext(), "Click", Toast.LENGTH_SHORT).show();
             viewModel.book(hotelId, checkIn, checkOut, bookableRoom.getRoomType().getId()).observe(getViewLifecycleOwner(), unused ->
                     NavHostFragment.findNavController(this).navigate(R.id.action_bookableRoomsFragment_to_bookingFragment));
         };
-        binding.bookableRoomsRecyclerView.addItemDecoration(new BookableRoomsAdapter.ItemPaddingDecorator(getResources().getDimensionPixelSize(R.dimen.item_padding)));
+        binding.bookableRoomsRecyclerView.addItemDecoration(new ItemPaddingDecorator(getResources().getDimensionPixelSize(R.dimen.item_padding)));
         if (bookableRooms != null) {
             binding.bookableRoomsRecyclerView.setAdapter(new BookableRoomsAdapter(Arrays.asList(bookableRooms), listener));
         }
