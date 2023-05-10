@@ -2,7 +2,9 @@ package ru.sejapoe.digitalhotel.data.model.hotel;
 
 import androidx.annotation.NonNull;
 
-public class HotelLess {
+import java.io.Serializable;
+
+public class HotelLess implements Serializable {
     private final int id;
     private final String name;
 

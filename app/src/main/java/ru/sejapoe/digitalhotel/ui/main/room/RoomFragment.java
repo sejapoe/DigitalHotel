@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import ru.sejapoe.digitalhotel.data.model.hotel.room.Occupation;
+import ru.sejapoe.digitalhotel.data.model.hotel.room.RoomAccess;
 import ru.sejapoe.digitalhotel.databinding.FragmentRoomBinding;
 
 @AndroidEntryPoint
@@ -34,9 +34,9 @@ public class RoomFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(RoomViewModel.class);
         binding.pager.setAdapter(new RoomPagerAdapter(this));
         new TabLayoutMediator(binding.tabLayout, binding.pager, (tab, position) -> {
-            Occupation occupation = ((RoomPagerAdapter) binding.pager.getAdapter()).getItem(position);
-            tab.setText(occupation.getRoom().getHotel().getName() + ":" + occupation.getRoom().getNumber());
+            RoomAccess roomAccess = ((RoomPagerAdapter) binding.pager.getAdapter()).getItem(position);
+            tab.setText(roomAccess.getRoom().getHotel().getName() + ":" + roomAccess.getRoom().getNumber());
         }).attach();
-        viewModel.getOccupations().observe(getViewLifecycleOwner(), occupations -> ((RoomPagerAdapter) binding.pager.getAdapter()).setOccupations(occupations));
+        viewModel.getAccesses().observe(getViewLifecycleOwner(), accesses -> ((RoomPagerAdapter) binding.pager.getAdapter()).setAccesses(accesses));
     }
 }

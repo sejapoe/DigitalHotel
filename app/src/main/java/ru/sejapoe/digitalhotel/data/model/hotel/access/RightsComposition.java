@@ -10,6 +10,10 @@ public class RightsComposition {
     }
 
     public boolean satisfy(@NonNull Rights right) {
-        return (value & right.getValue()) == 0;
+        return (value & right.getValue()) != 0;
+    }
+
+    public int getValue() {
+        return value;
     }
 }

@@ -16,14 +16,17 @@ import ru.sejapoe.digitalhotel.data.source.network.Authenticated;
 @Authenticated
 public interface AccessService {
     @GET("/room/{id}/shares")
-    Call<List<AccessShare>> getSharedAccesses(int roomId);
+    Call<List<AccessShare>> getSharedAccesses(@Path("id") int roomId);
 
     @POST("/room/{id}/shares")
-    Call<Void> shareAccess(@Path("id") int roomId, @Body String username);
+    Call<Void> shareAccess(@Path("id") int roomId, @Body List<String> usernames);
 
-    @PUT("/room/{id}/share/{shareId}")
-    Call<Void> editShare(@Path("id") int roomId, @Path("shareId") int shareId, @Body AccessShareEdit accessShareEdit);
+    @GET("/share/{shareId}")
+    Call<AccessShare> getShare(@Path("shareId") int shareId);
 
-    @DELETE("/room/{id}/share/{shareId}")
-    Call<Void> deleteShare(@Path("id") int roomId, @Path("shareId") int shareId);
+    @PUT("/share/{shareId}")
+    Call<Void> editShare(@Path("shareId") int shareId, @Body AccessShareEdit accessShareEdit);
+
+    @DELETE("/share/{shareId}")
+    Call<Void> deleteShare(@Path("shareId") int shareId);
 }

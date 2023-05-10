@@ -5,7 +5,9 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-public class RoomType implements Parcelable {
+import java.io.Serializable;
+
+public class RoomType implements Parcelable, Serializable {
     private final int id;
     private final String name;
     private final int price;

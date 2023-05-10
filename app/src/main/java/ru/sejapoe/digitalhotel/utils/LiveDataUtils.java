@@ -3,10 +3,12 @@ package ru.sejapoe.digitalhotel.utils;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.Transformations;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,5 +50,32 @@ public class LiveDataUtils {
 
     public static LiveData<Integer> callToStatusLiveData(@NonNull Call<?> call) {
         return Transformations.map(callToResponseLiveData(call), response -> response == null ? -1 : response.code());
+    }
+
+    @NonNull
+    public static <R, A, B> LiveData<R> combine(@NonNull LiveData<A> aLiveData, @NonNull LiveData<B> bLiveData, Combinator<R, A, B> combinator) {
+        MutableLiveData<R> rMutableLiveData = new MutableLiveData<>();
+        AtomicReference<A> a = new AtomicReference<>();
+        AtomicReference<B> b = new AtomicReference<>();
+        observeOnce(aLiveData, newValue -> {
+            a.set(newValue);
+            if (b.get() != null) rMutableLiveData.postValue(combinator.combine(a.get(), b.get()));
+        });
+        observeOnce(bLiveData, newValue -> {
+            b.set(newValue);
+            if (a.get() != null) rMutableLiveData.postValue(combinator.combine(a.get(), b.get()));
+        });
+        return rMutableLiveData;
+    }
+
+    public static <T> void observeOnce(@NonNull LiveData<T> liveData, Observer<T> observer) {
+        liveData.observeForever(t -> {
+            observer.onChanged(t);
+            liveData.removeObserver(observer);
+        });
+    }
+
+    public interface Combinator<R, A, B> {
+        R combine(A a, B b);
     }
 }

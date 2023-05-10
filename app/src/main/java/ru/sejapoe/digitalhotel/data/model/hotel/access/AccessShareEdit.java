@@ -3,16 +3,16 @@ package ru.sejapoe.digitalhotel.data.model.hotel.access;
 import javax.annotation.Nullable;
 
 public class AccessShareEdit {
-    private final short rights;
+    private final int rights;
     @Nullable
     private final Integer budget;
 
-    public AccessShareEdit(short rights, @Nullable Integer budget) {
+    public AccessShareEdit(int rights, @Nullable Integer budget) {
         this.rights = rights;
         this.budget = budget;
     }
 
-    public short getRights() {
+    public int getRights() {
         return rights;
     }
 

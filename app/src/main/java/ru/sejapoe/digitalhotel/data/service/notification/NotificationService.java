@@ -33,10 +33,13 @@ public class NotificationService extends FirebaseMessagingService {
         super.onMessageReceived(message);
         Map<String, String> data = message.getData();
         String action = data.getOrDefault("action", "");
-        if (Objects.requireNonNull(action).equals("close_room")) {
+        if (action.equals("close_room")) {
             int roomId = Integer.parseInt(Objects.requireNonNull(data.get("room_id")));
-            roomRepository.close(roomId);
+            roomRepository.setOpened(roomId, false);
         }
-
+        if (action.equals("open_room")) {
+            int roomId = Integer.parseInt(Objects.requireNonNull(data.get("room_id")));
+            roomRepository.setOpened(roomId, true);
+        }
     }
 }

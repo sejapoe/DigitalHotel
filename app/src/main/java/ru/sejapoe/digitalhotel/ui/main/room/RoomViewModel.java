@@ -8,7 +8,7 @@ import java.util.Collection;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import ru.sejapoe.digitalhotel.data.model.hotel.room.Occupation;
+import ru.sejapoe.digitalhotel.data.model.hotel.room.RoomAccess;
 import ru.sejapoe.digitalhotel.data.repository.RoomRepository;
 
 @HiltViewModel
@@ -21,7 +21,7 @@ public class RoomViewModel extends ViewModel {
         this.roomRepository = roomRepository;
     }
 
-    public LiveData<Collection<Occupation>> getOccupations() {
-        return roomRepository.getOccupations();
+    public LiveData<Collection<RoomAccess>> getAccesses() {
+        return roomRepository.getAccesses();
     }
 }

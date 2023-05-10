@@ -90,13 +90,16 @@
         android:id="@+id/roomNavigation"
         app:startDestination="@id/roomFragment">
         <fragment
-            android:id="@+id/accessFragment"
-            android:name="ru.sejapoe.digitalhotel.ui.main.room.access.AccessFragment"
-            android:label="AccessFragment"
-            tools:layout="@layout/fragment_access">
+            android:id="@+id/accessManagerFragment"
+            android:name="ru.sejapoe.digitalhotel.ui.main.room.access.manager.AccessManagerFragment"
+            android:label="AccessManagerFragment"
+            tools:layout="@layout/fragment_access_manager">
             <argument
-                android:name="occupation_id"
+                android:name="room_id"
                 app:argType="integer" />
+            <action
+                android:id="@+id/action_roomFragment_to_accessEditorFragment"
+                app:destination="@id/accessEditorFragment" />
         </fragment>
         <fragment
             android:id="@+id/roomFragment"
@@ -104,8 +107,18 @@
             android:label="RoomFragment"
             tools:layout="@layout/fragment_room">
             <action
-                android:id="@+id/action_roomFragment_to_accessFragment"
-                app:destination="@id/accessFragment" />
+                android:id="@+id/action_roomFragment_to_accessManagerFragment"
+                app:destination="@id/accessManagerFragment" />
+
+        </fragment>
+        <fragment
+            android:id="@+id/accessEditorFragment"
+            android:name="ru.sejapoe.digitalhotel.ui.main.room.access.editor.AccessEditorFragment"
+            android:label="AccessEditorFragment"
+            tools:layout="@layout/fragment_access_editor">
+            <argument
+                android:name="access_id"
+                app:argType="integer" />
         </fragment>
     </navigation>
 </navigation>

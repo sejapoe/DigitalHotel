@@ -10,39 +10,39 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import ru.sejapoe.digitalhotel.data.model.hotel.room.Occupation;
-import ru.sejapoe.digitalhotel.ui.main.room.occupation.OccupationFragment;
+import ru.sejapoe.digitalhotel.data.model.hotel.room.RoomAccess;
+import ru.sejapoe.digitalhotel.ui.main.room.access.AccessFragment;
 
 public class RoomPagerAdapter extends FragmentStateAdapter {
-    private final List<Occupation> occupations = new ArrayList<>();
+    private final List<RoomAccess> accesses = new ArrayList<>();
 
     public RoomPagerAdapter(@NonNull Fragment fragment) {
         super(fragment);
     }
 
-    public void setOccupations(Collection<Occupation> occupations) {
-        this.occupations.clear();
-        this.occupations.addAll(occupations);
-        notifyItemRangeChanged(0, occupations.size());
+    public void setAccesses(Collection<RoomAccess> accesses) {
+        this.accesses.clear();
+        this.accesses.addAll(accesses);
+        notifyItemRangeChanged(0, accesses.size());
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        Occupation occupation = occupations.get(position);
-        OccupationFragment occupationFragment = new OccupationFragment();
+        RoomAccess roomAccess = accesses.get(position);
+        AccessFragment accessFragment = new AccessFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(OccupationFragment.ARG_OCCUPATION, occupation);
-        occupationFragment.setArguments(bundle);
-        return occupationFragment;
+        bundle.putSerializable(AccessFragment.ARG_ACCESS, roomAccess);
+        accessFragment.setArguments(bundle);
+        return accessFragment;
     }
 
     @Override
     public int getItemCount() {
-        return occupations.size();
+        return accesses.size();
     }
 
-    public Occupation getItem(int position) {
-        return occupations.get(position);
+    public RoomAccess getItem(int position) {
+        return accesses.get(position);
     }
 }

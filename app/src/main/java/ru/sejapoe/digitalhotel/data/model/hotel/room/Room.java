@@ -1,8 +1,10 @@
 package ru.sejapoe.digitalhotel.data.model.hotel.room;
 
+import java.io.Serializable;
+
 import ru.sejapoe.digitalhotel.data.model.hotel.HotelLess;
 
-public class Room {
+public class Room implements Serializable {
     private final int id;
     private final int number;
     private final RoomType roomType;
