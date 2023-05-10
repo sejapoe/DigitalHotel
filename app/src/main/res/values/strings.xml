@@ -53,6 +53,8 @@
     <string name="right_pay">Pay for services</string>
     <string name="save">Save</string>
     <string name="right_manage_room">Manage room</string>
+    <string name="days_left">%d days left</string>
+    <string name="today">Today</string>
     <plurals name="rooms_count">
         <item quantity="one">%d room left</item>
         <item quantity="other">%d rooms left</item>
