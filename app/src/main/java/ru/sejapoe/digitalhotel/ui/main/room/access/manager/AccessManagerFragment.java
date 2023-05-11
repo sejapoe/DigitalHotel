@@ -46,17 +46,17 @@ public class AccessManagerFragment extends Fragment {
             NavHostFragment.findNavController(this).navigate(AccessManagerFragmentDirections.actionRoomFragmentToAccessEditorFragment(element.getId()));
         });
         binding.accessShareRecyclerView.setAdapter(adapter);
-        binding.accessShareRecyclerView.addItemDecoration(new ItemPaddingDecorator(16));
+        binding.accessShareRecyclerView.addItemDecoration(new ItemPaddingDecorator(getResources().getDimensionPixelSize(R.dimen.item_padding)));
         binding.add.setOnClickListener(v -> viewModel.getFriends().observe(getViewLifecycleOwner(), friends -> {
-                    new MaterialDialog.Builder(requireContext())
-                            .title(R.string.sharing_access)
-                            .items(friends.stream().map(UserLess::getFullName).collect(Collectors.toList()))
-                            .itemsCallbackMultiChoice(null, (dialog, which, text) -> {
-                                List<String> usernames = Arrays.stream(which).map(integer -> friends.get(integer).getUsername()).collect(Collectors.toList());
-                                viewModel.shareAccess(usernames).observe(getViewLifecycleOwner(), aBoolean -> {
-                                    if (aBoolean) load();
-                                });
-                                return true;
+            new MaterialDialog.Builder(requireContext())
+                    .title(R.string.sharing_access)
+                    .items(friends.stream().map(UserLess::getFullName).collect(Collectors.toList()))
+                    .itemsCallbackMultiChoice(null, (dialog, which, text) -> {
+                        List<String> usernames = Arrays.stream(which).map(integer -> friends.get(integer).getUsername()).collect(Collectors.toList());
+                        viewModel.shareAccess(usernames).observe(getViewLifecycleOwner(), aBoolean -> {
+                            if (aBoolean) load();
+                        });
+                        return true;
                             })
                             .positiveText(R.string.share_access)
                             .show();

@@ -44,7 +44,7 @@ public class FriendsFragment extends Fragment {
             }
         });
         binding.friendsRecycler.setAdapter(adapter);
-        binding.friendsRecycler.addItemDecoration(new ItemPaddingDecorator(16));
+        binding.friendsRecycler.addItemDecoration(new ItemPaddingDecorator(getResources().getDimensionPixelSize(R.dimen.item_padding)));
         initFriends();
         binding.addFriend.setOnClickListener(v -> {
             new MaterialDialog.Builder(requireContext())
