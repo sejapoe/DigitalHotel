@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -15,7 +16,9 @@ import java.time.LocalDate;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import ru.sejapoe.digitalhotel.R;
+import ru.sejapoe.digitalhotel.data.model.hotel.booking.Booking;
 import ru.sejapoe.digitalhotel.databinding.FragmentBookingInfoBinding;
+import ru.sejapoe.digitalhotel.ui.qr.QrCodeDialogFragment;
 import ru.sejapoe.digitalhotel.utils.LocalDateAdapter;
 
 @AndroidEntryPoint
@@ -36,12 +39,14 @@ public class BookingInfoFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(BookingInfoViewModel.class);
         int bookingId = requireArguments().getInt("booking_id");
 
-//        binding.qr.setOnClickListener(v -> new QrCodeDialogFragment("https://www.youtube.com/watch?v=jfKfPfyJRdk").show(getChildFragmentManager(), "QR"));
-        binding.qr.setOnClickListener(v -> viewModel.checkIn(bookingId).observe(getViewLifecycleOwner(), aBoolean -> {
-            if (aBoolean) {
-                NavHostFragment.findNavController(this).navigate(R.id.action_bookingInfoFragment_to_bookingFragment);
-            }
-        }));
+        binding.qr.setOnClickListener(v -> {
+            DialogFragment fragment = new QrCodeDialogFragment("https://www.sejapoe.live/booking/" + (bookingId * 71 + 13) + "/checkIn");
+            fragment.show(getChildFragmentManager(), "QR");
+            viewModel.isCheckedIn(bookingId).observe(getViewLifecycleOwner(), aBoolean -> {
+                if (aBoolean) fragment.dismiss();
+                NavHostFragment.findNavController(this).popBackStack();
+            });
+        });
 
         viewModel.getBooking(bookingId).observe(getViewLifecycleOwner(), booking -> {
             binding.hotelName.setText(booking.getHotel().getName());
@@ -49,12 +54,15 @@ public class BookingInfoFragment extends Fragment {
             binding.checkInDate.setText(LocalDateAdapter.getDateString(booking.getCheckInDate()));
             binding.checkOutDate.setText(LocalDateAdapter.getDateString(booking.getCheckOutDate()));
             binding.actionButton.setEnabled(booking.getPayment() == null);
-            binding.qr.setVisibility(booking.getCheckInDate().toEpochDay() <= LocalDate.now().toEpochDay() ? View.VISIBLE : View.GONE);
+            setQrVisibility(booking);
         });
 
         binding.actionButton.setOnClickListener(v -> {
             binding.actionButton.setEnabled(false);
-            viewModel.payBooking(bookingId).observe(getViewLifecycleOwner(), aBoolean -> binding.actionButton.setEnabled(!aBoolean));
+            viewModel.payBooking(bookingId).observe(getViewLifecycleOwner(), aBoolean -> {
+                binding.actionButton.setEnabled(!aBoolean);
+                viewModel.getBooking(bookingId).observe(getViewLifecycleOwner(), this::setQrVisibility);
+            });
         });
 
         binding.cancelButton.setOnClickListener(v -> viewModel.deleteBooking(bookingId).observe(getViewLifecycleOwner(), isSuccess -> {
@@ -62,5 +70,9 @@ public class BookingInfoFragment extends Fragment {
                 NavHostFragment.findNavController(this).navigate(R.id.action_bookingInfoFragment_to_bookingFragment);
             }
         }));
+    }
+
+    private void setQrVisibility(@NonNull Booking booking) {
+        binding.qr.setVisibility(booking.getCheckInDate().toEpochDay() <= LocalDate.now().toEpochDay() && booking.getPayment() != null ? View.VISIBLE : View.GONE);
     }
 }

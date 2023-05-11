@@ -33,4 +33,8 @@ public class BookingInfoViewModel extends ViewModel {
     public LiveData<Boolean> checkIn(int bookingId) {
         return hotelRepository.checkIn(bookingId);
     }
+
+    public LiveData<Boolean> isCheckedIn(int bookingId) {
+        return hotelRepository.isCheckedIn(bookingId);
+    }
 }

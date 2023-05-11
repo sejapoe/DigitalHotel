@@ -3,9 +3,12 @@ package ru.sejapoe.digitalhotel.data.repository;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -22,6 +25,8 @@ import ru.sejapoe.digitalhotel.utils.LiveDataUtils;
 @Singleton
 public class HotelRepository {
     private final HotelService hotelService;
+
+    private final Map<Integer, MutableLiveData<Boolean>> waitingForCheckIn = new HashMap<>();
 
     @Inject
     public HotelRepository(HotelService hotelService) {
@@ -78,5 +83,19 @@ public class HotelRepository {
 
     public LiveData<Boolean> checkIn(int id) {
         return LiveDataUtils.callToSuccessLiveData(hotelService.checkIn(id));
+    }
+
+    public LiveData<Boolean> isCheckedIn(int id) {
+        MutableLiveData<Boolean> isCheckedIn = new MutableLiveData<>();
+        waitingForCheckIn.put(id, isCheckedIn);
+        return Transformations.map(isCheckedIn, aBoolean -> {
+            if (aBoolean) waitingForCheckIn.remove(id);
+            return aBoolean;
+        });
+    }
+
+    public void setCheckedIn(int bookingId) {
+        MutableLiveData<Boolean> isCheckedIn = waitingForCheckIn.get(bookingId);
+        if (isCheckedIn != null) isCheckedIn.postValue(true);
     }
 }
