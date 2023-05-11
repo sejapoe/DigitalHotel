@@ -15,6 +15,8 @@ import ru.sejapoe.digitalhotel.data.repository.RoomRepository;
 public class RoomViewModel extends ViewModel {
     private final RoomRepository roomRepository;
 
+    private int selected = 0;
+
 
     @Inject
     public RoomViewModel(RoomRepository roomRepository) {
@@ -23,5 +25,13 @@ public class RoomViewModel extends ViewModel {
 
     public LiveData<Collection<RoomAccess>> getAccesses() {
         return roomRepository.getAccesses();
+    }
+
+    public int getSelected() {
+        return selected;
+    }
+
+    public void setSelected(int selected) {
+        this.selected = selected;
     }
 }

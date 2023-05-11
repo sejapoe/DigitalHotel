@@ -36,6 +36,7 @@
             <action
                 android:id="@+id/action_bookableRoomsFragment_to_bookingFragment"
                 app:destination="@id/bookingFragment"
+                app:popUpTo="@id/bookingFragment"
                 app:enterAnim="@android:anim/fade_in"
                 app:exitAnim="@android:anim/fade_out"
                 app:popEnterAnim="@android:anim/fade_in"
@@ -62,6 +63,7 @@
             <action
                 android:id="@+id/action_bookingInfoFragment_to_bookingFragment"
                 app:destination="@id/bookingFragment"
+                app:popUpTo="@id/bookingFragment"
                 app:enterAnim="@android:anim/fade_in"
                 app:exitAnim="@android:anim/fade_out"
                 app:popEnterAnim="@android:anim/fade_in"

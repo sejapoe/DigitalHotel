@@ -18,6 +18,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import dagger.hilt.android.AndroidEntryPoint;
 import ru.sejapoe.digitalhotel.R;
 import ru.sejapoe.digitalhotel.databinding.FragmentFriendsBinding;
+import ru.sejapoe.digitalhotel.ui.core.ItemPaddingDecorator;
 import ru.sejapoe.digitalhotel.ui.login.LoginViewModel;
 
 @AndroidEntryPoint
@@ -43,6 +44,7 @@ public class FriendsFragment extends Fragment {
             }
         });
         binding.friendsRecycler.setAdapter(adapter);
+        binding.friendsRecycler.addItemDecoration(new ItemPaddingDecorator(16));
         initFriends();
         binding.addFriend.setOnClickListener(v -> {
             new MaterialDialog.Builder(requireContext())
