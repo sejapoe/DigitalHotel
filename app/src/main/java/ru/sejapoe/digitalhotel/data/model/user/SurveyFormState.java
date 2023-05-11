@@ -18,20 +18,23 @@ public class SurveyFormState {
     @StringRes
     private final int dateError;
 
+    private final boolean isSexSelected;
+
     public SurveyFormState() {
-        this(android.R.string.ok, android.R.string.ok, android.R.string.ok, android.R.string.ok, android.R.string.ok);
+        this(android.R.string.ok, android.R.string.ok, android.R.string.ok, android.R.string.ok, android.R.string.ok, false);
     }
 
-    public SurveyFormState(@StringRes int firstNameError, @StringRes int lastNameError, @StringRes int patronymicError, @StringRes int phoneNumberError, @StringRes int dateError) {
+    public SurveyFormState(@StringRes int firstNameError, @StringRes int lastNameError, @StringRes int patronymicError, @StringRes int phoneNumberError, @StringRes int dateError, boolean isSexSelected) {
         this.firstNameError = firstNameError;
         this.lastNameError = lastNameError;
         this.patronymicError = patronymicError;
         this.phoneNumberError = phoneNumberError;
         this.dateError = dateError;
+        this.isSexSelected = isSexSelected;
     }
 
     public boolean isOk() {
-        return !(hasFirstNameError() || hasLastNameError() || hasPatronymicError() || hasPhoneNumberError() || hasDateError());
+        return !(hasFirstNameError() || hasLastNameError() || hasPatronymicError() || hasPhoneNumberError() || hasDateError() || !isSexSelected);
     }
 
     public boolean hasFirstNameError() {
@@ -72,5 +75,9 @@ public class SurveyFormState {
 
     public int getDateError() {
         return dateError;
+    }
+
+    public boolean isSexSelected() {
+        return isSexSelected;
     }
 }

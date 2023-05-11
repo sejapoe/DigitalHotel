@@ -30,12 +30,12 @@ public class SurveyViewModel extends ViewModel {
 
 
     public LiveData<Boolean> sendSurvey(String firstName, String lastName, String patronymic, String phoneNumber, boolean isMale) {
-        if (validate(firstName, lastName, phoneNumber))
+        if (validate(firstName, lastName, phoneNumber, isMale))
             return repository.sendSurvey(firstName, lastName, patronymic, phoneNumber, date.getValue(), isMale);
         else return new MutableLiveData<>(false);
     }
 
-    public boolean validate(String firstName, String lastName, String phoneNumber) {
+    public boolean validate(String firstName, String lastName, String phoneNumber, boolean isSexSelected) {
         SurveyFormState newState = new SurveyFormState(
                 firstName == null || firstName.isEmpty() ? R.string.error_field_required : android.R.string.ok,
                 lastName == null || lastName.isEmpty() ? R.string.error_field_required : android.R.string.ok,
@@ -43,7 +43,9 @@ public class SurveyViewModel extends ViewModel {
                 phoneNumber == null || phoneNumber.isEmpty() ? R.string.error_field_required : (
                         PHONE_REGEX.matcher(phoneNumber).matches() ? android.R.string.ok : R.string.error_invalid_phone_number
                 ),
-                date.getValue() == null ? R.string.error_field_required : android.R.string.ok);
+                date.getValue() == null ? R.string.error_field_required : android.R.string.ok,
+                isSexSelected);
+        System.out.println(newState);
         formState.postValue(newState);
         return newState.isOk();
     }

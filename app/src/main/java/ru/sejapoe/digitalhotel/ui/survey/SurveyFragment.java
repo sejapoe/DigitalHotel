@@ -64,31 +64,28 @@ public class SurveyFragment extends Fragment {
             DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext());
             datePickerDialog.setOnDateSetListener((view1, year, month, dayOfMonth) -> {
                 viewModel.setDate(LocalDate.of(year, month, dayOfMonth));
-                validate();
             });
             datePickerDialog.show();
         });
 
-        viewModel.getDate().observe(getViewLifecycleOwner(), localDate -> binding.datePickerBtn.setText(localDate.toString()));
+        viewModel.getDate().observe(getViewLifecycleOwner(), localDate -> {
+            binding.datePickerBtn.setText(localDate.toString());
+            validate();
+        });
 
         viewModel.getFormState().observe(getViewLifecycleOwner(), surveyFormState -> {
+            System.out.println(surveyFormState);
             if (surveyFormState == null) {
                 return;
             }
             binding.submitButton.setEnabled(surveyFormState.isOk());
-            if (surveyFormState.hasFirstNameError()) {
-                binding.firstNameEditText.setError(getString(surveyFormState.getFirstNameError()));
-            }
-            if (surveyFormState.hasLastNameError()) {
-                binding.lastNameEditText.setError(getString(surveyFormState.getLastNameError()));
-            }
-            if (surveyFormState.hasLastNameError()) {
-                binding.phoneNumberEditText.setError(getString(surveyFormState.getPhoneNumberError()));
-            }
-            if (surveyFormState.hasPatronymicError()) {
-                binding.patronymicEditText.setError(getString(surveyFormState.getPatronymicError()));
-            }
+            binding.firstNameEditText.setError(surveyFormState.hasFirstNameError() ? getString(surveyFormState.getFirstNameError()) : null);
+            binding.lastNameEditText.setError(surveyFormState.hasLastNameError() ? getString(surveyFormState.getLastNameError()) : null);
+            binding.patronymicEditText.setError(surveyFormState.hasPatronymicError() ? getString(surveyFormState.getPatronymicError()) : null);
+            binding.phoneNumberEditText.setError(surveyFormState.hasPhoneNumberError() ? getString(surveyFormState.getPhoneNumberError()) : null);
         });
+
+        binding.sexRadio.setOnCheckedChangeListener((group, checkedId) -> validate());
 
         binding.submitButton.setOnClickListener(v -> viewModel.sendSurvey(
                 binding.firstNameEditText.getText().toString(),
@@ -103,9 +100,11 @@ public class SurveyFragment extends Fragment {
     }
 
     private void validate() {
+        System.out.println("text watcher");
         viewModel.validate(
                 binding.firstNameEditText.getText().toString(),
                 binding.lastNameEditText.getText().toString(),
-                binding.phoneNumberEditText.getText().toString());
+                binding.phoneNumberEditText.getText().toString(),
+                binding.sexRadio.getCheckedRadioButtonId() != -1);
     }
 }
